@@ -19,11 +19,11 @@ public class WelcomeActivity extends AppCompatActivity {
         initViews();
 
         tvLogin.setOnClickListener(view -> startActivity(new Intent(WelcomeActivity.this, LoginActivity.class)));
-        btnSignUp.setOnClickListener(view -> startActivity(new Intent(WelcomeActivity.this, PersonalDataActivity.class)));
+        btnSignUp.setOnClickListener(view -> startActivity(new Intent(WelcomeActivity.this, SignUpActivity.class)));
     }
 
     private void initViews() {
         btnSignUp = findViewById(R.id.welcome_btn_sign_up);
-        tvLogin = findViewById(R.id.welcome_tv_login);
+        tvLogin = findViewById(R.id.welcome_tv);
     }
 }

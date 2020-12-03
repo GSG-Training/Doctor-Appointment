@@ -9,10 +9,8 @@
         android:roundIcon="@drawable/ic_health_insurance"
         android:supportsRtl="true"
         android:theme="@style/Theme.DoctorAppointment">
-        <activity android:name=".PersonalDataActivity" />
-        <activity
-            android:name=".WelcomeActivity"
-            android:theme="@style/WelcomeActivityTheme" />
+        <activity android:name=".SignUpActivity" />
+        <activity android:name=".WelcomeActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".SplashActivity">
             <intent-filter>
