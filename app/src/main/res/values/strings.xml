@@ -49,5 +49,6 @@
     <string name="start_hour">Start Hour</string>
     <string name="end_hour">End Hour</string>
     <string name="time_for_each_case">Time for each case</string>
+    <string name="back">Back</string>
 
 </resources>

@@ -153,17 +153,17 @@
         android:layout_marginTop="@dimen/_4sdp"
         android:text="@string/next"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
-        app:layout_constraintStart_toEndOf="@+id/sign_up_btn_clear"
+        app:layout_constraintStart_toEndOf="@+id/sign_up_btn_back"
         app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
 
     <Button
-        android:id="@+id/sign_up_btn_clear"
+        android:id="@+id/sign_up_btn_back"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="0dp"
         android:layout_height="?actionBarSize"
         android:layout_marginTop="@dimen/_4sdp"
         android:layout_marginEnd="@dimen/_4sdp"
-        android:text="@string/clear"
+        android:text="@string/back"
         app:layout_constraintEnd_toStartOf="@+id/sign_up_btn_next"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/guideline3"

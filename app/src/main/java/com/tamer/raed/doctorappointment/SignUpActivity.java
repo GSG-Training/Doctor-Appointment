@@ -1,7 +1,7 @@
 package com.tamer.raed.doctorappointment;
 
-import android.animation.AnimatorInflater;
-import android.animation.ObjectAnimator;
+import android.content.Intent;
+import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -10,6 +10,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -19,10 +20,10 @@ import com.tamer.raed.doctorappointment.signUpFragments.SpecializationFragment;
 import com.tamer.raed.doctorappointment.signUpFragments.WorkHoursFragment;
 
 public class SignUpActivity extends AppCompatActivity {
-    static int position = 1;
+    static int position = 0;
     FrameLayout frameLayout;
     Button next;
-    Button clear;
+    Button back;
     LoginDataFragment loginDataFragment;
     SpecializationFragment specializationFragment;
     AddressFragment addressFragment;
@@ -30,7 +31,7 @@ public class SignUpActivity extends AppCompatActivity {
     RadioButton rb_login_data, rb_specialization, rb_address, rb_work_hour;
     View view1, view2, view3;
     TextView tv_specialization, tv_address, tv_work_hour;
-    ObjectAnimator objectAnimator;
+    TransitionDrawable doneStep;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,26 +42,41 @@ public class SignUpActivity extends AppCompatActivity {
         initFragments();
         moveFragment(loginDataFragment);
 
-
         next.setOnClickListener(view -> {
             switch (position) {
                 case 0:
                     moveFragment(loginDataFragment);
-                    position++;
                     break;
                 case 1:
                     doneStep(rb_specialization, view1, tv_specialization, specializationFragment);
-                    position++;
                     break;
                 case 2:
                     doneStep(rb_address, view2, tv_address, addressFragment);
-                    position++;
                     break;
                 case 3:
                     next.setText(getString(R.string.sign_up));
                     doneStep(rb_work_hour, view3, tv_work_hour, workHoursFragment);
                     break;
             }
+            position++;
+        });
+        back.setOnClickListener(view -> {
+            switch (position) {
+                case 0:
+                    startActivity(new Intent(SignUpActivity.this, WelcomeActivity.class));
+                    break;
+                case 1:
+                    notDoneStep(rb_specialization, view1, tv_specialization, specializationFragment);
+                    break;
+                case 2:
+                    notDoneStep(rb_address, view2, tv_address, addressFragment);
+                    break;
+                case 3:
+                    next.setText(getString(R.string.sign_up));
+                    notDoneStep(rb_work_hour, view3, tv_work_hour, workHoursFragment);
+                    break;
+            }
+            position--;
         });
     }
 
@@ -74,7 +90,7 @@ public class SignUpActivity extends AppCompatActivity {
     private void initViews() {
         frameLayout = findViewById(R.id.frameLayout);
         next = findViewById(R.id.sign_up_btn_next);
-        clear = findViewById(R.id.sign_up_btn_clear);
+        back = findViewById(R.id.sign_up_btn_back);
         rb_login_data = findViewById(R.id.sign_up_rb_login_data);
         rb_specialization = findViewById(R.id.sign_up_rb_specialization);
         rb_address = findViewById(R.id.sign_up_rb_address);
@@ -85,7 +101,8 @@ public class SignUpActivity extends AppCompatActivity {
         view1 = findViewById(R.id.sign_up_view1);
         view2 = findViewById(R.id.sign_up_view2);
         view3 = findViewById(R.id.sign_up_view3);
-        objectAnimator = (ObjectAnimator) AnimatorInflater.loadAnimator(this, R.animator.fill_view_animation);
+        doneStep = (TransitionDrawable) ContextCompat.getDrawable(this, R.drawable.transition_done_step);
+
     }
 
     public void moveFragment(Fragment fragment) {
@@ -95,11 +112,18 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     public void doneStep(RadioButton radioButton, View view, TextView textView, Fragment fragment) {
-        objectAnimator.setTarget(view);
-        objectAnimator.start();
+        view.setBackground(doneStep);
+        doneStep.startTransition(1500);
         radioButton.setChecked(true);
         textView.setTextColor(getResources().getColor(R.color.colorPrimary));
         moveFragment(fragment);
 
+    }
+
+    public void notDoneStep(RadioButton radioButton, View view, TextView textView, Fragment fragment) {
+        view.setBackgroundColor(getResources().getColor(R.color.light_gray));
+        radioButton.setChecked(false);
+        textView.setTextColor(getResources().getColor(R.color.light_gray));
+        moveFragment(fragment);
     }
 }
