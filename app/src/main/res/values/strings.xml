@@ -50,5 +50,6 @@
     <string name="end_hour">End Hour</string>
     <string name="time_for_each_case">Time for each case</string>
     <string name="back">Back</string>
+    <string name="choose_time">Choose Time</string>
 
 </resources>

@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -42,41 +43,42 @@ public class SignUpActivity extends AppCompatActivity {
         initFragments();
         moveFragment(loginDataFragment);
 
-        next.setOnClickListener(view -> {
-            switch (position) {
-                case 0:
-                    moveFragment(loginDataFragment);
-                    break;
-                case 1:
-                    doneStep(rb_specialization, view1, tv_specialization, specializationFragment);
-                    break;
-                case 2:
-                    doneStep(rb_address, view2, tv_address, addressFragment);
-                    break;
-                case 3:
-                    next.setText(getString(R.string.sign_up));
-                    doneStep(rb_work_hour, view3, tv_work_hour, workHoursFragment);
-                    break;
-            }
-            position++;
-        });
+//        next.setOnClickListener(view -> {
+//            position++;
+//            switch (position) {
+//                case 0:
+//                    moveFragment(loginDataFragment);
+//                    break;
+//                case 1:
+//                    doneStep(rb_specialization, view1, tv_specialization, specializationFragment);
+//                    break;
+//                case 2:
+//                    doneStep(rb_address, view2, tv_address, addressFragment);
+//                    break;
+//                case 3:
+//                    next.setText(getString(R.string.sign_up));
+//                    doneStep(rb_work_hour, view3, tv_work_hour, workHoursFragment);
+//                    break;
+//            }
+//        });
         back.setOnClickListener(view -> {
+            position--;
+            Toast.makeText(this, position + " ", Toast.LENGTH_SHORT).show();
             switch (position) {
                 case 0:
-                    startActivity(new Intent(SignUpActivity.this, WelcomeActivity.class));
+                    notDoneStep(rb_specialization, view1, tv_specialization, loginDataFragment);
                     break;
                 case 1:
-                    notDoneStep(rb_specialization, view1, tv_specialization, specializationFragment);
+                    notDoneStep(rb_address, view1, tv_address, specializationFragment);
                     break;
                 case 2:
-                    notDoneStep(rb_address, view2, tv_address, addressFragment);
+                    notDoneStep(rb_work_hour, view3, tv_work_hour, addressFragment);
                     break;
-                case 3:
-                    next.setText(getString(R.string.sign_up));
-                    notDoneStep(rb_work_hour, view3, tv_work_hour, workHoursFragment);
+                default:
+                    startActivity(new Intent(SignUpActivity.this, WelcomeActivity.class));
+                    finish();
                     break;
             }
-            position--;
         });
     }
 
@@ -117,7 +119,8 @@ public class SignUpActivity extends AppCompatActivity {
         radioButton.setChecked(true);
         textView.setTextColor(getResources().getColor(R.color.colorPrimary));
         moveFragment(fragment);
-
+        position++;
+        Toast.makeText(this, position + " ", Toast.LENGTH_SHORT).show();
     }
 
     public void notDoneStep(RadioButton radioButton, View view, TextView textView, Fragment fragment) {
@@ -125,5 +128,11 @@ public class SignUpActivity extends AppCompatActivity {
         radioButton.setChecked(false);
         textView.setTextColor(getResources().getColor(R.color.light_gray));
         moveFragment(fragment);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        position = 0;
     }
 }
