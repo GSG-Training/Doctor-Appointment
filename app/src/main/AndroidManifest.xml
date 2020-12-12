@@ -9,6 +9,7 @@
         android:roundIcon="@drawable/ic_health_insurance"
         android:supportsRtl="true"
         android:theme="@style/Theme.DoctorAppointment">
+        <activity android:name=".Patient.PatientDashboard.SearchActivity"></activity>
         <activity android:name=".Patient.PatientSignUpActivity" />
         <activity android:name=".Patient.PatientDashboard.PatientDashboardActivity" />
         <activity android:name=".Doctor.DoctorSignUpActivity" />
