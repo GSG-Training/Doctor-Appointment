@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".signUpFragments.SpecializationFragment">
+    tools:context=".Doctor.SignUpFragments.SpecializationFragment">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/specialization_input_layout"

@@ -1,4 +1,4 @@
-package com.tamer.raed.doctorappointment.signUpFragments;
+package com.tamer.raed.doctorappointment.Doctor.SignUpFragments;
 
 import android.app.Dialog;
 import android.app.DialogFragment;

@@ -1,4 +1,4 @@
-package com.tamer.raed.doctorappointment.signUpFragments;
+package com.tamer.raed.doctorappointment.Doctor.SignUpFragments;
 
 import android.app.DialogFragment;
 import android.app.TimePickerDialog;
@@ -34,13 +34,7 @@ public class WorkHoursFragment extends Fragment implements TimePickerDialog.OnTi
         btn_choose_start_time = view.findViewById(R.id.choose_start_time);
         btn_choose_end_time = view.findViewById(R.id.choose_end_time);
 
-        btn_choose_start_time.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showTimePickerDialog();
-
-            }
-        });
+        btn_choose_start_time.setOnClickListener(view1 -> showTimePickerDialog());
         return view;
     }
 
@@ -51,11 +45,8 @@ public class WorkHoursFragment extends Fragment implements TimePickerDialog.OnTi
         if (getActivity() != null) {
             next = getActivity().findViewById(R.id.sign_up_btn_next);
             if (next != null) {
-                next.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
+                next.setOnClickListener(view -> {
 
-                    }
                 });
             }
         }

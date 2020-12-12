@@ -1,0 +1,53 @@
+package com.tamer.raed.doctorappointment.Patient;
+
+import android.content.Intent;
+import android.os.Build;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+
+import com.google.android.material.textfield.TextInputEditText;
+import com.tamer.raed.doctorappointment.Patient.PatientDashboard.PatientDashboardActivity;
+import com.tamer.raed.doctorappointment.R;
+
+import java.util.Objects;
+
+public class PatientSignUpActivity extends AppCompatActivity {
+    Toolbar toolbar;
+    TextInputEditText et_username, et_phone, et_password;
+    Button btn_sign_up;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_patient_sign_up);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);//  set status text dark
+        }
+        getWindow().setStatusBarColor(ContextCompat.getColor(PatientSignUpActivity.this, R.color.white));// set status background white
+
+        initViews();
+        setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationIcon(ContextCompat.getDrawable(this, R.drawable.ic_arrow));
+        toolbar.setNavigationOnClickListener(view -> onBackPressed());
+    }
+
+    private void initViews() {
+        toolbar = findViewById(R.id.patient_sign_up_toolbar);
+        et_username = findViewById(R.id.patient_sign_up_et_username);
+        et_phone = findViewById(R.id.patient_sign_up_et_phone);
+        et_password = findViewById(R.id.patient_sign_up_et_password);
+        btn_sign_up = findViewById(R.id.patient_sign_up_btn);
+    }
+
+    public void signUp(View view) {
+        startActivity(new Intent(PatientSignUpActivity.this, PatientDashboardActivity.class));
+        finish();
+    }
+}
