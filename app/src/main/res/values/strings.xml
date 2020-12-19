@@ -67,5 +67,6 @@
     <string name="concat_us">Conact Us</string>
     <string name="account_type_error">You must select the account type!</string>
     <string name="search">Search</string>
+    <string name="find_doctor">Let\'s Find Your Doctor</string>
 
 </resources>

@@ -13,9 +13,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:background="@color/colorPrimary"
         app:title="@string/sign_up"
-        app:titleTextColor="@color/dark_gray" />
+        app:titleTextColor="@color/white" />
 
     <TextView
         android:id="@+id/sign_up_text_view_login_data"

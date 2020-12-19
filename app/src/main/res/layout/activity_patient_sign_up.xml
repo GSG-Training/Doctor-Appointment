@@ -13,9 +13,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:title="@string/sign_up"
-        app:titleTextColor="@color/dark_gray" />
+        android:background="@color/colorPrimary"
+        app:titleTextColor="@color/white" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/patient_sign_up_image"

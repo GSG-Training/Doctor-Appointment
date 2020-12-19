@@ -32,15 +32,20 @@ public class PatientDashboardActivity extends AppCompatActivity implements Navig
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_dashboard);
+
         initViews();
+
         setSupportActionBar(toolbar);
+
         Objects.requireNonNull(getSupportActionBar()).setDefaultDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+
         toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawerOpen, R.string.drawerClose);
         toggle.getDrawerArrowDrawable().setColor(Color.WHITE);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+
         PatientHomepageFragment patientHomepageFragment = new PatientHomepageFragment();
         moveFragment(patientHomepageFragment);
         toolbar.setTitle(getString(R.string.homepage));
@@ -52,6 +57,7 @@ public class PatientDashboardActivity extends AppCompatActivity implements Navig
         navigationView = findViewById(R.id.navigation_view);
     }
 
+    //@SuppressLint("NonConstantResourceId")
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {

@@ -1,7 +1,6 @@
 package com.tamer.raed.doctorappointment;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -11,7 +10,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import com.tamer.raed.doctorappointment.Doctor.DoctorSignUpActivity;
 import com.tamer.raed.doctorappointment.Patient.PatientSignUpActivity;
@@ -26,12 +24,7 @@ public class WelcomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);//  set status text dark
-        }
-        getWindow().setStatusBarColor(ContextCompat.getColor(WelcomeActivity.this, R.color.white));// set status background white
         initViews();
-
         tvLogin.setOnClickListener(view -> startActivity(new Intent(WelcomeActivity.this, LoginActivity.class)));
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
