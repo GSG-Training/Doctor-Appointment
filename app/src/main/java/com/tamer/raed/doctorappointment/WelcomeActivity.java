@@ -11,8 +11,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.tamer.raed.doctorappointment.Doctor.DoctorSignUpActivity;
-import com.tamer.raed.doctorappointment.Patient.PatientSignUpActivity;
+import com.tamer.raed.doctorappointment.doctor.DoctorSignUpActivity;
+import com.tamer.raed.doctorappointment.patient.PatientSignUpActivity;
 
 public class WelcomeActivity extends AppCompatActivity {
     private Button btnSignUp;

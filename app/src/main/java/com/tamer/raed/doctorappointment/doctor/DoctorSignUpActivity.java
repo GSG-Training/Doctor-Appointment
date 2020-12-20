@@ -1,4 +1,4 @@
-package com.tamer.raed.doctorappointment.Doctor;
+package com.tamer.raed.doctorappointment.doctor;
 
 import android.content.Intent;
 import android.graphics.drawable.TransitionDrawable;
@@ -15,12 +15,12 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.tamer.raed.doctorappointment.Doctor.SignUpFragments.AddressFragment;
-import com.tamer.raed.doctorappointment.Doctor.SignUpFragments.LoginDataFragment;
-import com.tamer.raed.doctorappointment.Doctor.SignUpFragments.SpecializationFragment;
-import com.tamer.raed.doctorappointment.Doctor.SignUpFragments.WorkHoursFragment;
 import com.tamer.raed.doctorappointment.R;
 import com.tamer.raed.doctorappointment.WelcomeActivity;
+import com.tamer.raed.doctorappointment.doctor.ui.signUpFragments.AddressFragment;
+import com.tamer.raed.doctorappointment.doctor.ui.signUpFragments.LoginDataFragment;
+import com.tamer.raed.doctorappointment.doctor.ui.signUpFragments.SpecializationFragment;
+import com.tamer.raed.doctorappointment.doctor.ui.signUpFragments.WorkHoursFragment;
 
 import java.util.Objects;
 
@@ -117,9 +117,9 @@ public class DoctorSignUpActivity extends AppCompatActivity {
     }
 
     public void notDoneStep(TextView step, View view, TextView textView, Fragment fragment) {
-        view.setBackgroundColor(getResources().getColor(R.color.light_gray));
+        view.setBackgroundColor(getResources().getColor(R.color.gray));
         step.setBackground(ContextCompat.getDrawable(this, R.drawable.circle_bg));
-        textView.setTextColor(getResources().getColor(R.color.light_gray));
+        textView.setTextColor(getResources().getColor(R.color.gray));
         moveFragment(fragment);
     }
 

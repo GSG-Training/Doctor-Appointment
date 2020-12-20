@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.tamer.raed.doctorappointment.Patient.PatientDashboard.PatientDashboardActivity;
+import com.tamer.raed.doctorappointment.patient.ui.patientDashboard.PatientDashboardActivity;
 
 public class LoginActivity extends AppCompatActivity {
     private TextView tvSignUp;

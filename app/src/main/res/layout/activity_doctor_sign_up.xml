@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Doctor.DoctorSignUpActivity">
+    tools:context=".doctor.DoctorSignUpActivity">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/sign_up_toolbar"
@@ -46,7 +46,7 @@
         android:id="@+id/sign_up_view1"
         android:layout_width="0dp"
         android:layout_height="2dp"
-        android:background="@color/light_gray"
+        android:background="@color/gray"
         app:layout_constraintBottom_toBottomOf="@+id/sign_up_text_view_login_data"
         app:layout_constraintEnd_toStartOf="@+id/sign_up_text_view_specialization"
         app:layout_constraintStart_toEndOf="@+id/sign_up_text_view_login_data"
@@ -90,7 +90,7 @@
         android:id="@+id/sign_up_view2"
         android:layout_width="0dp"
         android:layout_height="2dp"
-        android:background="@color/light_gray"
+        android:background="@color/gray"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="@+id/sign_up_text_view_specialization"
         app:layout_constraintEnd_toStartOf="@+id/sign_up_text_view_address"
@@ -124,7 +124,7 @@
         android:id="@+id/sign_up_view3"
         android:layout_width="0dp"
         android:layout_height="2dp"
-        android:background="@color/light_gray"
+        android:background="@color/gray"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="@+id/sign_up_text_view_address"
         app:layout_constraintEnd_toStartOf="@+id/sign_up_text_view_work_hour"

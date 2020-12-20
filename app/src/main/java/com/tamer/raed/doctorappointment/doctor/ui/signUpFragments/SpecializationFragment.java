@@ -1,4 +1,4 @@
-package com.tamer.raed.doctorappointment.Doctor.SignUpFragments;
+package com.tamer.raed.doctorappointment.doctor.ui.signUpFragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,8 +11,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.textfield.TextInputEditText;
-import com.tamer.raed.doctorappointment.Doctor.DoctorSignUpActivity;
 import com.tamer.raed.doctorappointment.R;
+import com.tamer.raed.doctorappointment.doctor.DoctorSignUpActivity;
 
 import java.util.Objects;
 

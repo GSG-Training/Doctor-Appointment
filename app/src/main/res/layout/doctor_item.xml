@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/_4sdp"
+    android:background="@drawable/category_bg_off"
+    android:padding="@dimen/_8sdp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/item_doctor_iv"
+        android:layout_width="@dimen/_60sdp"
+        android:layout_height="@dimen/_60sdp"
+        android:layout_marginStart="@dimen/_8sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/ic_user" />
+
+    <TextView
+        android:id="@+id/item_doctor_tv_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_4sdp"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_16sdp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/item_doctor_iv"
+        app:layout_constraintTop_toTopOf="@+id/item_doctor_iv"
+        tools:text="@string/username" />
+
+    <TextView
+        android:id="@+id/item_doctor_tv_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_4sdp"
+        android:textColor="@color/dark_gray"
+        android:textSize="@dimen/_12sdp"
+        app:layout_constraintStart_toEndOf="@+id/item_doctor_iv"
+        app:layout_constraintTop_toBottomOf="@+id/item_doctor_tv_username"
+        tools:text="@string/categories" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_4sdp"
+        android:contentDescription="@string/rating"
+        app:layout_constraintStart_toEndOf="@+id/item_doctor_iv"
+        app:layout_constraintTop_toBottomOf="@+id/item_doctor_tv_category"
+        app:srcCompat="@drawable/ic_star" />
+
+    <TextView
+        android:id="@+id/item_doctor_tv_rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_4sdp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView3"
+        app:layout_constraintStart_toEndOf="@+id/imageView3"
+        app:layout_constraintTop_toTopOf="@+id/imageView3"
+        tools:text="4.5" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

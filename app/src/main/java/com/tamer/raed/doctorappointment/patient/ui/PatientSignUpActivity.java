@@ -1,4 +1,4 @@
-package com.tamer.raed.doctorappointment.Patient;
+package com.tamer.raed.doctorappointment.patient;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,8 +10,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
 import com.google.android.material.textfield.TextInputEditText;
-import com.tamer.raed.doctorappointment.Patient.PatientDashboard.PatientDashboardActivity;
 import com.tamer.raed.doctorappointment.R;
+import com.tamer.raed.doctorappointment.patient.ui.patientDashboard.PatientDashboardActivity;
 
 import java.util.Objects;
 

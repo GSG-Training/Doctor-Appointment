@@ -1,4 +1,4 @@
-package com.tamer.raed.doctorappointment.Patient.PatientDashboard;
+package com.tamer.raed.doctorappointment.patient.ui.patientDashboard;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;

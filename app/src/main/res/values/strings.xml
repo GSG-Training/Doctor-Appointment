@@ -67,6 +67,11 @@
     <string name="concat_us">Conact Us</string>
     <string name="account_type_error">You must select the account type!</string>
     <string name="search">Search</string>
-    <string name="find_doctor">Let\'s Find Your Doctor</string>
+    <string name="find_doctor">Let\'s Find Your \nDoctor</string>
+    <string name="categories">Categories</string>
+    <string name="available_doctor">Available Doctor</string>
+    <string name="tooth">tooth</string>
+    <string name="heart">heart</string>
+    <string name="rating">rating</string>
 
 </resources>
