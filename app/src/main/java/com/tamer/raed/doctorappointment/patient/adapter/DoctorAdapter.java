@@ -15,9 +15,13 @@ import com.tamer.raed.doctorappointment.model.Doctor;
 import java.util.List;
 
 public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.DoctorViewHolder> {
-    List<Doctor> doctors;
+    private List<Doctor> doctors;
 
     public DoctorAdapter(List<Doctor> doctors) {
+        this.doctors = doctors;
+    }
+
+    public void setDoctors(List<Doctor> doctors) {
         this.doctors = doctors;
     }
 
@@ -32,6 +36,7 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.DoctorView
     public void onBindViewHolder(@NonNull DoctorViewHolder holder, int position) {
         holder.bind(doctors.get(position));
     }
+
 
     @Override
     public int getItemCount() {
@@ -51,6 +56,14 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.DoctorView
         }
 
         private void bind(Doctor doctor) {
+            if (doctor.getImage() == 0) {
+                imageView.setImageResource(R.drawable.ic_user);
+            } else {
+                imageView.setImageResource(doctor.getImage());
+            }
+            tv_username.setText(doctor.getUsername());
+            tv_category.setText(doctor.getCategory().getName());
+            tv_rating.setText(String.valueOf(doctor.getRating()));
         }
     }
 }
