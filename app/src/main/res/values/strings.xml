@@ -18,7 +18,7 @@
     <string name="phone">Phone</string>
     <string name="clear">Clear</string>
     <string name="next">next</string>
-    <string name="basic_info">Login Data</string>
+    <string name="basic_info">Personal Data</string>
     <string name="specialization">Specialization</string>
     <string name="address">Address</string>
     <string name="working_hour">Work Hour</string>
@@ -73,5 +73,14 @@
     <string name="tooth">tooth</string>
     <string name="heart">heart</string>
     <string name="rating">rating</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="gender">Gender</string>
+    <string name="experience">Experience</string>
+    <string name="doctor_details">Doctor Details</string>
+    <string name="patient">Patient</string>
+    <string name="location">Location</string>
+    <string name="book_appointment">Book an Appointment</string>
+    <string name="availability">Availability</string>
 
 </resources>

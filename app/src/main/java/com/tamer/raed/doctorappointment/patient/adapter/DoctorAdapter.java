@@ -16,9 +16,11 @@ import java.util.List;
 
 public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.DoctorViewHolder> {
     private List<Doctor> doctors;
+    private OnDoctorItemClickListener listener;
 
-    public DoctorAdapter(List<Doctor> doctors) {
+    public DoctorAdapter(List<Doctor> doctors, OnDoctorItemClickListener listener) {
         this.doctors = doctors;
+        this.listener = listener;
     }
 
     public void setDoctors(List<Doctor> doctors) {
@@ -43,7 +45,7 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.DoctorView
         return doctors.size();
     }
 
-    static class DoctorViewHolder extends RecyclerView.ViewHolder {
+    class DoctorViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
         TextView tv_username, tv_category, tv_rating;
 
@@ -64,6 +66,7 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.DoctorView
             tv_username.setText(doctor.getUsername());
             tv_category.setText(doctor.getCategory().getName());
             tv_rating.setText(String.valueOf(doctor.getRating()));
+            itemView.setOnClickListener(view -> listener.onItemClick(doctor));
         }
     }
 }

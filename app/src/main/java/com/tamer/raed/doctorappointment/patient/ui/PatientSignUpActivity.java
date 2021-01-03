@@ -1,4 +1,4 @@
-package com.tamer.raed.doctorappointment.patient;
+package com.tamer.raed.doctorappointment.patient.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,9 +16,9 @@ import com.tamer.raed.doctorappointment.patient.ui.patientDashboard.PatientDashb
 import java.util.Objects;
 
 public class PatientSignUpActivity extends AppCompatActivity {
-    Toolbar toolbar;
-    TextInputEditText et_username, et_phone, et_password;
-    Button btn_sign_up;
+    private Toolbar toolbar;
+    private TextInputEditText et_username, et_phone, et_password;
+    private Button btn_sign_up;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

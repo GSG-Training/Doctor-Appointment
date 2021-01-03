@@ -1,4 +1,4 @@
-package com.tamer.raed.doctorappointment.doctor;
+package com.tamer.raed.doctorappointment.doctor.ui;
 
 import android.content.Intent;
 import android.graphics.drawable.TransitionDrawable;
@@ -18,7 +18,7 @@ import androidx.fragment.app.FragmentManager;
 import com.tamer.raed.doctorappointment.R;
 import com.tamer.raed.doctorappointment.WelcomeActivity;
 import com.tamer.raed.doctorappointment.doctor.ui.signUpFragments.AddressFragment;
-import com.tamer.raed.doctorappointment.doctor.ui.signUpFragments.LoginDataFragment;
+import com.tamer.raed.doctorappointment.doctor.ui.signUpFragments.PersonalDataFragment;
 import com.tamer.raed.doctorappointment.doctor.ui.signUpFragments.SpecializationFragment;
 import com.tamer.raed.doctorappointment.doctor.ui.signUpFragments.WorkHoursFragment;
 
@@ -29,7 +29,7 @@ public class DoctorSignUpActivity extends AppCompatActivity {
     FrameLayout frameLayout;
     Button next;
     Button back;
-    LoginDataFragment loginDataFragment;
+    PersonalDataFragment personalDataFragment;
     SpecializationFragment specializationFragment;
     AddressFragment addressFragment;
     WorkHoursFragment workHoursFragment;
@@ -50,17 +50,17 @@ public class DoctorSignUpActivity extends AppCompatActivity {
         toolbar.setNavigationIcon(ContextCompat.getDrawable(this, R.drawable.ic_arrow));
         toolbar.setNavigationOnClickListener(view -> onBackPressed());
         initFragments();
-        moveFragment(loginDataFragment);
+        moveFragment(personalDataFragment);
 
         back.setOnClickListener(view -> {
             position--;
             Toast.makeText(this, position + " ", Toast.LENGTH_SHORT).show();
             switch (position) {
                 case 0:
-                    notDoneStep(text_view_specialization, view1, tv_specialization, loginDataFragment);
+                    notDoneStep(text_view_specialization, view1, tv_specialization, personalDataFragment);
                     break;
                 case 1:
-                    notDoneStep(text_view_address, view1, tv_address, specializationFragment);
+                    notDoneStep(text_view_address, view2, tv_address, specializationFragment);
                     break;
                 case 2:
                     notDoneStep(text_view_work_hour, view3, tv_work_hour, addressFragment);
@@ -74,7 +74,7 @@ public class DoctorSignUpActivity extends AppCompatActivity {
     }
 
     private void initFragments() {
-        loginDataFragment = new LoginDataFragment();
+        personalDataFragment = new PersonalDataFragment();
         specializationFragment = new SpecializationFragment();
         addressFragment = new AddressFragment();
         workHoursFragment = new WorkHoursFragment();
@@ -118,8 +118,9 @@ public class DoctorSignUpActivity extends AppCompatActivity {
 
     public void notDoneStep(TextView step, View view, TextView textView, Fragment fragment) {
         view.setBackgroundColor(getResources().getColor(R.color.gray));
-        step.setBackground(ContextCompat.getDrawable(this, R.drawable.circle_bg));
         textView.setTextColor(getResources().getColor(R.color.gray));
+        step.setBackground(ContextCompat.getDrawable(this, R.drawable.circle_bg));
+        step.setTextColor(getResources().getColor(R.color.dark_gray));
         moveFragment(fragment);
     }
 

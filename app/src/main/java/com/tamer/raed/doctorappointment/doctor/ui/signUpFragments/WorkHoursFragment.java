@@ -46,7 +46,8 @@ public class WorkHoursFragment extends Fragment implements TimePickerDialog.OnTi
             next = getActivity().findViewById(R.id.sign_up_btn_next);
             if (next != null) {
                 next.setOnClickListener(view -> {
-
+                    // TODO: go to doctor homepage
+//                    startActivity(new Intent(WorkHoursFragment.this, ));
                 });
             }
         }

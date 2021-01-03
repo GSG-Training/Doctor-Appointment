@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -12,23 +13,26 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.tamer.raed.doctorappointment.R;
-import com.tamer.raed.doctorappointment.doctor.DoctorSignUpActivity;
+import com.tamer.raed.doctorappointment.doctor.ui.DoctorSignUpActivity;
 
 import java.util.Objects;
 
-public class LoginDataFragment extends Fragment {
+public class PersonalDataFragment extends Fragment {
 
-    String username, phone, password;
+    String username, phone, password, gender;
     TextInputEditText et_username, et_phone, et_password;
+    RadioButton rb_male, rb_female;
     Button next;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_login_data, container, false);
+        View view = inflater.inflate(R.layout.fragment_personal_data, container, false);
         et_username = view.findViewById(R.id.login_data_username);
         et_phone = view.findViewById(R.id.login_data_phone);
         et_password = view.findViewById(R.id.login_data_password);
+        rb_male = view.findViewById(R.id.rb_male);
+        rb_female = view.findViewById(R.id.rb_female);
         return view;
     }
 
@@ -45,6 +49,7 @@ public class LoginDataFragment extends Fragment {
                             phone = et_phone.getText().toString();
                             if (!Objects.requireNonNull(et_password.getText()).toString().isEmpty()) {
                                 password = et_password.getText().toString();
+                                getGender();
                                 TextView text_view_specialization = getActivity().findViewById(R.id.sign_up_text_view_specialization);
                                 View view1 = getActivity().findViewById(R.id.sign_up_view1);
                                 TextView tv_specialization = getActivity().findViewById(R.id.sign_up_tv_specialization);
@@ -61,6 +66,14 @@ public class LoginDataFragment extends Fragment {
                     }
                 });
             }
+        }
+    }
+
+    private void getGender() {
+        if (rb_male.isChecked()) {
+            gender = "male";
+        } else if (rb_female.isChecked()) {
+            gender = "female";
         }
     }
 }

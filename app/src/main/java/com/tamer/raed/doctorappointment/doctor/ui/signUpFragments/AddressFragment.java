@@ -1,6 +1,7 @@
 package com.tamer.raed.doctorappointment.doctor.ui.signUpFragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +13,10 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.tamer.raed.doctorappointment.R;
-import com.tamer.raed.doctorappointment.doctor.DoctorSignUpActivity;
+import com.tamer.raed.doctorappointment.doctor.ui.DoctorSignUpActivity;
+import com.tamer.raed.doctorappointment.model.SharedPrefs;
 
+import java.util.HashMap;
 import java.util.Objects;
 
 public class AddressFragment extends Fragment {
@@ -28,6 +31,27 @@ public class AddressFragment extends Fragment {
         country_et = view.findViewById(R.id.country_et);
         city_et = view.findViewById(R.id.city_et);
         street_et = view.findViewById(R.id.street_et);
+
+        HashMap<String, String> hashMap = SharedPrefs.getAddressData(getContext());
+        if (!hashMap.isEmpty()) {
+            Log.d("dddd", "not null");
+            country = hashMap.get(SharedPrefs.COUNTRY_KEY);
+            city = hashMap.get(SharedPrefs.CITY_KEY);
+            street = hashMap.get(SharedPrefs.STREET_KEY);
+            Log.d("dddd", country + "   " + city + "    " + street);
+            if (country != null && city != null && street != null) {
+                Log.d("dddd", "country not null");
+                country_et.setText(country);
+                city_et.setText(city);
+                street_et.setText(street);
+            } else {
+                Log.d("dddd", "country null");
+
+            }
+        } else {
+            Log.d("dddd", "null");
+
+        }
         return view;
     }
 
@@ -44,6 +68,7 @@ public class AddressFragment extends Fragment {
                             city = city_et.getText().toString();
                             if (!Objects.requireNonNull(street_et.getText()).toString().isEmpty()) {
                                 street = street_et.getText().toString();
+                                SharedPrefs.setAddressData(getContext(), country, city, street);
                                 TextView text_view_work_hour = getActivity().findViewById(R.id.sign_up_text_view_work_hour);
                                 View view3 = getActivity().findViewById(R.id.sign_up_view3);
                                 TextView tv_work_hour = getActivity().findViewById(R.id.sign_up_tv_work_hour);

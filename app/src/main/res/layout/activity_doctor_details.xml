@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".patient.ui.DoctorDetailsActivity">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/patient_doctor_details_toolbar"
+            android:layout_width="0dp"
+            android:layout_height="?actionBarSize"
+            android:background="@color/colorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:title="@string/doctor_details"
+            app:titleTextColor="@color/white" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/patient_doctor_details_image_view"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_100sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:src="@drawable/ic_user"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/patient_doctor_details_toolbar" />
+
+        <TextView
+            android:id="@+id/patient_doctor_details_tv_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/_20sdp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/patient_doctor_details_image_view"
+            tools:text="Tamer Alnuaizi" />
+
+        <TextView
+            android:id="@+id/patient_doctor_details_tv_specialization"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_8sdp"
+            android:textSize="@dimen/_14sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/patient_doctor_details_tv_username"
+            tools:text="Tamer Alnuaizi" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            app:cardCornerRadius="@dimen/_8sdp"
+            app:cardElevation="@dimen/_12sdp"
+            app:layout_constraintStart_toStartOf="@+id/guideline11"
+            app:layout_constraintTop_toBottomOf="@+id/patient_doctor_details_tv_specialization">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="@dimen/_16sdp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/patient"
+                    android:textSize="@dimen/_16sdp" />
+
+                <TextView
+                    android:id="@+id/patient_doctor_details_tv_number_of_patient"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/_16sdp"
+                    android:textStyle="bold"
+                    tools:text="350" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="@dimen/_8sdp"
+            app:cardElevation="@dimen/_8sdp"
+            app:layout_constraintEnd_toStartOf="@+id/card3"
+            app:layout_constraintStart_toEndOf="@+id/card1"
+            app:layout_constraintTop_toTopOf="@+id/card1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="@dimen/_16sdp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/rating"
+                    android:textSize="@dimen/_16sdp" />
+
+                <TextView
+                    android:id="@+id/patient_doctor_details_tv_rating"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/_16sdp"
+                    android:textStyle="bold"
+                    tools:text="4.5" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="@dimen/_8sdp"
+            app:cardElevation="@dimen/_8sdp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline12"
+            app:layout_constraintTop_toTopOf="@+id/card2">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="@dimen/_16sdp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/experience"
+                    android:textSize="@dimen/_16sdp" />
+
+                <TextView
+                    android:id="@+id/patient_doctor_details_tv_experience"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/_16sdp"
+                    android:textStyle="bold"
+                    tools:text="4" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:contentDescription="@string/location"
+            android:src="@drawable/ic_location"
+            app:layout_constraintStart_toStartOf="@+id/card1"
+            app:layout_constraintTop_toBottomOf="@+id/card1" />
+
+        <TextView
+            android:id="@+id/patient_doctor_details_tv_address"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintStart_toEndOf="@+id/imageView4"
+            app:layout_constraintTop_toTopOf="@+id/imageView4"
+            tools:text="wrgwegkawrnglanwrgajlrng" />
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:contentDescription="@string/phone"
+            android:src="@drawable/ic_phone_android"
+            app:layout_constraintStart_toStartOf="@+id/imageView4"
+            app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+
+        <TextView
+            android:id="@+id/patient_doctor_details_tv_phone"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintStart_toEndOf="@+id/imageView5"
+            app:layout_constraintTop_toTopOf="@+id/imageView5"
+            tools:text="0592899024" />
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:text="@string/biography"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/_16sdp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/imageView5"
+            app:layout_constraintTop_toBottomOf="@+id/imageView5" />
+
+        <TextView
+            android:id="@+id/patient_doctor_details_tv_biography"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline12"
+            app:layout_constraintStart_toStartOf="@+id/textView12"
+            app:layout_constraintTop_toBottomOf="@+id/textView12"
+            tools:text="a;uiwrghkwjrgnaw;rjkgnrbgibawrigbawruiguiawrguiarb
+        gauwrbguiawrguiawrguawrbgawruibguiargbuiarwguiarbguiabrgbauiwrbgu
+        iawrguibargauirwbgauiwrguiargauiwrguiwrguiwrguiwargaw;irbg;awirb
+        guiawrbguiwrbguiarbguiergubaeruibgaeruibgerguierguirhguirguierghur" />
+
+        <Button
+            android:id="@+id/patient_doctor_details_btn_book_appointment"
+            android:layout_width="0dp"
+            android:layout_height="?actionBarSize"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:onClick="bookAnAppointment"
+            android:text="@string/book_appointment"
+            app:layout_constraintEnd_toEndOf="@+id/patient_doctor_details_tv_biography"
+            app:layout_constraintStart_toStartOf="@+id/patient_doctor_details_tv_biography"
+            app:layout_constraintTop_toBottomOf="@+id/patient_doctor_details_tv_biography" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent=".05" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.95" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
