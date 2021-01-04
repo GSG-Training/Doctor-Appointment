@@ -3,9 +3,13 @@ package com.tamer.raed.doctorappointment.patient.ui.patientDashboard;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,7 +25,6 @@ import com.tamer.raed.doctorappointment.patient.ui.DoctorDetailsActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class PatientHomepageFragment extends Fragment {
     private List<Category> categories;
     private List<Doctor> doctors;
@@ -33,6 +36,7 @@ public class PatientHomepageFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         View view = inflater.inflate(R.layout.fragment_patient_homepage, container, false);
         RecyclerView doctor_rv = view.findViewById(R.id.patient_homepage_rv_doctors);
         RecyclerView categories_rv = view.findViewById(R.id.patient_homepage_rv_categories);
@@ -118,5 +122,25 @@ public class PatientHomepageFragment extends Fragment {
             }
         }
         return temp;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.search_menu_icon, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    //    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.search_menu_icon, menu);
+//        return super.onCreateOptionsMenu(menu);
+//    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.menu_search_item) {
+            startActivity(new Intent(getContext(), SearchActivity.class));
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

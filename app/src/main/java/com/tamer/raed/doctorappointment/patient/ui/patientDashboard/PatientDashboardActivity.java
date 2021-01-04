@@ -1,10 +1,8 @@
 package com.tamer.raed.doctorappointment.patient.ui.patientDashboard;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -92,19 +90,5 @@ public class PatientDashboardActivity extends AppCompatActivity implements Navig
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().setCustomAnimations(android.R.animator.fade_in,
                 android.R.animator.fade_out).replace(R.id.patient_frameLayout, fragment).commit();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.search_menu_icon, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.menu_search_item) {
-            startActivity(new Intent(PatientDashboardActivity.this, SearchActivity.class));
-        }
-        return super.onOptionsItemSelected(item);
     }
 }

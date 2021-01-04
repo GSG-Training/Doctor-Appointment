@@ -1,7 +1,6 @@
 package com.tamer.raed.doctorappointment.doctor.ui.signUpFragments;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,23 +33,14 @@ public class AddressFragment extends Fragment {
 
         HashMap<String, String> hashMap = SharedPrefs.getAddressData(getContext());
         if (!hashMap.isEmpty()) {
-            Log.d("dddd", "not null");
             country = hashMap.get(SharedPrefs.COUNTRY_KEY);
             city = hashMap.get(SharedPrefs.CITY_KEY);
             street = hashMap.get(SharedPrefs.STREET_KEY);
-            Log.d("dddd", country + "   " + city + "    " + street);
             if (country != null && city != null && street != null) {
-                Log.d("dddd", "country not null");
                 country_et.setText(country);
                 city_et.setText(city);
                 street_et.setText(street);
-            } else {
-                Log.d("dddd", "country null");
-
             }
-        } else {
-            Log.d("dddd", "null");
-
         }
         return view;
     }

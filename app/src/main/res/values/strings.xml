@@ -82,5 +82,13 @@
     <string name="location">Location</string>
     <string name="book_appointment">Book an Appointment</string>
     <string name="availability">Availability</string>
+    <string name="update_profile">Update My Profile</string>
+    <string name="edit">Edit</string>
+    <string name="update_profile_dialog">Are you sure to update your profile?</string>
+    <string name="cancel">Cancel</string>
+    <string name="update">Update</string>
+    <string name="username_error">Username must be entered</string>
+    <string name="phone_error">Phone must be entered</string>
+    <string name="password_error">Password must be entered</string>
 
 </resources>
