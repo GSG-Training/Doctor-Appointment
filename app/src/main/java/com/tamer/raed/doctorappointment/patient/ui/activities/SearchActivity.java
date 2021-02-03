@@ -1,4 +1,4 @@
-package com.tamer.raed.doctorappointment.patient.ui.patientDashboard;
+package com.tamer.raed.doctorappointment.patient.ui.activities;
 
 import android.os.Build;
 import android.os.Bundle;

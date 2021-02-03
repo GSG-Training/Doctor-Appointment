@@ -12,7 +12,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.tamer.raed.doctorappointment.doctor.ui.DoctorSignUpActivity;
-import com.tamer.raed.doctorappointment.patient.ui.PatientSignUpActivity;
+import com.tamer.raed.doctorappointment.patient.ui.activities.PatientSignUpActivity;
 
 
 public class WelcomeActivity extends AppCompatActivity {

@@ -30,7 +30,6 @@ public class AddressFragment extends Fragment {
         country_et = view.findViewById(R.id.country_et);
         city_et = view.findViewById(R.id.city_et);
         street_et = view.findViewById(R.id.street_et);
-
         HashMap<String, String> hashMap = SharedPrefs.getAddressData(getContext());
         if (!hashMap.isEmpty()) {
             country = hashMap.get(SharedPrefs.COUNTRY_KEY);
@@ -42,6 +41,7 @@ public class AddressFragment extends Fragment {
                 street_et.setText(street);
             }
         }
+
         return view;
     }
 

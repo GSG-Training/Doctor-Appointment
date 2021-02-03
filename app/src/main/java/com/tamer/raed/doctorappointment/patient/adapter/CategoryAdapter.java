@@ -49,7 +49,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     }
 
     public interface OnItemClickListener {
-        void onClick(int position);
+        void onItemClick(int position);
     }
 
     class CategoryViewHolder extends RecyclerView.ViewHolder {
@@ -72,7 +72,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
                 imageView.setColorFilter(context.getResources().getColor(R.color.colorPrimary));
             }
 
-            itemView.setOnClickListener(view -> onItemClickListener.onClick(getAdapterPosition()));
+            itemView.setOnClickListener(view -> onItemClickListener.onItemClick(getBindingAdapterPosition()));
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.tamer.raed.doctorappointment.patient.ui;
+package com.tamer.raed.doctorappointment.patient.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -27,7 +27,7 @@ public class BookAppointmentActivity extends AppCompatActivity {
         if (intent != null && intent.hasExtra("Doctor")) {
             doctor = intent.getParcelableExtra("Doctor");
             tv_username.setText(doctor.getUsername());
-            tv_specialization.setText(doctor.getCategory().getName());
+            tv_specialization.setText(doctor.getSpecialization());
         }
     }
 

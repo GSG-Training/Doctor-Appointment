@@ -1,4 +1,4 @@
-package com.tamer.raed.doctorappointment.patient.ui;
+package com.tamer.raed.doctorappointment.patient.ui.activities;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;

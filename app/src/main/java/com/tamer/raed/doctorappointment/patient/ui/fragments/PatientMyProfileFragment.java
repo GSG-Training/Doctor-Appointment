@@ -1,4 +1,4 @@
-package com.tamer.raed.doctorappointment.patient.ui.patientDashboard;
+package com.tamer.raed.doctorappointment.patient.ui.fragments;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -23,7 +23,7 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.tamer.raed.doctorappointment.R;
-import com.tamer.raed.doctorappointment.patient.ui.UpdateProfileDialogFragment;
+import com.tamer.raed.doctorappointment.patient.ui.activities.UpdateProfileDialogFragment;
 
 public class PatientMyProfileFragment extends Fragment {
     private ImageView imageView;

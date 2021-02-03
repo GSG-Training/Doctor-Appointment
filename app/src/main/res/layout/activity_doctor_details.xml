@@ -8,7 +8,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".patient.ui.DoctorDetailsActivity">
+        tools:context=".patient.ui.activities.DoctorDetailsActivity">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/patient_doctor_details_toolbar"

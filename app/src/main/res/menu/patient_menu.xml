@@ -12,9 +12,13 @@
             android:icon="@drawable/ic_account"
             android:title="@string/my_profile" />
         <item
-            android:id="@+id/patient_menu_my_appointment"
+            android:id="@+id/patient_menu_upcoming_appointments"
             android:icon="@drawable/ic_access_time"
-            android:title="@string/my_appointments" />
+            android:title="@string/upcoming_appointments" />
+        <item
+            android:id="@+id/patient_menu_recent_appointments"
+            android:icon="@drawable/ic_history"
+            android:title="@string/recent_appointments" />
     </group>
     <group
         android:id="@+id/group2"

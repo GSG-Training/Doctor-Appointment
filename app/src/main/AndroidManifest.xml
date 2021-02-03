@@ -9,11 +9,12 @@
         android:roundIcon="@drawable/ic_health_insurance"
         android:supportsRtl="true"
         android:theme="@style/Theme.DoctorAppointment">
-        <activity android:name=".patient.ui.BookAppointmentActivity" />
-        <activity android:name=".patient.ui.DoctorDetailsActivity" />
-        <activity android:name=".patient.ui.patientDashboard.SearchActivity" />
-        <activity android:name=".patient.ui.PatientSignUpActivity" />
-        <activity android:name=".patient.ui.patientDashboard.PatientDashboardActivity" />
+        <activity android:name=".patient.ui.activities.SettingsActivity"></activity>
+        <activity android:name=".patient.ui.activities.BookAppointmentActivity" />
+        <activity android:name=".patient.ui.activities.DoctorDetailsActivity" />
+        <activity android:name=".patient.ui.activities.SearchActivity" />
+        <activity android:name=".patient.ui.activities.PatientSignUpActivity" />
+        <activity android:name=".patient.ui.activities.PatientDashboardActivity" />
         <activity android:name=".doctor.ui.DoctorSignUpActivity" />
         <activity
             android:name=".WelcomeActivity"

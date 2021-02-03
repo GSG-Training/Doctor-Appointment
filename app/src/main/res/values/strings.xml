@@ -64,7 +64,7 @@
     <string name="four">4</string>
     <string name="three">3</string>
     <string name="two">2</string>
-    <string name="concat_us">Conact Us</string>
+    <string name="concat_us">Concat Us</string>
     <string name="account_type_error">You must select the account type!</string>
     <string name="search">Search</string>
     <string name="find_doctor">Let\'s Find Your \nDoctor</string>
@@ -90,5 +90,14 @@
     <string name="username_error">Username must be entered</string>
     <string name="phone_error">Phone must be entered</string>
     <string name="password_error">Password must be entered</string>
+    <string name="upcoming_appointments">Upcoming Appointments</string>
+    <string name="recent_appointments">Recent Appointment</string>
+    <string name="delete">Delete</string>
+    <string name="enter_email">Enter Your Email</string>
+    <string name="enter_content">Enter The Content</string>
+    <string name="send_email">Send Email</string>
+    <string name="key_night_mode">night_mode</string>
+    <string name="summary_night_mode">Change the app theme</string>
+    <string name="night_mode">Night Theme</string>
 
 </resources>

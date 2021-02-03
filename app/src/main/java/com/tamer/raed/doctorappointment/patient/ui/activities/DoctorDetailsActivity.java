@@ -1,5 +1,6 @@
-package com.tamer.raed.doctorappointment.patient.ui;
+package com.tamer.raed.doctorappointment.patient.ui.activities;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -22,6 +23,7 @@ public class DoctorDetailsActivity extends AppCompatActivity {
             tv_rating, tv_experience, tv_address, tv_phone, tv_biography;
     private Doctor doctor;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,11 +41,11 @@ public class DoctorDetailsActivity extends AppCompatActivity {
         if (intent != null && intent.hasExtra("Doctor")) {
             doctor = intent.getParcelableExtra("Doctor");
             tv_username.setText(doctor.getUsername());
-            tv_specialization.setText(doctor.getCategory().getName());
+            tv_specialization.setText(doctor.getSpecialization());
             tv_number_of_patient.setText(String.valueOf(doctor.getNumberOfPatient()));
             tv_rating.setText(String.valueOf(doctor.getRating()));
             tv_experience.setText(String.valueOf(doctor.getExperience()));
-            tv_address.setText(doctor.getAddress().getCountry());
+            tv_address.setText(doctor.getCountry() + "-" + doctor.getCity() + "-" + doctor.getStreet());
             tv_phone.setText(doctor.getPhone());
             tv_biography.setText(doctor.getBiography());
         }
@@ -60,7 +62,6 @@ public class DoctorDetailsActivity extends AppCompatActivity {
         tv_address = findViewById(R.id.patient_doctor_details_tv_address);
         tv_phone = findViewById(R.id.patient_doctor_details_tv_phone);
         tv_biography = findViewById(R.id.patient_doctor_details_tv_biography);
-//        btn_book_appointment = findViewById(R.id.patient_doctor_details_btn_book_appointment);
     }
 
     public void bookAnAppointment(View view) {

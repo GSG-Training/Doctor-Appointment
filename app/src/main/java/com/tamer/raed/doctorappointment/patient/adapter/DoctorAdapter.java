@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.tamer.raed.doctorappointment.R;
 import com.tamer.raed.doctorappointment.model.Doctor;
+import com.tamer.raed.doctorappointment.patient.interfaces.OnDoctorItemClickListener;
 
 import java.util.List;
 
@@ -64,9 +65,10 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.DoctorView
                 imageView.setImageResource(doctor.getImage());
             }
             tv_username.setText(doctor.getUsername());
-            tv_category.setText(doctor.getCategory().getName());
+            tv_category.setText(doctor.getSpecialization());
             tv_rating.setText(String.valueOf(doctor.getRating()));
             itemView.setOnClickListener(view -> listener.onItemClick(doctor));
         }
     }
+
 }

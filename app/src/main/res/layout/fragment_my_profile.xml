@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/_8sdp"
-    tools:context=".patient.ui.patientDashboard.PatientMyProfileFragment">
+    tools:context=".patient.ui.fragments.PatientMyProfileFragment">
 
     <ImageView
         android:id="@+id/patient_my_profile_image_view"
