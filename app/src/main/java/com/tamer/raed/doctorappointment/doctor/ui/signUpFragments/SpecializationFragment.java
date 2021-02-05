@@ -66,14 +66,13 @@ public class SpecializationFragment extends Fragment {
                                 AddressFragment addressFragment = new AddressFragment();
                                 ((DoctorSignUpActivity) getActivity()).doneStep(text_view_address, view2, tv_address, addressFragment);
                             } else {
-                                experience_et.setError("experience must be enter!!");
+                                biography_et.setError(getString(R.string.biography_error));
                             }
-
                         } else {
-                            biography_et.setError("biography must be enter!!");
+                            experience_et.setError(getString(R.string.experience_error));
                         }
                     } else {
-                        specialization_et.setError("specialization must be enter!!");
+                        specialization_et.setError(getString(R.string.specialization_error));
                     }
                 });
             }

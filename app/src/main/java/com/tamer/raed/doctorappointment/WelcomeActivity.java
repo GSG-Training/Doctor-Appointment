@@ -57,7 +57,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
     private void initViews() {
         btnSignUp = findViewById(R.id.welcome_btn_sign_up);
-        tvLogin = findViewById(R.id.welcome_tv);
+        tvLogin = findViewById(R.id.welcome_tv_login);
         spinner = findViewById(R.id.account_type_spinner);
     }
 }

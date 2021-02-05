@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_selected="true">
+        <layer-list>
+            <item>
+                <shape>
+                    <solid android:color="@color/purple_700" />
+                    <stroke android:width="@dimen/_1sdp" android:color="#FFFFFF" />
+                </shape>
+            </item>
+            <item android:drawable="@drawable/ic_spinner" android:end="@dimen/_8sdp" android:gravity="end" />
+        </layer-list>
+    </item>
+    <item>
+        <layer-list>
+            <item>
+                <shape>
+                    <solid android:color="@color/purple_700" />
+                    <stroke android:width="@dimen/_1sdp" android:color="#FFFFFF" />
+                </shape>
+            </item>
+            <item android:drawable="@drawable/ic_spinner" android:end="@dimen/_8sdp" android:gravity="end" />
+        </layer-list>
+    </item>
+</selector>

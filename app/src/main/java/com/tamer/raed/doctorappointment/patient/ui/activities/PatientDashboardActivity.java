@@ -14,6 +14,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -114,15 +115,18 @@ public class PatientDashboardActivity extends AppCompatActivity implements Navig
                 break;
             case R.id.patient_menu_settings:
                 startActivity(new Intent(PatientDashboardActivity.this, SettingsActivity.class));
-//                SettingsFragment settingsFragment = new SettingsFragment();
-//                moveFragment(settingsFragment);
-//                toolbar.setTitle(getString(R.string.settings));
-//                toolbar.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-//                drawerLayout.closeDrawers();
                 break;
-
         }
         return false;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawers();
+        } else {
+            super.onBackPressed();
+        }
     }
 
     public void moveFragment(Fragment fragment) {

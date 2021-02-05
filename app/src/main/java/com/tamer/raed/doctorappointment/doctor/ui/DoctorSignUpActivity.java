@@ -3,12 +3,13 @@ package com.tamer.raed.doctorappointment.doctor.ui;
 import android.content.Intent;
 import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
@@ -50,11 +51,17 @@ public class DoctorSignUpActivity extends AppCompatActivity {
         toolbar.setNavigationIcon(ContextCompat.getDrawable(this, R.drawable.ic_arrow));
         toolbar.setNavigationOnClickListener(view -> onBackPressed());
         initFragments();
-        moveFragment(personalDataFragment);
+        if (savedInstanceState != null) {
+            position = savedInstanceState.getInt("position");
+            Log.d("dddd", "not null" + position);
+
+        } else {
+            Log.d("dddd", "null" + position);
+            moveFragment(personalDataFragment);
+        }
 
         back.setOnClickListener(view -> {
             position--;
-            Toast.makeText(this, position + " ", Toast.LENGTH_SHORT).show();
             switch (position) {
                 case 0:
                     notDoneStep(text_view_specialization, view1, tv_specialization, personalDataFragment);
@@ -113,7 +120,6 @@ public class DoctorSignUpActivity extends AppCompatActivity {
         textView.setTextColor(getResources().getColor(R.color.colorPrimary));
         moveFragment(fragment);
         position++;
-        Toast.makeText(this, position + " ", Toast.LENGTH_SHORT).show();
     }
 
     public void notDoneStep(TextView step, View view, TextView textView, Fragment fragment) {
@@ -125,8 +131,8 @@ public class DoctorSignUpActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        position = 0;
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("position", position);
     }
 }

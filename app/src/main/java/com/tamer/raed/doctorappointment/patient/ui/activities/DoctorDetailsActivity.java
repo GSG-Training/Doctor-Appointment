@@ -8,16 +8,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
-import com.google.android.material.appbar.MaterialToolbar;
 import com.tamer.raed.doctorappointment.R;
 import com.tamer.raed.doctorappointment.model.Doctor;
 
-import java.util.Objects;
-
 public class DoctorDetailsActivity extends AppCompatActivity {
-    private MaterialToolbar toolbar;
     private ImageView imageView;
     private TextView tv_username, tv_specialization, tv_number_of_patient,
             tv_rating, tv_experience, tv_address, tv_phone, tv_biography;
@@ -30,12 +25,6 @@ public class DoctorDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_doctor_details);
 
         initViews();
-
-        setSupportActionBar(toolbar);
-        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        toolbar.setNavigationIcon(ContextCompat.getDrawable(this, R.drawable.ic_arrow));
-        toolbar.setNavigationOnClickListener(view -> onBackPressed());
 
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra("Doctor")) {
@@ -52,7 +41,6 @@ public class DoctorDetailsActivity extends AppCompatActivity {
     }
 
     private void initViews() {
-        toolbar = findViewById(R.id.patient_doctor_details_toolbar);
         imageView = findViewById(R.id.patient_doctor_details_image_view);
         tv_username = findViewById(R.id.patient_doctor_details_tv_username);
         tv_specialization = findViewById(R.id.patient_doctor_details_tv_specialization);
@@ -68,5 +56,9 @@ public class DoctorDetailsActivity extends AppCompatActivity {
         Intent intent = new Intent(DoctorDetailsActivity.this, BookAppointmentActivity.class);
         intent.putExtra("Doctor", doctor);
         startActivity(intent);
+    }
+
+    public void backToHomepage(View view) {
+        onBackPressed();
     }
 }

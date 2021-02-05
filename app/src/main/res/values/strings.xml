@@ -81,7 +81,7 @@
     <string name="patient">Patient</string>
     <string name="location">Location</string>
     <string name="book_appointment">Book an Appointment</string>
-    <string name="availability">Availability</string>
+    <string name="availability">Availability:</string>
     <string name="update_profile">Update My Profile</string>
     <string name="edit">Edit</string>
     <string name="update_profile_dialog">Are you sure to update your profile?</string>
@@ -99,5 +99,25 @@
     <string name="key_night_mode">night_mode</string>
     <string name="summary_night_mode">Change the app theme</string>
     <string name="night_mode">Night Theme</string>
+    <string name="email">Email</string>
+    <string name="email_error">Email must be entered</string>
+    <string name="country_error">country must be enter!!</string>
+    <string name="city_error">city must be enter!!</string>
+    <string name="street_error">street must be enter!!</string>
+    <string name="experience_error">experience must be enter!!</string>
+    <string name="biography_error">biography must be enter!!</string>
+    <string name="specialization_error">specialization must be enter!!</string>
+    <string name="start_day_error">You must select start day</string>
+    <string name="end_day_error">You must select end day</string>
+    <string name="work_day_error">The start day must be different from the end day</string>
+    <string name="start_hour_error">You must choose start hour</string>
+    <string name="end_hour_error">You must choose end hour</string>
+    <string name="time_case_error">You must enter time for each case</string>
+    <string name="days">Days:</string>
+    <string name="to">to</string>
+    <string name="time">Times:</string>
+    <string name="select_date">Select Date:</string>
+    <string name="select_day">Select Day:</string>
+    <string name="confirm_appointment">Confirm appointment</string>
 
 </resources>

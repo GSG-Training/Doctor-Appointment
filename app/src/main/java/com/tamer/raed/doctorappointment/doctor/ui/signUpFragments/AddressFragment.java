@@ -1,6 +1,7 @@
 package com.tamer.raed.doctorappointment.doctor.ui.signUpFragments;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,6 @@ import com.tamer.raed.doctorappointment.doctor.ui.DoctorSignUpActivity;
 import com.tamer.raed.doctorappointment.model.SharedPrefs;
 
 import java.util.HashMap;
-import java.util.Objects;
 
 public class AddressFragment extends Fragment {
     TextInputEditText country_et, city_et, street_et;
@@ -52,11 +52,11 @@ public class AddressFragment extends Fragment {
             next = getActivity().findViewById(R.id.sign_up_btn_next);
             if (next != null) {
                 next.setOnClickListener(view -> {
-                    if (!Objects.requireNonNull(country_et.getText()).toString().isEmpty()) {
+                    if (!TextUtils.isEmpty(country_et.getText().toString())) {
                         country = country_et.getText().toString();
-                        if (!Objects.requireNonNull(city_et.getText()).toString().isEmpty()) {
+                        if (!TextUtils.isEmpty(city_et.getText().toString())) {
                             city = city_et.getText().toString();
-                            if (!Objects.requireNonNull(street_et.getText()).toString().isEmpty()) {
+                            if (!TextUtils.isEmpty(street_et.getText().toString())) {
                                 street = street_et.getText().toString();
                                 SharedPrefs.setAddressData(getContext(), country, city, street);
                                 TextView text_view_work_hour = getActivity().findViewById(R.id.sign_up_text_view_work_hour);
@@ -65,13 +65,13 @@ public class AddressFragment extends Fragment {
                                 WorkHoursFragment workHoursFragment = new WorkHoursFragment();
                                 ((DoctorSignUpActivity) getActivity()).doneStep(text_view_work_hour, view3, tv_work_hour, workHoursFragment);
                             } else {
-                                street_et.setError("street must be enter!!");
+                                street_et.setError(getString(R.string.street_error));
                             }
                         } else {
-                            city_et.setError("city must be enter!!");
+                            city_et.setError(getString(R.string.city_error));
                         }
                     } else {
-                        country_et.setError("country must be enter!!");
+                        country_et.setError(getString(R.string.country_error));
                     }
                 });
             }
