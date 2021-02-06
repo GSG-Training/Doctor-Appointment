@@ -17,18 +17,22 @@ If the user select account type doctor this screen will appear
 ![6](https://user-images.githubusercontent.com/47909387/107109939-8bf7ad00-684c-11eb-8fd5-107067a0bd49.jpg)
 # Enter working hour data
 ![7](https://user-images.githubusercontent.com/47909387/107109940-8d28da00-684c-11eb-9f43-2f8c595ee0e2.jpg)
+  
 If the account type patient this screen will appear  
 ![8](https://user-images.githubusercontent.com/47909387/107109944-9154f780-684c-11eb-9b7e-bcb3180ab017.jpg)
 # Patient menu
-![9](https://user-images.githubusercontent.com/47909387/107109945-92862480-684c-11eb-8319-55158291284d.jpg)  
+![9](https://user-images.githubusercontent.com/47909387/107109945-92862480-684c-11eb-8319-55158291284d.jpg)
+    
 When the patient login this screen will appear
 # Homepage
 ![10](https://user-images.githubusercontent.com/47909387/107109946-931ebb00-684c-11eb-8039-4e6674896324.jpg)
+  
 When the patient click on the doctor item
 # Doctor Details
 ![11](https://user-images.githubusercontent.com/47909387/107109947-94e87e80-684c-11eb-9a10-0d6731346e4a.jpg)
 # Book an appointment
 ![12](https://user-images.githubusercontent.com/47909387/107109948-9619ab80-684c-11eb-943a-986a81cee5f4.jpg)
+  
 when click confirm the order go to doctor to accept it
 # Patient profile   
 ![13](https://user-images.githubusercontent.com/47909387/107109951-97e36f00-684c-11eb-8c61-29b60c83c721.jpg)
