@@ -7,6 +7,7 @@ It is an Android application through which the user can request an appointment w
 # Signup Screen 
 The user select the account type (Doctor or patient)
 ![3](https://user-images.githubusercontent.com/47909387/107109933-8732f900-684c-11eb-82f2-b6981990c1d9.jpg)
+  
 If the user select account type doctor this screen will appear 
 # Enter personal data 
 ![4](https://user-images.githubusercontent.com/47909387/107109935-8ac68000-684c-11eb-8b05-ca90ef83dbbf.jpg)
