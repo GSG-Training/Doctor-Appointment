@@ -233,19 +233,27 @@
                     app:layout_constraintStart_toStartOf="@+id/imageView5"
                     app:layout_constraintTop_toBottomOf="@+id/imageView5" />
 
-                <TextView
-                    android:id="@+id/patient_doctor_details_tv_biography"
+                <androidx.core.widget.NestedScrollView
+                    android:id="@+id/nestedScrollView"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/_80sdp"
                     android:layout_marginTop="@dimen/_8sdp"
-                    android:textSize="@dimen/_12sdp"
                     app:layout_constraintEnd_toEndOf="@+id/card3"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="@+id/textView12"
-                    app:layout_constraintTop_toBottomOf="@+id/textView12"
-                    tools:text="a;uiwrghkwjrgnaw;rjkgnrbgibawrigbawruiguiawrguiarb
+                    app:layout_constraintTop_toBottomOf="@+id/textView12">
+
+                    <TextView
+                        android:id="@+id/patient_doctor_details_tv_biography"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/_50sdp"
+                        android:textSize="@dimen/_12sdp"
+                        tools:text="a;uiwrghkwjrgnaw;rjkgnrbgibawrigbawruiguiawrguiarb
                     gauwrbguiawrguiawrguawrbgawruibguiargbuiarwguiarbguiabrgbauiwrbgu
                     iawrguibargauirwbgauiwrguiargauiwrguiwrguiwrguiwargaw;irbg;awirb
                     guiawrbguiwrbguiarbguiergubaeruibgaeruibgerguierguirhguirguierghur" />
+
+                </androidx.core.widget.NestedScrollView>
 
                 <Button
                     android:id="@+id/patient_doctor_details_btn_book_appointment"
@@ -254,9 +262,9 @@
                     android:layout_marginTop="8dp"
                     android:onClick="bookAnAppointment"
                     android:text="@string/book_appointment"
-                    app:layout_constraintEnd_toEndOf="@+id/patient_doctor_details_tv_biography"
-                    app:layout_constraintStart_toStartOf="@+id/patient_doctor_details_tv_biography"
-                    app:layout_constraintTop_toBottomOf="@+id/patient_doctor_details_tv_biography" />
+                    app:layout_constraintEnd_toEndOf="@+id/nestedScrollView"
+                    app:layout_constraintStart_toStartOf="@+id/nestedScrollView"
+                    app:layout_constraintTop_toBottomOf="@+id/nestedScrollView" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
     </androidx.constraintlayout.widget.ConstraintLayout>

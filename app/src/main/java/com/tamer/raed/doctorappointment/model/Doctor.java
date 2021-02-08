@@ -32,9 +32,8 @@ public class Doctor implements Parcelable {
     private int numberOfPatient;
     private int experience;
     private String biography;
-    private double timeForEachCase;
 
-    public Doctor(int id, int image, String username, String specialization, String phone, String gender, String country, String city, String street, String startDayWork, String endDayWork, String startHourWork, String endHourWork, double timeForEachCase, int experience, String biography) {
+    public Doctor(int id, int image, String username, String specialization, String phone, String gender, String country, String city, String street, String startDayWork, String endDayWork, String startHourWork, String endHourWork, int experience, String biography) {
         this.id = id;
         this.image = image;
         this.username = username;
@@ -48,7 +47,6 @@ public class Doctor implements Parcelable {
         this.endDayWork = endDayWork;
         this.startHourWork = startHourWork;
         this.endHourWork = endHourWork;
-        this.timeForEachCase = timeForEachCase;
         this.experience = experience;
         this.biography = biography;
     }
@@ -68,7 +66,6 @@ public class Doctor implements Parcelable {
         endDayWork = in.readString();
         startHourWork = in.readString();
         endHourWork = in.readString();
-        timeForEachCase = in.readDouble();
         numberOfPatient = in.readInt();
         experience = in.readInt();
         biography = in.readString();
@@ -144,14 +141,6 @@ public class Doctor implements Parcelable {
 
     public void setEndHourWork(String endHourWork) {
         this.endHourWork = endHourWork;
-    }
-
-    public double getTimeForEachCase() {
-        return timeForEachCase;
-    }
-
-    public void setTimeForEachCase(double timeForEachCase) {
-        this.timeForEachCase = timeForEachCase;
     }
 
     public String getBiography() {
@@ -241,7 +230,6 @@ public class Doctor implements Parcelable {
         parcel.writeString(endDayWork);
         parcel.writeString(startHourWork);
         parcel.writeString(endHourWork);
-        parcel.writeDouble(timeForEachCase);
         parcel.writeInt(numberOfPatient);
         parcel.writeInt(experience);
         parcel.writeString(biography);
