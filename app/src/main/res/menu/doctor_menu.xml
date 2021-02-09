@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group
+        android:id="@+id/doctor_group1"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/doctor_menu_upcoming_appointments"
+            android:icon="@drawable/ic_access_time"
+            android:title="@string/upcoming_appointments" />
+        <item
+            android:id="@+id/doctor_menu_recent_appointments"
+            android:icon="@drawable/ic_history"
+            android:title="@string/recent_appointments" />
+        <item
+            android:id="@+id/doctor_menu_orders"
+            android:icon="@drawable/ic_order"
+            android:title="@string/orders" />
+        <item
+            android:id="@+id/doctor_menu_my_profile"
+            android:icon="@drawable/ic_account"
+            android:title="@string/my_profile" />
+    </group>
+    <group
+        android:id="@+id/doctor_group2"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/doctor_menu_settings"
+            android:icon="@drawable/ic_settings"
+            android:title="@string/settings" />
+        <item
+            android:id="@+id/doctor_menu_concat_us"
+            android:icon="@drawable/ic_email"
+            android:title="@string/concat_us" />
+        <item
+            android:id="@+id/doctor_menu_logout"
+            android:icon="@drawable/ic_logout"
+            android:title="@string/logout" />
+    </group>
+</menu>
