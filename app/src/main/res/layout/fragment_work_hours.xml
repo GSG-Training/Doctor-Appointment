@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".doctor.ui.signUpFragments.WorkHoursFragment">
+    tools:context=".doctor.ui.fragments.signUpFragments.WorkHoursFragment">
 
     <View
         android:id="@+id/view"

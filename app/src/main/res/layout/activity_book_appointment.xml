@@ -22,6 +22,8 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/patient_book_appointment_image_button">
@@ -237,7 +239,9 @@
                         android:layout_width="0dp"
                         android:layout_height="?actionBarSize"
                         android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_marginBottom="@dimen/_16sdp"
                         android:text="@string/confirm_appointment"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="@+id/patient_book_appointment_hours_rv"
                         app:layout_constraintStart_toStartOf="@+id/patient_book_appointment_hours_rv"
                         app:layout_constraintTop_toBottomOf="@+id/patient_book_appointment_hours_rv" />

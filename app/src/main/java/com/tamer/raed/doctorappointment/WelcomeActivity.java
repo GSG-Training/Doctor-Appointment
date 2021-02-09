@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.tamer.raed.doctorappointment.doctor.ui.DoctorSignUpActivity;
+import com.tamer.raed.doctorappointment.doctor.ui.activities.DoctorSignUpActivity;
 import com.tamer.raed.doctorappointment.patient.ui.activities.PatientSignUpActivity;
 
 

@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.tamer.raed.doctorappointment.doctor.ui.activities.DoctorDashboardActivity;
 import com.tamer.raed.doctorappointment.patient.ui.activities.PatientDashboardActivity;
 
 public class LoginActivity extends AppCompatActivity {
@@ -22,7 +23,7 @@ public class LoginActivity extends AppCompatActivity {
 
         tvSignUp.setOnClickListener(view -> startActivity(new Intent(LoginActivity.this, WelcomeActivity.class)));
         login_btn.setOnClickListener(view -> {
-            startActivity(new Intent(LoginActivity.this, PatientDashboardActivity.class));
+            startActivity(new Intent(LoginActivity.this, DoctorDashboardActivity.class));
             finish();
         });
     }
