@@ -9,7 +9,7 @@
         android:roundIcon="@drawable/ic_health_insurance"
         android:supportsRtl="true"
         android:theme="@style/Theme.DoctorAppointment">
-        <activity android:name=".doctor.ui.activities.DoctorDashboardActivity"></activity>
+        <activity android:name=".doctor.ui.activities.DoctorDashboardActivity" />
         <activity android:name=".patient.ui.activities.SettingsActivity" />
         <activity android:name=".patient.ui.activities.BookAppointmentActivity" />
         <activity android:name=".patient.ui.activities.DoctorDetailsActivity" />
@@ -21,7 +21,9 @@
             android:name=".WelcomeActivity"
             android:theme="@style/welcome" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".SplashActivity">
+        <activity
+            android:name=".SplashActivity"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
