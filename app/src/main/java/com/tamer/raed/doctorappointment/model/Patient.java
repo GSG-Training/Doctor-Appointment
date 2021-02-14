@@ -1,25 +1,30 @@
 package com.tamer.raed.doctorappointment.model;
 
 public class Patient {
-    private int id;
+    private String id;
     private String name;
     private String phone;
     private String gender;
-    private int image;
+    private String image;
+    private String email;
 
-    public Patient(int id, String name, String phone, String gender, int image) {
+    public Patient(String id, String name, String phone, String gender, String image, String email) {
         this.id = id;
         this.name = name;
         this.phone = phone;
         this.gender = gender;
         this.image = image;
+        this.email = email;
     }
 
-    public int getId() {
+    public Patient() {
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -47,11 +52,19 @@ public class Patient {
         this.gender = gender;
     }
 
-    public int getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(int image) {
+    public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

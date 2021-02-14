@@ -121,5 +121,10 @@
     <string name="confirm_appointment">Confirm appointment</string>
     <string name="orders">Orders</string>
     <string name="accept">Accept</string>
+    <string name="login_error">Login failed! Please try again later</string>
+    <string name="success_sign_up">Successful sign up, enjoy</string>
+    <string name="error_sign_up">Error in sign up, Try again</string>
+    <string name="doctor">Doctor</string>
+    <string name="choose_account_type2">Choose Account Type</string>
 
 </resources>

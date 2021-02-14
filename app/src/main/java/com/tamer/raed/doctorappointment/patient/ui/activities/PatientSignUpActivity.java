@@ -4,23 +4,36 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.tamer.raed.doctorappointment.R;
+import com.tamer.raed.doctorappointment.model.Patient;
 
 import java.util.Objects;
 
 public class PatientSignUpActivity extends AppCompatActivity {
     private Toolbar toolbar;
-    String username, email, phone, password, gender;
+    private String username, email, phone, password, gender;
     private TextInputEditText et_username, et_phone, et_password, et_email;
     private RadioButton rb_male, rb_female;
+    private FirebaseFirestore db;
+    private FirebaseAuth mAuth;
+    private ProgressBar progressBar;
+    private Button signUpBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +55,8 @@ public class PatientSignUpActivity extends AppCompatActivity {
         et_email = findViewById(R.id.patient_sign_up_et_email);
         rb_male = findViewById(R.id.patient_rb_male);
         rb_female = findViewById(R.id.patient_rb_female);
+        progressBar = findViewById(R.id.sign_up_progressBar);
+        signUpBtn = findViewById(R.id.patient_sign_up_btn);
     }
 
     public void signUp(View view) {
@@ -54,9 +69,8 @@ public class PatientSignUpActivity extends AppCompatActivity {
                     if (!TextUtils.isEmpty(et_password.getText().toString())) {
                         password = et_password.getText().toString();
                         getGender();
-                        Toast.makeText(this, "Gender: " + gender, Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(PatientSignUpActivity.this, PatientDashboardActivity.class));
-                        finish();
+                        signUpFirebase();
+
                     } else {
                         et_password.setError(getString(R.string.password_error));
                     }
@@ -69,6 +83,42 @@ public class PatientSignUpActivity extends AppCompatActivity {
         } else {
             et_username.setError(getString(R.string.username_error));
         }
+    }
+
+    private void signUpFirebase() {
+        signUpBtn.setVisibility(View.INVISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
+        mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    String id = mAuth.getCurrentUser().getUid();
+                    Patient patient = new Patient(id, username, email, gender, "", email);
+                    db = FirebaseFirestore.getInstance();
+                    db.collection("Patients").document(mAuth.getCurrentUser().getUid().toString()).set(patient).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(PatientSignUpActivity.this, getString(R.string.success_sign_up), Toast.LENGTH_SHORT).show();
+
+                            } else {
+                                Toast.makeText(PatientSignUpActivity.this, getString(R.string.error_sign_up), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                    progressBar.setVisibility(View.GONE);
+                    signUpBtn.setVisibility(View.VISIBLE);
+                    startActivity(new Intent(PatientSignUpActivity.this, PatientDashboardActivity.class));
+                    finish();
+                } else {
+                    progressBar.setVisibility(View.GONE);
+                    signUpBtn.setVisibility(View.VISIBLE);
+                    Toast.makeText(PatientSignUpActivity.this, getString(R.string.error_sign_up), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     private void getGender() {

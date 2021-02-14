@@ -3,6 +3,7 @@ package com.tamer.raed.doctorappointment.patient.ui.fragments;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,8 +22,16 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.tamer.raed.doctorappointment.R;
+import com.tamer.raed.doctorappointment.model.Patient;
 import com.tamer.raed.doctorappointment.patient.ui.activities.UpdateProfileDialogFragment;
 
 public class PatientMyProfileFragment extends Fragment {
@@ -34,6 +43,8 @@ public class PatientMyProfileFragment extends Fragment {
     private TextView tv_gender;
     private Button btn_update_profile;
     private String gender;
+    private FirebaseFirestore db;
+    private FirebaseUser firebaseUser;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,7 +61,7 @@ public class PatientMyProfileFragment extends Fragment {
         et_password = view.findViewById(R.id.patient_my_profile_et_password);
         tv_gender = view.findViewById(R.id.patient_my_profile_tv_gender);
         btn_update_profile = view.findViewById(R.id.patient_my_profile_btn_update_profile);
-
+        fillDataFromFirebase();
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -90,8 +101,8 @@ public class PatientMyProfileFragment extends Fragment {
                 Toast.makeText(getContext(), "Cancel", Toast.LENGTH_SHORT).show();
 
         });
-        if (getFragmentManager() != null) {
-            newFragment.show(getFragmentManager(), "dialog");
+        if (getParentFragmentManager() != null) {
+            newFragment.show(getParentFragmentManager(), "dialog");
         }
     }
 
@@ -132,5 +143,32 @@ public class PatientMyProfileFragment extends Fragment {
             tv_gender.setVisibility(View.GONE);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void fillDataFromFirebase() {
+        db = FirebaseFirestore.getInstance();
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        DocumentReference docRef = db.collection("Patients").document(firebaseUser.getUid());
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+
+                    if (document.exists()) {
+                        Patient patient = document.toObject(Patient.class);
+                        if (patient != null) {
+                            et_username.setText(patient.getName());
+                            et_phone.setText(patient.getPhone());
+                            tv_gender.setText(patient.getGender());
+                        }
+                    } else {
+                        Log.d("dddd", "No such document");
+                    }
+                } else {
+                    Log.d("dddd", "get failed with ", task.getException());
+                }
+            }
+        });
     }
 }
