@@ -29,6 +29,15 @@
         <item>Patient</item>
     </string-array>
 
+    <string-array name="specializations">
+        <item>Select Your Specializations</item>
+        <item>Tooth</item>
+        <item>Heart</item>
+        <item>Eyes</item>
+        <item>Bones</item>
+        <item>Brain</item>
+    </string-array>
+
     <string-array name="days">
         <item>Select Day</item>
         <item>Saturday</item>
@@ -126,5 +135,11 @@
     <string name="error_sign_up">Error in sign up, Try again</string>
     <string name="doctor">Doctor</string>
     <string name="choose_account_type2">Choose Account Type</string>
+    <string name="permissions_error">Permission denied…!</string>
+    <string name="image_error">No Image Found!</string>
+    <string name="general_error">Something is wrong try later</string>
+    <string name="eyes">eyes</string>
+    <string name="bones">bones</string>
+    <string name="brain">Brain</string>
 
 </resources>

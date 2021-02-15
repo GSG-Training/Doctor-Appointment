@@ -15,7 +15,6 @@ public class Doctor implements Parcelable {
             return new Doctor[size];
         }
     };
-    private int image;
     private String username;
     private int id;
     private float rating;
@@ -36,7 +35,6 @@ public class Doctor implements Parcelable {
 
     public Doctor(int id, int image, String username, String specialization, String phone, String gender, String country, String city, String street, String startDayWork, String endDayWork, String startHourWork, String endHourWork, double timeForEachCase, int experience, String biography) {
         this.id = id;
-        this.image = image;
         this.username = username;
         this.specialization = specialization;
         this.phone = phone;
@@ -55,7 +53,6 @@ public class Doctor implements Parcelable {
 
     protected Doctor(Parcel in) {
         id = in.readInt();
-        image = in.readInt();
         username = in.readString();
         specialization = in.readString();
         rating = in.readFloat();
@@ -162,14 +159,6 @@ public class Doctor implements Parcelable {
         this.biography = biography;
     }
 
-    public int getImage() {
-        return image;
-    }
-
-    public void setImage(int image) {
-        this.image = image;
-    }
-
     public String getUsername() {
         return username;
     }
@@ -228,7 +217,6 @@ public class Doctor implements Parcelable {
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeInt(id);
-        parcel.writeInt(image);
         parcel.writeString(username);
         parcel.writeString(specialization);
         parcel.writeFloat(rating);

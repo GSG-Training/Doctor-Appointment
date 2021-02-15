@@ -6,7 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -19,18 +21,18 @@ import com.tamer.raed.doctorappointment.model.SharedPrefs;
 import java.util.HashMap;
 
 public class SpecializationFragment extends Fragment {
-    TextInputEditText specialization_et, biography_et, experience_et;
+    TextInputEditText biography_et, experience_et;
     Button next;
+    private Spinner specializationSpinner;
     String specialization, biography, experience;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_specialization, container, false);
-        specialization_et = view.findViewById(R.id.specialization_et);
         biography_et = view.findViewById(R.id.biography_et);
         experience_et = view.findViewById(R.id.experience_et);
-
+        specializationSpinner = view.findViewById(R.id.specialization_spinner);
         HashMap<String, String> hashMap = SharedPrefs.getSpecializationData(getContext());
         if (!hashMap.isEmpty()) {
             biography = hashMap.get(SharedPrefs.BIOGRAPHY_KEY);
@@ -39,7 +41,6 @@ public class SpecializationFragment extends Fragment {
             if (biography != null && experience != null && specialization != null) {
                 experience_et.setText(experience);
                 biography_et.setText(biography);
-                specialization_et.setText(specialization);
             }
         }
         return view;
@@ -53,8 +54,9 @@ public class SpecializationFragment extends Fragment {
             next = getActivity().findViewById(R.id.sign_up_btn_next);
             if (next != null) {
                 next.setOnClickListener(view -> {
-                    if (!TextUtils.isEmpty(specialization_et.getText().toString())) {
-                        specialization = specialization_et.getText().toString();
+                    if (specializationSpinner.getSelectedItemPosition() > 0) {
+                        specialization = specializationSpinner.getSelectedItem().toString();
+                        ;
                         if (!TextUtils.isEmpty(experience_et.getText().toString())) {
                             experience = experience_et.getText().toString();
                             if (!TextUtils.isEmpty(biography_et.getText().toString())) {
@@ -72,7 +74,7 @@ public class SpecializationFragment extends Fragment {
                             experience_et.setError(getString(R.string.experience_error));
                         }
                     } else {
-                        specialization_et.setError(getString(R.string.specialization_error));
+                        Toast.makeText(getContext(), getString(R.string.specialization_error), Toast.LENGTH_SHORT).show();
                     }
                 });
             }

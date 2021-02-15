@@ -5,15 +5,13 @@ public class Patient {
     private String name;
     private String phone;
     private String gender;
-    private String image;
     private String email;
 
-    public Patient(String id, String name, String phone, String gender, String image, String email) {
+    public Patient(String id, String name, String phone, String gender, String email) {
         this.id = id;
         this.name = name;
         this.phone = phone;
         this.gender = gender;
-        this.image = image;
         this.email = email;
     }
 
@@ -50,14 +48,6 @@ public class Patient {
 
     public void setGender(String gender) {
         this.gender = gender;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 
     public String getEmail() {

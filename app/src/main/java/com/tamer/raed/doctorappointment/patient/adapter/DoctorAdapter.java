@@ -59,11 +59,7 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.DoctorView
         }
 
         private void bind(Doctor doctor) {
-            if (doctor.getImage() == 0) {
-                imageView.setImageResource(R.drawable.ic_user);
-            } else {
-                imageView.setImageResource(doctor.getImage());
-            }
+            imageView.setImageResource(R.drawable.ic_user_account);
             tv_username.setText(doctor.getUsername());
             tv_category.setText(doctor.getSpecialization());
             tv_rating.setText(String.valueOf(doctor.getRating()));

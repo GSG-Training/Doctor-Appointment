@@ -21,7 +21,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.tamer.raed.doctorappointment.doctor.ui.activities.DoctorDashboardActivity;
+import com.tamer.raed.doctorappointment.patient.ui.activities.PatientDashboardActivity;
 
 public class LoginActivity extends AppCompatActivity {
     private TextView tvSignUp;
@@ -106,11 +106,12 @@ public class LoginActivity extends AppCompatActivity {
 
                     progressBar.setVisibility(View.GONE);
                     login_btn.setVisibility(View.VISIBLE);
-                    startActivity(new Intent(LoginActivity.this, DoctorDashboardActivity.class));
+                    startActivity(new Intent(LoginActivity.this, PatientDashboardActivity.class));
                     finish();
                 } else {
                     Toast.makeText(getApplicationContext(), getString(R.string.login_error), Toast.LENGTH_LONG).show();
                     progressBar.setVisibility(View.GONE);
+                    login_btn.setVisibility(View.VISIBLE);
                 }
             }
         });

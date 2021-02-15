@@ -7,6 +7,9 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,9 +23,18 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.preference.PreferenceManager;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.tamer.raed.doctorappointment.LoginActivity;
 import com.tamer.raed.doctorappointment.R;
+import com.tamer.raed.doctorappointment.model.Patient;
 import com.tamer.raed.doctorappointment.patient.ui.fragments.ConcatUsFragment;
 import com.tamer.raed.doctorappointment.patient.ui.fragments.PatientHomepageFragment;
 import com.tamer.raed.doctorappointment.patient.ui.fragments.PatientMyProfileFragment;
@@ -33,10 +45,12 @@ import java.util.Objects;
 
 public class PatientDashboardActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private final int REQUEST_SETTINGS_CHANGE = 1;
-    Toolbar toolbar;
-    DrawerLayout drawerLayout;
-    NavigationView navigationView;
-    ActionBarDrawerToggle toggle;
+    private Toolbar toolbar;
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
+    private ImageView imageView;
+    private TextView tv_username;
+    private FirebaseUser firebaseUser;
 
     @SuppressLint("RestrictedApi")
     @Override
@@ -51,7 +65,7 @@ public class PatientDashboardActivity extends AppCompatActivity implements Navig
         Objects.requireNonNull(getSupportActionBar()).setDefaultDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawerOpen, R.string.drawerClose);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawerOpen, R.string.drawerClose);
         toggle.getDrawerArrowDrawable().setColor(Color.WHITE);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
@@ -61,6 +75,38 @@ public class PatientDashboardActivity extends AppCompatActivity implements Navig
         moveFragment(patientHomepageFragment);
         toolbar.setTitle(getString(R.string.homepage));
         readUserPreferences();
+        fillHeaderData();
+
+    }
+
+    private void fillHeaderData() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        DocumentReference docRef = db.collection("Patients").document(firebaseUser.getUid());
+        docRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                if (document.exists()) {
+                    Patient patient = document.toObject(Patient.class);
+                    if (patient != null) {
+                        tv_username.setText(patient.getName());
+                        getImageProfile();
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), getString(R.string.general_error), Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(getApplicationContext(), getString(R.string.general_error), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void getImageProfile() {
+        String userId = firebaseUser.getUid();
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+        storageReference.child("profileImages/" + userId).getDownloadUrl().addOnSuccessListener(uri -> Glide.with(getApplicationContext())
+                .load(uri)
+                .into(imageView)).addOnFailureListener(exception -> Toast.makeText(getApplicationContext(), getString(R.string.image_error), Toast.LENGTH_SHORT).show());
 
     }
 
@@ -68,6 +114,9 @@ public class PatientDashboardActivity extends AppCompatActivity implements Navig
         toolbar = findViewById(R.id.patient_dashboard_toolbar);
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigation_view);
+        View header = navigationView.getHeaderView(0);
+        imageView = header.findViewById(R.id.header_image_view);
+        tv_username = header.findViewById(R.id.tv_header_username);
     }
 
     @SuppressLint("NonConstantResourceId")

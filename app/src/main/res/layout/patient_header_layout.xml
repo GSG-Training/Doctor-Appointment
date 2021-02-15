@@ -7,16 +7,17 @@
     android:orientation="vertical">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/circleImageView2"
-        android:layout_width="@dimen/_100sdp"
-        android:layout_height="@dimen/_100sdp"
+        android:id="@+id/header_image_view"
+        android:layout_width="@dimen/_80sdp"
+        android:layout_height="@dimen/_80sdp"
         android:layout_marginStart="@dimen/_8sdp"
         android:layout_marginTop="@dimen/_8sdp"
-        android:src="@drawable/ic_account"
+        android:src="@drawable/ic_user_account"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/tv_header_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="@dimen/_8sdp"
@@ -24,7 +25,7 @@
         android:textColor="@color/white"
         android:textSize="@dimen/_16sdp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/circleImageView2"
-        app:layout_constraintStart_toStartOf="@+id/circleImageView2"
-        app:layout_constraintTop_toBottomOf="@+id/circleImageView2" />
+        app:layout_constraintEnd_toEndOf="@+id/header_image_view"
+        app:layout_constraintStart_toStartOf="@+id/header_image_view"
+        app:layout_constraintTop_toBottomOf="@+id/header_image_view" />
 </androidx.constraintlayout.widget.ConstraintLayout>

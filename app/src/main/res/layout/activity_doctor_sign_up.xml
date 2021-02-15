@@ -176,9 +176,9 @@
                 android:id="@+id/frameLayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
                 app:layout_constraintBottom_toTopOf="@+id/sign_up_btn_back"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.366"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

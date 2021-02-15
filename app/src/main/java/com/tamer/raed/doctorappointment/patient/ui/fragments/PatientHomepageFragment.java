@@ -84,11 +84,13 @@ public class PatientHomepageFragment extends Fragment {
         // Fill ArrayList
         categories.add(new Category(R.drawable.ic_tooth, getString(R.string.tooth), true));
         categories.add(new Category(R.drawable.ic_heart, getString(R.string.heart), false));
+        categories.add(new Category(R.drawable.ic_eye, getString(R.string.eyes), false));
+        categories.add(new Category(R.drawable.ic_bone, getString(R.string.bones), false));
+        categories.add(new Category(R.drawable.ic_brain, getString(R.string.brain), false));
     }
 
 
     private void fillListWorkingHours() {
-//        WorkingHour(String startDayWork, String endDayWork, String startHourWork, String endHourWork, double timeForEachCase)
         workingHours.add(new WorkingHour("Saturday", "Thursday", "9", "3", 2));
         workingHours.add(new WorkingHour("Sunday", "Thursday", "10", "4", 1.5));
         workingHours.add(new WorkingHour("Saturday", "Thursday", "8", "2", 1));

@@ -16,7 +16,6 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.material.textfield.TextInputEditText;
 import com.tamer.raed.doctorappointment.R;
 
 import java.sql.Time;
@@ -25,7 +24,6 @@ import java.util.Calendar;
 import java.util.Locale;
 
 public class WorkHoursFragment extends Fragment {
-    private TextInputEditText time_et;
     private TextView start_hour_tv, end_hour_tv;
     private Button next, btn_choose_start_time, btn_choose_end_time;
     private Spinner start_day_spinner, end_day_spinner;
@@ -40,7 +38,6 @@ public class WorkHoursFragment extends Fragment {
 
         start_hour_tv = view.findViewById(R.id.start_hour_tv);
         end_hour_tv = view.findViewById(R.id.end_hour_tv);
-        time_et = view.findViewById(R.id.time_et);
         btn_choose_start_time = view.findViewById(R.id.choose_start_time);
         btn_choose_end_time = view.findViewById(R.id.choose_end_time);
 
@@ -69,15 +66,7 @@ public class WorkHoursFragment extends Fragment {
                         start_hour = start_hour_tv.getText().toString();
                         if (!TextUtils.isEmpty(end_hour_tv.getText().toString())) {
                             end_hour = end_hour_tv.getText().toString();
-                            if (!TextUtils.isEmpty(time_et.getText().toString())) {
-                                time_for_each_case = time_et.getText().toString();
-                                Log.d("dddd", "Start day: " + start_day + "\nEnd Day: " + end_day + "\nStart hour: " + start_hour + "\nEnd hour: " + end_hour + "\nTime: " + time_for_each_case);
-                            } else {
-                                time_et.setError(getString(R.string.time_case_error));
-                                // TODO: go to doctor homepage
-
-//                                  startActivity(new Intent(WorkHoursFragment.this, ));
-                            }
+                            Log.d("dddd", "Start day: " + start_day + "\nEnd Day: " + end_day + "\nStart hour: " + start_hour + "\nEnd hour: " + end_hour + "\nTime: " + time_for_each_case);
                         } else {
                             end_hour_tv.setError(getString(R.string.end_hour_error));
                         }

@@ -76,24 +76,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/start_hour_tv" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/time_input_layout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_8sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/end_hour_tv">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/time_et"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:hint="@string/time_for_each_case"
-            android:inputType="text" />
-    </com.google.android.material.textfield.TextInputLayout>
-
     <Button
         android:id="@+id/choose_start_time"
         android:layout_width="wrap_content"
