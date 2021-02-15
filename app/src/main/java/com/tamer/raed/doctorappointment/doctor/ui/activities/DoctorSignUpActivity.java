@@ -51,6 +51,7 @@ public class DoctorSignUpActivity extends AppCompatActivity {
         toolbar.setNavigationIcon(ContextCompat.getDrawable(this, R.drawable.ic_arrow));
         toolbar.setNavigationOnClickListener(view -> onBackPressed());
         initFragments();
+        moveFragment(personalDataFragment);
         if (savedInstanceState != null) {
             position = savedInstanceState.getInt("position");
             Log.d("dddd", "not null" + position);

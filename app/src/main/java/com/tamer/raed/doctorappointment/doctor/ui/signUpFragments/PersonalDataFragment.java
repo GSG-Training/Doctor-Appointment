@@ -1,38 +1,95 @@
 package com.tamer.raed.doctorappointment.doctor.ui.signUpFragments;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.tamer.raed.doctorappointment.R;
 import com.tamer.raed.doctorappointment.doctor.ui.DoctorSignUpActivity;
 
+import java.io.IOException;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class PersonalDataFragment extends Fragment {
 
-    String username, phone, password, gender, email;
-    TextInputEditText et_username, et_phone, et_password, et_email;
-    RadioButton rb_male, rb_female;
-    Button next;
+    private static final int PERMISSION_CODE = 1001;
+    private static final int IMAGE_PICK_CODE = 1000;
+    private String username, phone, password, gender, email;
+    private TextInputEditText et_username, et_phone, et_password, et_email;
+    private RadioButton rb_male, rb_female;
+    private Button next;
+    private CircleImageView imageView;
+    private FirebaseFirestore db;
+    private FirebaseAuth mAuth;
+    private FirebaseStorage storage;
+    private StorageReference storageReference;
+    private Uri filePath;
+    private String userId;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_personal_data, container, false);
+        View view = inflater.inflate(R.layout.fragment_personal_data, container, true);
         et_username = view.findViewById(R.id.login_data_username);
         et_email = view.findViewById(R.id.login_data_email);
         et_phone = view.findViewById(R.id.login_data_phone);
         et_password = view.findViewById(R.id.login_data_password);
+        imageView = view.findViewById(R.id.doctor_image_profile);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("ddddd", "clickaergksfc wrsfkdbmc efhksdjc efdhkj.zxm,");
+            }
+        });
+//        imageView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Toast.makeText(getContext(), "Click", Toast.LENGTH_SHORT).show();
+////                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+////                    if (getContext().checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+////                            == PackageManager.PERMISSION_DENIED) {
+////                        //permission not granted, request it.
+////                        String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
+////                        //show popup for runtime permission
+////                        requestPermissions(permissions, PERMISSION_CODE);
+////                    } else {
+////                        //permission already granted
+////                        pickImageFromGallery();
+////                    }
+////                } else {
+////                    //system os is less then marshmallow
+////                    pickImageFromGallery();
+////                }
+//            }
+//        });
         rb_male = view.findViewById(R.id.rb_male);
         rb_female = view.findViewById(R.id.rb_female);
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
+
         return view;
     }
 
@@ -56,6 +113,7 @@ public class PersonalDataFragment extends Fragment {
                                     View view1 = getActivity().findViewById(R.id.sign_up_view1);
                                     TextView tv_specialization = getActivity().findViewById(R.id.sign_up_tv_specialization);
                                     SpecializationFragment specializationFragment = new SpecializationFragment();
+
                                     ((DoctorSignUpActivity) getActivity()).doneStep(text_view_specialization, view1, tv_specialization, specializationFragment);
                                 } else {
                                     et_password.setError(getString(R.string.password_error));
@@ -70,6 +128,57 @@ public class PersonalDataFragment extends Fragment {
                         et_username.setError(getString(R.string.username_error));
                     }
                 });
+            }
+        }
+    }
+
+    private void pickImageFromGallery() {
+        //intent to pick image
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        startActivityForResult(Intent.createChooser(intent, "Select Image from here..."),
+                IMAGE_PICK_CODE);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case PERMISSION_CODE: {
+                if (grantResults.length > 0 && grantResults[0] ==
+                        PackageManager.PERMISSION_GRANTED) {
+                    //permission was granted
+                    pickImageFromGallery();
+                } else {
+                    //permission was denied
+                    Toast.makeText(getContext(), getString(R.string.permissions_error), Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == IMAGE_PICK_CODE
+                && resultCode == Activity.RESULT_OK
+                && data != null
+                && data.getData() != null) {
+            filePath = data.getData();
+            try {
+
+                // Setting image on image view using Bitmap
+                Bitmap bitmap = MediaStore
+                        .Images
+                        .Media
+                        .getBitmap(
+                                getContext().getContentResolver(),
+                                filePath);
+                imageView.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                // Log the exception
+                e.printStackTrace();
             }
         }
     }
