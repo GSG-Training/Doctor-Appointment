@@ -36,6 +36,8 @@ import com.tamer.raed.doctorappointment.R;
 import com.tamer.raed.doctorappointment.model.Patient;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -139,25 +141,30 @@ public class PatientSignUpActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    String id = mAuth.getCurrentUser().getUid();
-                    Patient patient = new Patient(id, username, phone, gender, email);
+                    userId = mAuth.getCurrentUser().getUid();
+                    Patient patient = new Patient(userId, username, phone, gender, email);
                     db = FirebaseFirestore.getInstance();
-                    db.collection("Patients").document(mAuth.getCurrentUser().getUid().toString()).set(patient).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    db.collection("Patients").document(userId).set(patient).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
-                                Toast.makeText(PatientSignUpActivity.this, getString(R.string.success_sign_up), Toast.LENGTH_SHORT).show();
-                                userId = mAuth.getCurrentUser().getUid();
-                                if (userId != null) {
-                                    uploadImage();
-                                    progressBar.setVisibility(View.GONE);
-                                    signUpBtn.setVisibility(View.VISIBLE);
-                                    startActivity(new Intent(PatientSignUpActivity.this, PatientDashboardActivity.class));
-                                    finish();
-                                }
-
-                                progressBar.setVisibility(View.GONE);
-                                signUpBtn.setVisibility(View.VISIBLE);
+                                Map<String, Object> map2 = new HashMap<>();
+                                map2.put("id", userId);
+                                map2.put("accountType", "patient");
+                                db.collection("Users").document(userId).set(map2).addOnCompleteListener(task2 -> {
+                                    if (task2.isSuccessful()) {
+                                        uploadImage();
+                                        Toast.makeText(PatientSignUpActivity.this, getString(R.string.success_sign_up), Toast.LENGTH_SHORT).show();
+                                        progressBar.setVisibility(View.GONE);
+                                        signUpBtn.setVisibility(View.VISIBLE);
+                                        Intent intent = new Intent(PatientSignUpActivity.this, PatientDashboardActivity.class);
+                                        intent.putExtra("id", userId);
+                                        startActivity(intent);
+                                        finish();
+                                    } else {
+                                        Toast.makeText(PatientSignUpActivity.this, getString(R.string.error_sign_up), Toast.LENGTH_SHORT).show();
+                                    }
+                                });
                             } else {
                                 Toast.makeText(PatientSignUpActivity.this, getString(R.string.error_sign_up), Toast.LENGTH_SHORT).show();
                             }
@@ -229,12 +236,6 @@ public class PatientSignUpActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-//        if (resultCode == RESULT_OK && requestCode == IMAGE_PICK_CODE && data != null) {
-//            //set image to image view
-//            imageView.setImageURI(data.getData());
-//            bitmap = (Bitmap) data.getExtras().get("data");
-////            imageView.setImageBitmap(bitmap);
-//        }
     }
 
     private void uploadImage() {

@@ -27,7 +27,7 @@
             android:layout_width="@dimen/_100sdp"
             android:layout_height="@dimen/_100sdp"
             android:layout_marginTop="@dimen/_12sdp"
-            android:src="@drawable/ic_user"
+            android:src="@drawable/ic_user_account"
             android:tint="@color/dark_gray"
             app:layout_constraintEnd_toStartOf="@+id/guideline9"
             app:layout_constraintStart_toStartOf="@+id/guideline8"

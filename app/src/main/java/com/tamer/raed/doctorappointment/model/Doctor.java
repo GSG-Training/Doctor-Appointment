@@ -16,7 +16,7 @@ public class Doctor implements Parcelable {
         }
     };
     private String username;
-    private int id;
+    private String id;
     private float rating;
     private String phone;
     private String gender;
@@ -32,7 +32,7 @@ public class Doctor implements Parcelable {
     private int experience;
     private String biography;
 
-    public Doctor(int id, int image, String username, String specialization, String phone, String gender, String country, String city, String street, String startDayWork, String endDayWork, String startHourWork, String endHourWork, int experience, String biography) {
+    public Doctor(String id, int image, String username, String specialization, String phone, String gender, String country, String city, String street, String startDayWork, String endDayWork, String startHourWork, String endHourWork, int experience, String biography) {
         this.id = id;
         this.username = username;
         this.specialization = specialization;
@@ -49,8 +49,11 @@ public class Doctor implements Parcelable {
         this.biography = biography;
     }
 
+    public Doctor() {
+    }
+
     protected Doctor(Parcel in) {
-        id = in.readInt();
+        id = in.readString();
         username = in.readString();
         specialization = in.readString();
         rating = in.readFloat();
@@ -68,11 +71,11 @@ public class Doctor implements Parcelable {
         biography = in.readString();
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -205,7 +208,7 @@ public class Doctor implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(id);
+        parcel.writeString(id);
         parcel.writeString(username);
         parcel.writeString(specialization);
         parcel.writeFloat(rating);

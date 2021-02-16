@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.tamer.raed.doctorappointment">
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="false"
         android:icon="@drawable/ic_health_insurance"
@@ -10,6 +12,10 @@
         android:roundIcon="@drawable/ic_health_insurance"
         android:supportsRtl="true"
         android:theme="@style/Theme.DoctorAppointment">
+        <activity android:name=".doctor.ui.activities.signUpActivities.WorkHoursActivity"></activity>
+        <activity android:name=".doctor.ui.activities.signUpActivities.AddressActivity" />
+        <activity android:name=".doctor.ui.activities.signUpActivities.SpecializationActivity" />
+        <activity android:name=".doctor.ui.activities.signUpActivities.PersonalDataActivity" />
         <activity android:name=".doctor.ui.activities.DoctorDashboardActivity" />
         <activity android:name=".patient.ui.activities.SettingsActivity" />
         <activity android:name=".patient.ui.activities.BookAppointmentActivity" />
@@ -17,7 +23,6 @@
         <activity android:name=".patient.ui.activities.SearchActivity" />
         <activity android:name=".patient.ui.activities.PatientSignUpActivity" />
         <activity android:name=".patient.ui.activities.PatientDashboardActivity" />
-        <activity android:name=".doctor.ui.activities.DoctorSignUpActivity" />
         <activity
             android:name=".WelcomeActivity"
             android:theme="@style/welcome" />

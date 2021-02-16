@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.tamer.raed.doctorappointment.doctor.ui.activities.DoctorSignUpActivity;
+import com.tamer.raed.doctorappointment.doctor.ui.activities.signUpActivities.PersonalDataActivity;
 import com.tamer.raed.doctorappointment.patient.ui.activities.PatientSignUpActivity;
 
 
@@ -44,7 +44,7 @@ public class WelcomeActivity extends AppCompatActivity {
                     Toast.makeText(WelcomeActivity.this, getText(R.string.account_type_error), Toast.LENGTH_SHORT).show();
                     break;
                 case 1:
-                    startActivity(new Intent(WelcomeActivity.this, DoctorSignUpActivity.class));
+                    startActivity(new Intent(WelcomeActivity.this, PersonalDataActivity.class));
                     break;
                 case 2:
                     startActivity(new Intent(WelcomeActivity.this, PatientSignUpActivity.class));

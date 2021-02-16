@@ -36,7 +36,7 @@
                 android:layout_width="@dimen/_80sdp"
                 android:layout_height="@dimen/_80sdp"
                 android:layout_marginTop="@dimen/_8sdp"
-                android:src="@drawable/ic_user"
+                android:src="@drawable/ic_user_account"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -213,37 +213,49 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_8sdp"
-                        android:text="@string/select_day"
+                        android:text="@string/choose_time"
                         android:textColor="@color/dark_gray2"
                         android:textSize="@dimen/_16sdp"
                         app:layout_constraintStart_toStartOf="@+id/datePickerTimeline"
                         app:layout_constraintTop_toBottomOf="@+id/datePickerTimeline" />
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/patient_book_appointment_hours_rv"
+                    <TextView
+                        android:id="@+id/book_appointment_tv_time"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="?actionBarSize"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:background="@drawable/spinner_border"
                         android:layout_marginTop="@dimen/_8sdp"
-                        android:onClick="confirmAppointment"
-                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:hint="@string/start_hour"
                         android:padding="@dimen/_8sdp"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        app:layout_constraintEnd_toEndOf="@+id/datePickerTimeline"
+                        app:layout_constraintEnd_toStartOf="@+id/choose_start_time"
                         app:layout_constraintStart_toStartOf="@+id/textView19"
-                        app:layout_constraintTop_toBottomOf="@+id/textView19"
-                        tools:listitem="@layout/item_hour" />
+                        app:layout_constraintTop_toBottomOf="@+id/textView19" />
+
+                    <Button
+                        android:id="@+id/choose_start_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:onClick="chooseTime"
+                        android:text="@string/choose_time"
+                        app:layout_constraintBottom_toBottomOf="@+id/book_appointment_tv_time"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/book_appointment_tv_time"
+                        app:layout_constraintVertical_bias="0.0" />
 
                     <Button
                         android:id="@+id/patient_book_appointment_btn_confirm"
                         android:layout_width="0dp"
                         android:layout_height="?actionBarSize"
-                        android:layout_marginTop="@dimen/_8sdp"
                         android:layout_marginBottom="@dimen/_16sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:onClick="confirmAppointment"
                         android:text="@string/confirm_appointment"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="@+id/patient_book_appointment_hours_rv"
-                        app:layout_constraintStart_toStartOf="@+id/patient_book_appointment_hours_rv"
-                        app:layout_constraintTop_toBottomOf="@+id/patient_book_appointment_hours_rv" />
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/textView19"
+                        app:layout_constraintTop_toBottomOf="@+id/book_appointment_tv_time" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </com.google.android.material.card.MaterialCardView>

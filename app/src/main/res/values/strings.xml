@@ -125,8 +125,7 @@
     <string name="days">Days:</string>
     <string name="to">to</string>
     <string name="time">Times:</string>
-    <string name="select_date">Select Date:</string>
-    <string name="select_day">Select Day:</string>
+    <string name="select_date">Select Date</string>
     <string name="confirm_appointment">Confirm appointment</string>
     <string name="orders">Orders</string>
     <string name="accept">Accept</string>
@@ -141,5 +140,8 @@
     <string name="eyes">eyes</string>
     <string name="bones">bones</string>
     <string name="brain">Brain</string>
+    <string name="more">More</string>
+    <string name="content_error">Content must entered!</string>
+    <string name="subject_error">Subject must entered!</string>
 
 </resources>

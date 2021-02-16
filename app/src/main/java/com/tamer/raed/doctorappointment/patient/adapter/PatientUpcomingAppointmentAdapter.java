@@ -15,8 +15,8 @@ import com.tamer.raed.doctorappointment.model.Appointment;
 import java.util.List;
 
 public class PatientUpcomingAppointmentAdapter extends RecyclerView.Adapter<PatientUpcomingAppointmentAdapter.UpcomingAppointmentViewHolder> {
-    private List<Appointment> appointments;
-    private OnItemClickListener onItemClickListener;
+    private final List<Appointment> appointments;
+    private final OnItemClickListener onItemClickListener;
 
     public PatientUpcomingAppointmentAdapter(List<Appointment> appointments, OnItemClickListener onItemClickListener) {
         this.appointments = appointments;

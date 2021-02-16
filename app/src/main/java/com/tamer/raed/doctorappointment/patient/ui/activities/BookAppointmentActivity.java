@@ -1,33 +1,36 @@
 package com.tamer.raed.doctorappointment.patient.ui.activities;
 
+import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.tamer.raed.doctorappointment.R;
 import com.tamer.raed.doctorappointment.model.Doctor;
-import com.tamer.raed.doctorappointment.patient.adapter.HoursAdapter;
 import com.vivekkaushik.datepicker.DatePickerTimeline;
 import com.vivekkaushik.datepicker.OnDateSelectedListener;
 
-import java.util.ArrayList;
+import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.List;
+import java.util.Locale;
 
 public class BookAppointmentActivity extends AppCompatActivity {
     private Doctor doctor;
     private TextView tv_username, tv_specialization, tv_day_start, tv_day_end, tv_hour_start, tv_hour_end;
     private ImageView imageView;
-    private RecyclerView hour_rv;
-    private List<String> hours;
-    private HoursAdapter hoursAdapter;
+    private TextView tv_time;
 
     public static void addTime(String a, String b) {
         int minSum = 0;
@@ -69,16 +72,8 @@ public class BookAppointmentActivity extends AppCompatActivity {
             tv_hour_end.setText(doctor.getEndHourWork());
         }
 
-        hours = new ArrayList<>();
-        fillHoursList();
-        hoursAdapter = new HoursAdapter(hours, new HoursAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
+        getImageProfile();
 
-            }
-        });
-
-        hour_rv.setAdapter(hoursAdapter);
         Date date = new Date();
         Calendar calendar = new GregorianCalendar();
         calendar.setTime(date);
@@ -114,24 +109,56 @@ public class BookAppointmentActivity extends AppCompatActivity {
         tv_day_end = findViewById(R.id.patient_book_appointment_tv_day_end);
         tv_hour_start = findViewById(R.id.patient_book_appointment_tv_time_start);
         tv_hour_end = findViewById(R.id.patient_book_appointment_tv_time_end);
-        hour_rv = findViewById(R.id.patient_book_appointment_hours_rv);
+        tv_time = findViewById(R.id.book_appointment_tv_time);
     }
 
     public void backToDetailsActivity(View view) {
         onBackPressed();
     }
 
-    private void fillHoursList() {
-        hours.add("9:00 Am");
-        hours.add("10:00 Am");
-        hours.add("11:00 Am");
-        hours.add("12:00 pm");
-        hours.add("01:00 pm");
-        hours.add("02:00 pm");
-        hours.add("03:00 pm");
-        hours.add("04:00 pm");
+    public void confirmAppointment(View view) {
+        if (checkFields()) {
+
+        }
     }
 
-    public void confirmAppointment(View view) {
+    private boolean checkFields() {
+        return false;
+    }
+
+    public void chooseTime(View view) {
+        setTimeFromTimePicker(this, tv_time);
+    }
+
+    private void getImageProfile() {
+        imageView.setVisibility(View.GONE);
+        String userId = doctor.getId();
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+        storageReference.child("profileImages/" + userId).getDownloadUrl()
+                .addOnSuccessListener(uri -> {
+                    Glide.with(getApplicationContext()).load(uri).into(imageView);
+                    imageView.setVisibility(View.VISIBLE);
+                })
+                .addOnFailureListener(exception -> {
+                    imageView.setImageResource(R.drawable.ic_user_account);
+                    Toast.makeText(getApplicationContext(), getString(R.string.image_error), Toast.LENGTH_SHORT).show();
+                });
+
+    }
+
+    public void setTimeFromTimePicker(Context context, TextView textView) {
+        int hourOfDay, minute;
+        final Calendar c = Calendar.getInstance();
+        hourOfDay = c.get(Calendar.HOUR_OF_DAY);
+        minute = c.get(Calendar.MINUTE);
+
+        TimePickerDialog timePickerDialog = new TimePickerDialog(context, (timePicker, hourOfDay1, minute1) -> {
+            Time time = new Time(hourOfDay1, minute1, 0);
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh:mm aa", Locale.getDefault());
+            String s = simpleDateFormat.format(time);
+            textView.setText(s);
+        }, hourOfDay, minute, false);
+
+        timePickerDialog.show();
     }
 }

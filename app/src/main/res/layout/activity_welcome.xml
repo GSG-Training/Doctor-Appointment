@@ -44,16 +44,6 @@
         app:layout_constraintStart_toStartOf="@+id/guideline6"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
-    <!--    <View-->
-    <!--        android:id="@+id/view"-->
-    <!--        android:layout_width="0dp"-->
-    <!--        android:layout_height="0dp"-->
-    <!--        android:background="@drawable/spinner_border"-->
-    <!--        app:layout_constraintBottom_toBottomOf="@+id/account_type_spinner"-->
-    <!--        app:layout_constraintEnd_toEndOf="@+id/account_type_spinner"-->
-    <!--        app:layout_constraintStart_toStartOf="@+id/account_type_spinner"-->
-    <!--        app:layout_constraintTop_toTopOf="@+id/account_type_spinner" />-->
-
     <Spinner
         android:id="@+id/account_type_spinner"
         android:layout_width="0dp"
@@ -61,7 +51,6 @@
         android:layout_marginTop="@dimen/_16sdp"
         android:background="@drawable/spinner_border2"
         android:textColor="@color/white"
-
         android:entries="@array/account_type"
         app:layout_constraintEnd_toStartOf="@+id/guideline7"
         app:layout_constraintStart_toStartOf="@+id/guideline6"
@@ -96,12 +85,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|start"
-        android:padding="@dimen/_8sdp"
+        android:padding="@dimen/_4sdp"
         android:text="@string/login"
-        android:textColor="@color/white"
+        android:textColor="@color/teal_200"
         android:textSize="@dimen/_12sdp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/welcome_tv" />
+        app:layout_constraintBottom_toBottomOf="@+id/welcome_tv"
+        app:layout_constraintStart_toEndOf="@+id/welcome_tv"
+        app:layout_constraintTop_toTopOf="@+id/welcome_tv" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline5"

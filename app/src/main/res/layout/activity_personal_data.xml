@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".doctor.ui.activities.signUpActivities.PersonalDataActivity">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/sign_up_toolbar"
+        android:layout_width="0dp"
+        android:layout_height="?actionBarSize"
+        android:background="@color/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="@string/basic_info"
+        app:titleTextColor="@color/white" />
+
+    <TextView
+        android:id="@+id/sign_up_text_view_login_data"
+        android:layout_width="@dimen/_22sdp"
+        android:layout_height="@dimen/_22sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:background="@drawable/circle_active_bg"
+        android:gravity="center"
+        android:text="@string/one"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toStartOf="@+id/sign_up_text_view_specialization"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="@+id/guideline11"
+        app:layout_constraintTop_toBottomOf="@+id/sign_up_toolbar" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/basic_info"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/_8sdp"
+        app:layout_constraintEnd_toEndOf="@+id/sign_up_text_view_login_data"
+        app:layout_constraintStart_toStartOf="@+id/sign_up_text_view_login_data"
+        app:layout_constraintTop_toBottomOf="@+id/sign_up_text_view_login_data" />
+
+    <View
+        android:id="@+id/sign_up_view1"
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:background="@color/gray"
+        app:layout_constraintBottom_toBottomOf="@+id/sign_up_text_view_login_data"
+        app:layout_constraintEnd_toStartOf="@+id/sign_up_text_view_specialization"
+        app:layout_constraintStart_toEndOf="@+id/sign_up_text_view_login_data"
+        app:layout_constraintTop_toTopOf="@+id/sign_up_text_view_login_data" />
+
+    <TextView
+        android:id="@+id/sign_up_text_view_work_hour"
+        android:layout_width="@dimen/_22sdp"
+        android:layout_height="@dimen/_22sdp"
+        android:background="@drawable/circle_bg"
+        android:buttonTint="@color/colorPrimary"
+        android:gravity="center"
+        android:text="@string/four"
+        android:textColor="@color/dark_gray"
+        app:layout_constraintEnd_toStartOf="@+id/guideline13"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/sign_up_text_view_address"
+        app:layout_constraintTop_toTopOf="@+id/sign_up_text_view_address" />
+
+    <TextView
+        android:id="@+id/sign_up_tv_work_hour"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/working_hour"
+        android:textSize="@dimen/_8sdp"
+        app:layout_constraintEnd_toEndOf="@+id/sign_up_text_view_work_hour"
+        app:layout_constraintStart_toStartOf="@+id/sign_up_text_view_work_hour"
+        app:layout_constraintTop_toBottomOf="@+id/sign_up_text_view_work_hour" />
+
+    <TextView
+        android:id="@+id/sign_up_tv_specialization"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/specialization"
+        android:textSize="@dimen/_8sdp"
+        app:layout_constraintEnd_toEndOf="@+id/sign_up_text_view_specialization"
+        app:layout_constraintStart_toStartOf="@+id/sign_up_text_view_specialization"
+        app:layout_constraintTop_toBottomOf="@+id/sign_up_text_view_specialization" />
+
+    <View
+        android:id="@+id/sign_up_view2"
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:background="@color/gray"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/sign_up_text_view_specialization"
+        app:layout_constraintEnd_toStartOf="@+id/sign_up_text_view_address"
+        app:layout_constraintStart_toEndOf="@+id/sign_up_text_view_specialization"
+        app:layout_constraintTop_toTopOf="@+id/sign_up_text_view_specialization" />
+
+    <TextView
+        android:id="@+id/sign_up_text_view_address"
+        android:layout_width="@dimen/_22sdp"
+        android:layout_height="@dimen/_22sdp"
+        android:background="@drawable/circle_bg"
+        android:gravity="center"
+        android:text="@string/three"
+        android:textColor="@color/dark_gray"
+        app:layout_constraintEnd_toStartOf="@+id/sign_up_text_view_work_hour"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/sign_up_text_view_specialization"
+        app:layout_constraintTop_toTopOf="@+id/sign_up_text_view_specialization" />
+
+    <TextView
+        android:id="@+id/sign_up_tv_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/address"
+        android:textSize="@dimen/_8sdp"
+        app:layout_constraintEnd_toEndOf="@+id/sign_up_text_view_address"
+        app:layout_constraintStart_toStartOf="@+id/sign_up_text_view_address"
+        app:layout_constraintTop_toBottomOf="@+id/sign_up_text_view_address" />
+
+    <View
+        android:id="@+id/sign_up_view3"
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:background="@color/gray"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/sign_up_text_view_address"
+        app:layout_constraintEnd_toStartOf="@+id/sign_up_text_view_work_hour"
+        app:layout_constraintStart_toEndOf="@+id/sign_up_text_view_address"
+        app:layout_constraintTop_toTopOf="@+id/sign_up_text_view_address" />
+
+    <TextView
+        android:id="@+id/sign_up_text_view_specialization"
+        android:layout_width="@dimen/_22sdp"
+        android:layout_height="@dimen/_22sdp"
+        android:background="@drawable/circle_bg"
+        android:gravity="center"
+        android:text="@string/two"
+        android:textColor="@color/dark_gray"
+        app:layout_constraintBottom_toBottomOf="@+id/sign_up_text_view_login_data"
+        app:layout_constraintEnd_toStartOf="@+id/sign_up_text_view_address"
+        app:layout_constraintStart_toEndOf="@+id/sign_up_text_view_login_data"
+        app:layout_constraintTop_toTopOf="@+id/sign_up_text_view_login_data" />
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/_8sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline13"
+        app:layout_constraintStart_toStartOf="@+id/guideline11"
+        app:layout_constraintTop_toBottomOf="@+id/sign_up_tv_specialization">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/doctor_image_profile"
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_100sdp"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="chooseImage"
+                android:src="@drawable/ic_user_account"
+                android:tint="@color/dark_gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/_4sdp"
+                android:text="@string/click_image"
+                app:layout_constraintEnd_toEndOf="@+id/doctor_image_profile"
+                app:layout_constraintStart_toStartOf="@+id/doctor_image_profile"
+                app:layout_constraintTop_toBottomOf="@+id/doctor_image_profile" />
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/personal_data_et_username"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:focusable="false"
+                app:errorEnabled="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView4">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/login_data_username"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/username"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/personal_data_et_email"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_4sdp"
+                app:errorEnabled="true"
+                app:layout_constraintEnd_toEndOf="@+id/personal_data_et_username"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/personal_data_et_username">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/login_data_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/email"
+                    android:inputType="textEmailAddress" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/personal_data_et_phone"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_4sdp"
+                app:errorEnabled="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/personal_data_et_email">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/login_data_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/phone"
+                    android:inputType="number" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="wrap_content"
+                android:layout_height="?actionBarSize"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:gravity="center"
+                android:text="@string/gender"
+                android:textSize="@dimen/_12sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/personal_data_et_phone" />
+
+            <RadioGroup
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="@+id/textView11"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textView11"
+                app:layout_constraintTop_toTopOf="@+id/textView11">
+
+                <RadioButton
+                    android:id="@+id/rb_male"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:checked="true"
+                    android:text="@string/male"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="@dimen/_12sdp" />
+
+                <RadioButton
+                    android:id="@+id/rb_female"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/female"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="@dimen/_12sdp" />
+            </RadioGroup>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/personal_data_et_password"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_4sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView11"
+                app:passwordToggleEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/login_data_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/password"
+                    android:inputType="textPassword" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/sign_up_btn_next"
+                android:layout_width="0dp"
+                android:layout_height="?actionBarSize"
+                android:layout_marginStart="@dimen/_4sdp"
+                android:onClick="next"
+                android:text="@string/next"
+                app:layout_constraintBottom_toBottomOf="@+id/sign_up_btn_back"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/sign_up_btn_back"
+                app:layout_constraintTop_toTopOf="@+id/sign_up_btn_back" />
+
+            <Button
+                android:id="@+id/sign_up_btn_back"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="?actionBarSize"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_4sdp"
+                android:layout_marginBottom="@dimen/_8sdp"
+                android:onClick="back"
+                android:text="@string/back"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/sign_up_btn_next"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/personal_data_et_password" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/personalDataGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="sign_up_btn_next,sign_up_btn_back" />
+
+            <ProgressBar
+                android:id="@+id/personalDataProgressBar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/personal_data_et_password" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.05" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.95" />
+</androidx.constraintlayout.widget.ConstraintLayout>

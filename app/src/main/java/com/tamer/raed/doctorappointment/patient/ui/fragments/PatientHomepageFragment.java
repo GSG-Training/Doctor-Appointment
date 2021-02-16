@@ -8,15 +8,20 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.tamer.raed.doctorappointment.R;
 import com.tamer.raed.doctorappointment.model.Category;
 import com.tamer.raed.doctorappointment.model.Doctor;
-import com.tamer.raed.doctorappointment.model.WorkingHour;
 import com.tamer.raed.doctorappointment.patient.adapter.CategoryAdapter;
 import com.tamer.raed.doctorappointment.patient.adapter.DoctorAdapter;
 import com.tamer.raed.doctorappointment.patient.ui.activities.DoctorDetailsActivity;
@@ -28,7 +33,6 @@ import java.util.List;
 public class PatientHomepageFragment extends Fragment {
     private List<Category> categories;
     private List<Doctor> doctors;
-    private List<WorkingHour> workingHours;
     private CategoryAdapter categoryAdapter;
     private DoctorAdapter doctorAdapter;
 
@@ -41,8 +45,7 @@ public class PatientHomepageFragment extends Fragment {
         RecyclerView categories_rv = view.findViewById(R.id.patient_homepage_rv_categories);
         categories = new ArrayList<>();
         doctors = new ArrayList<>();
-        workingHours = new ArrayList<>();
-        fillListWorkingHours();
+
         fillListCategories();
 
         categoryAdapter = new CategoryAdapter(getContext(), categories, position -> {
@@ -63,7 +66,7 @@ public class PatientHomepageFragment extends Fragment {
                     Intent intent = new Intent(getContext(), DoctorDetailsActivity.class);
                     intent.putExtra("Doctor", doctor);
                     startActivity(intent);
-                });
+                }, getContext());
         doctor_rv.setAdapter(doctorAdapter);
 
         return view;
@@ -90,26 +93,30 @@ public class PatientHomepageFragment extends Fragment {
     }
 
 
-    private void fillListWorkingHours() {
-        workingHours.add(new WorkingHour("Saturday", "Thursday", "9", "3", 2));
-        workingHours.add(new WorkingHour("Sunday", "Thursday", "10", "4", 1.5));
-        workingHours.add(new WorkingHour("Saturday", "Thursday", "8", "2", 1));
-        workingHours.add(new WorkingHour("Saturday", "Thursday", "9", "4", 1));
-    }
-
     private void fillListDoctors() {
 //    public Doctor(int id, int image, String username, String specialization, String phone, String gender, String country, String city, String street, String startDayWork, String endDayWork, String startHourWork, String endHourWork, double timeForEachCase, int experience, String biography) {
-        doctors.add(new Doctor(1, 0, "Tamer", categories.get(0).getName(), "0592899024", "Male", "Palestine", "Gaza", "Bagdad", "Saturday", "Thursday", "09:00 am", "03:00 pm", 5, "weghhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhEOIRH 23ORH O13HRO1  1 13R 1R  12R 12 12RO1HROH1UOR 123R13R1 34123123 12312 31231 2KBNIO N IOH OHU H HUOH HOH HUO HO HO HO HOH IOHQPWJPQJWEJ"));
-        doctors.add(new Doctor(2, 0, "Omar", categories.get(1).getName(), "0592899024", "Male", "Palestine", "Gaza", "Bagdad", "Saturday", "Thursday", "09:00 am", "04:00 pm", 5, "weghhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhEOIRH 23ORH O13HRO1  1 13R 1R  12R 12 12RO1HROH1UOR 123R13R1 34123123 12312 31231 2KBNIO N IOH OHU H HUOH HOH HUO HO HO HO HOH IOHQPWJPQJWEJ"));
-        doctors.add(new Doctor(3, 0, "Hasan", categories.get(0).getName(), "0592899024", "Male", "Palestine", "Gaza", "Bagdad", "Saturday", "Thursday", "10:00 am", "03:00 pm", 5, "weghhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhEOIRH 23ORH O13HRO1  1 13R 1R  12R 12 12RO1HROH1UOR 123R13R1 34123123 12312 31231 2KBNIO N IOH OHU H HUOH HOH HUO HO HO HO HOH IOHQPWJPQJWEJ"));
-        doctors.add(new Doctor(4, 0, "Mohammed", categories.get(1).getName(), "0592899024", "Male", "Palestine", "Gaza", "Bagdad", "Saturday", "Thursday", "08:00 am", "02:00 pm", 5, "weghhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhEOIRH 23ORH O13HRO1  1 13R 1R  12R 12 12RO1HROH1UOR 123R13R1 34123123 12312 31231 2KBNIO N IOH OHU H HUOH HOH HUO HO HO HO HOH IOHQPWJPQJWEJ"));
-        doctors.add(new Doctor(5, 0, "Bassem", categories.get(0).getName(), "0592899024", "Male", "Palestine", "Gaza", "Bagdad", "Saturday", "Thursday", "08:00 am", "02:00 pm", 5, "weghhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhEOIRH 23ORH O13HRO1  1 13R 1R  12R 12 12RO1HROH1UOR 123R13R1 34123123 12312 31231 2KBNIO N IOH OHU H HUOH HOH HUO HO HO HO HOH IOHQPWJPQJWEJ"));
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("Doctors")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Doctor doctor = document.toObject(Doctor.class);
+                                doctors.add(doctor);
+                            }
+                        } else {
+                            Toast.makeText(getContext(), getString(R.string.general_error), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 
     public List<Doctor> getDoctorByCategoryName(Category category) {
         List<Doctor> temp = new ArrayList<>();
         for (int i = 0; i < doctors.size(); i++) {
-            if (category.getName().equals(doctors.get(i).getSpecialization())) {
+            if (category.getName().equalsIgnoreCase(doctors.get(i).getSpecialization())) {
                 temp.add(doctors.get(i));
             }
         }

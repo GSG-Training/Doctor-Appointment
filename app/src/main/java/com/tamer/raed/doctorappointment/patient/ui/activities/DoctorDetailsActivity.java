@@ -6,9 +6,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.tamer.raed.doctorappointment.R;
 import com.tamer.raed.doctorappointment.model.Doctor;
 
@@ -37,6 +41,7 @@ public class DoctorDetailsActivity extends AppCompatActivity {
             tv_address.setText(doctor.getCountry() + "-" + doctor.getCity() + "-" + doctor.getStreet());
             tv_phone.setText(doctor.getPhone());
             tv_biography.setText(doctor.getBiography());
+            getImageProfile();
         }
     }
 
@@ -60,5 +65,21 @@ public class DoctorDetailsActivity extends AppCompatActivity {
 
     public void backToHomepage(View view) {
         onBackPressed();
+    }
+
+    private void getImageProfile() {
+        imageView.setVisibility(View.GONE);
+        String userId = doctor.getId();
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+        storageReference.child("profileImages/" + userId).getDownloadUrl()
+                .addOnSuccessListener(uri -> {
+                    Glide.with(getApplicationContext()).load(uri).into(imageView);
+                    imageView.setVisibility(View.VISIBLE);
+                })
+                .addOnFailureListener(exception -> {
+                    imageView.setImageResource(R.drawable.ic_user_account);
+                    Toast.makeText(getApplicationContext(), getString(R.string.image_error), Toast.LENGTH_SHORT).show();
+                });
+
     }
 }
