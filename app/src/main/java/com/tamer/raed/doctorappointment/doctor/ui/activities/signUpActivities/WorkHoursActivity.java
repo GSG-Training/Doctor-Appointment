@@ -141,7 +141,6 @@ public class WorkHoursActivity extends AppCompatActivity {
         map.put("endDayWork", end_day);
         map.put("startHourWork", start_hour);
         map.put("endHourWork", end_hour);
-        map.put("rating", 0.0);
         map.put("numberOfPatient", 0);
 
         db.collection("Doctors").document(userId).set(map, SetOptions.merge()).addOnCompleteListener(task1 -> {

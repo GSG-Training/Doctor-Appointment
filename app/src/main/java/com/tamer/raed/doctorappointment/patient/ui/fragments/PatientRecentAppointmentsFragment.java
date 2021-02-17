@@ -1,16 +1,21 @@
 package com.tamer.raed.doctorappointment.patient.ui.fragments;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupMenu;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.tamer.raed.doctorappointment.R;
 import com.tamer.raed.doctorappointment.model.Appointment;
 import com.tamer.raed.doctorappointment.patient.adapter.PatientUpcomingAppointmentAdapter;
@@ -21,56 +26,79 @@ import java.util.List;
 public class PatientRecentAppointmentsFragment extends Fragment {
     private List<Appointment> appointments;
     private PatientUpcomingAppointmentAdapter patientUpcomingAppointmentAdapter;
-    private RecyclerView recyclerView;
+    private ProgressBar progressBar;
+    private TextView textView;
+    private String patientId;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_patient_recent_appointments, container, false);
-        recyclerView = view.findViewById(R.id.rv_recent_appointments);
+        RecyclerView recyclerView = view.findViewById(R.id.rv_recent_appointments);
         appointments = new ArrayList<>();
+        progressBar = view.findViewById(R.id.appointmentsProgressBar);
+        textView = view.findViewById(R.id.appointments_state_tv);
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        patientId = firebaseUser.getUid();
         fillAppointments();
 
-        patientUpcomingAppointmentAdapter = new PatientUpcomingAppointmentAdapter(appointments, new PatientUpcomingAppointmentAdapter.OnItemClickListener() {
-            @Override
-            public void onClick(int position) {
-                // TODO: GO to new activity
-            }
-
-            @Override
-            public void onMoreImageButtonClick(View view, int position) {
-                PopupMenu popup = new PopupMenu(getContext(), view);
-                popup.getMenuInflater().inflate(R.menu.recent_appointment_menu, popup.getMenu());
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @SuppressLint("NonConstantResourceId")
-                    @Override
-                    public boolean onMenuItemClick(MenuItem menuItem) {
-                        int id = menuItem.getItemId();
-                        switch (id) {
-                            case R.id.delete_item:
-                                appointments.remove(position);
-                                patientUpcomingAppointmentAdapter.notifyDataSetChanged();
-                                break;
-                        }
-                        return true;
+        patientUpcomingAppointmentAdapter = new PatientUpcomingAppointmentAdapter(appointments, (view1, position) -> {
+            PopupMenu popup = new PopupMenu(getContext(), view1);
+            popup.getMenuInflater().inflate(R.menu.recent_appointment_menu, popup.getMenu());
+            popup.setOnMenuItemClickListener(menuItem -> {
+                int id = menuItem.getItemId();
+                if (id == R.id.delete_item) {
+                    cancelAppointment(position);
+                    appointments.remove(position);
+                    patientUpcomingAppointmentAdapter.notifyDataSetChanged();
+                    if (appointments.size() == 0) {
+                        textView.setVisibility(View.VISIBLE);
+                        textView.setText(getString(R.string.no_orders));
                     }
-                });
-                popup.show();
-            }
+                }
+                return true;
+            });
+            popup.show();
         });
         recyclerView.setAdapter(patientUpcomingAppointmentAdapter);
         return view;
     }
 
+    private void cancelAppointment(int position) {
+        Appointment appointment = appointments.get(position);
+        String patientId = appointment.getPatientId();
+        String doctorId = appointment.getDoctorId();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("PatientRecentAppointments").document(patientId).collection("Appointments").document(doctorId).delete().addOnCompleteListener(task3 -> {
+            if (task3.isSuccessful()) {
+                Toast.makeText(getContext(), getString(R.string.cancel_success), Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getContext(), getString(R.string.general_error), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     private void fillAppointments() {
-        appointments.add(new Appointment(0));
-        appointments.add(new Appointment(0));
-        appointments.add(new Appointment(0));
-        appointments.add(new Appointment(0));
-        appointments.add(new Appointment(0));
-        appointments.add(new Appointment(0));
-        appointments.add(new Appointment(0));
-        appointments.add(new Appointment(0));
-        appointments.add(new Appointment(0));
+        progressBar.setVisibility(View.VISIBLE);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("PatientRecentAppointments").document(patientId).collection("Appointments")
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    if (!queryDocumentSnapshots.isEmpty()) {
+                        for (DocumentSnapshot snapshot : queryDocumentSnapshots) {
+                            Appointment appointment = snapshot.toObject(Appointment.class);
+                            appointments.add(appointment);
+                            patientUpcomingAppointmentAdapter.notifyDataSetChanged();
+                        }
+                    } else {
+                        patientUpcomingAppointmentAdapter.notifyDataSetChanged();
+                        if (appointments.size() == 0) {
+                            textView.setVisibility(View.VISIBLE);
+                            textView.setText(getString(R.string.no_orders));
+                        }
+                    }
+                });
+        progressBar.setVisibility(View.GONE);
     }
 }

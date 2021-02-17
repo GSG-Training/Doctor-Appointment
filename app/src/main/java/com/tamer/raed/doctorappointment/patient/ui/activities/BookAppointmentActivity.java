@@ -1,25 +1,35 @@
 package com.tamer.raed.doctorappointment.patient.ui.activities;
 
+import android.annotation.SuppressLint;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.google.common.collect.ImmutableBiMap;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.tamer.raed.doctorappointment.R;
+import com.tamer.raed.doctorappointment.model.Appointment;
 import com.tamer.raed.doctorappointment.model.Doctor;
 import com.vivekkaushik.datepicker.DatePickerTimeline;
 import com.vivekkaushik.datepicker.OnDateSelectedListener;
 
 import java.sql.Time;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -30,29 +40,17 @@ public class BookAppointmentActivity extends AppCompatActivity {
     private Doctor doctor;
     private TextView tv_username, tv_specialization, tv_day_start, tv_day_end, tv_hour_start, tv_hour_end;
     private ImageView imageView;
+    private ProgressBar progressBar;
+    private Button confirm;
     private TextView tv_time;
-
-    public static void addTime(String a, String b) {
-        int minSum = 0;
-        int hourSum = 0;
-
-        int hour1 = Integer.parseInt(a.substring(0, 2));
-        int hour2 = Integer.parseInt(b.substring(0, 2));
-
-        int min1 = Integer.parseInt(a.substring(3, 5));
-        int min2 = Integer.parseInt(b.substring(3, 5));
-
-        minSum = min1 + min2;
-
-        if (minSum > 59) {
-            hourSum += 1;
-            minSum %= 60;
-        }
-
-        hourSum = hourSum + hour1 + hour2;
-
-        System.out.println(hourSum + " Hours : " + minSum + " minutes");
-    }
+    private Calendar calendar;
+    private String dayString;
+    private String monthString;
+    private String yearString;
+    private String timeString;
+    private String firstDay;
+    private String endDay;
+    private int intDay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,12 +68,14 @@ public class BookAppointmentActivity extends AppCompatActivity {
             tv_day_end.setText(doctor.getEndDayWork());
             tv_hour_start.setText(doctor.getStartHourWork());
             tv_hour_end.setText(doctor.getEndHourWork());
+            firstDay = tv_day_start.getText().toString();
+            endDay = tv_day_end.getText().toString();
         }
 
         getImageProfile();
 
         Date date = new Date();
-        Calendar calendar = new GregorianCalendar();
+        calendar = new GregorianCalendar();
         calendar.setTime(date);
 
         int year = calendar.get(Calendar.YEAR);
@@ -88,7 +88,8 @@ public class BookAppointmentActivity extends AppCompatActivity {
         datePickerTimeline.setOnDateSelectedListener(new OnDateSelectedListener() {
             @Override
             public void onDateSelected(int year, int month, int day, int dayOfWeek) {
-                System.out.println("Year " + year + "    Month  " + month + "      Day  " + day);
+                intDay = day;
+                setDateString(year, month, day);
             }
 
             @Override
@@ -99,6 +100,7 @@ public class BookAppointmentActivity extends AppCompatActivity {
 
 //        Date[] dates = {Calendar.getInstance().getTime()};
 //        datePickerTimeline.deactivateDates(dates);
+
     }
 
     private void initViews() {
@@ -110,6 +112,8 @@ public class BookAppointmentActivity extends AppCompatActivity {
         tv_hour_start = findViewById(R.id.patient_book_appointment_tv_time_start);
         tv_hour_end = findViewById(R.id.patient_book_appointment_tv_time_end);
         tv_time = findViewById(R.id.book_appointment_tv_time);
+        progressBar = findViewById(R.id.bookAppointmentProgressBar);
+        confirm = findViewById(R.id.patient_book_appointment_btn_confirm);
     }
 
     public void backToDetailsActivity(View view) {
@@ -118,12 +122,52 @@ public class BookAppointmentActivity extends AppCompatActivity {
 
     public void confirmAppointment(View view) {
         if (checkFields()) {
-
+            if (checkIsValidDay(getDayInNumber())) {
+                if (checkIsValidTime(timeString)) {
+                    setAppointmentToFirebase();
+                } else {
+                    Toast.makeText(this, getString(R.string.time_not_valid), Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(this, getString(R.string.day_not_valid), Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
+    private void setAppointmentToFirebase() {
+        progressBar.setVisibility(View.VISIBLE);
+        confirm.setVisibility(View.GONE);
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        String patientId = firebaseUser.getUid();
+        String doctorId = doctor.getId();
+        String month = monthString.substring(0, 3);
+        Appointment appointment = new Appointment(doctorId, patientId, intDay, month, yearString, timeString);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("Orders").document(doctorId).collection("doctorOrders").document(patientId).set(appointment).addOnCompleteListener(task2 -> {
+            if (task2.isSuccessful()) {
+                Toast.makeText(BookAppointmentActivity.this, getString(R.string.success_book_appointment), Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.GONE);
+                confirm.setVisibility(View.VISIBLE);
+                Intent intent = new Intent(BookAppointmentActivity.this, PatientDashboardActivity.class);
+                startActivity(intent);
+                finish();
+            } else {
+                Toast.makeText(BookAppointmentActivity.this, getString(R.string.general_error), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     private boolean checkFields() {
-        return false;
+        if (dayString == null || monthString == null || yearString == null) {
+            Toast.makeText(this, getString(R.string.date_error), Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (!TextUtils.isEmpty(tv_time.getText().toString())) {
+            timeString = tv_time.getText().toString();
+            return true;
+        } else {
+            tv_time.setError(getString(R.string.time_error));
+            return false;
+        }
     }
 
     public void chooseTime(View view) {
@@ -160,5 +204,83 @@ public class BookAppointmentActivity extends AppCompatActivity {
         }, hourOfDay, minute, false);
 
         timePickerDialog.show();
+    }
+
+    private void setDateString(int year, int month, int day) {
+        calendar.add(Calendar.DAY_OF_MONTH, day);
+        calendar.set(year, month, day, 0, 0, 0);
+        dayString = String.format("%tA", calendar);
+        monthString = String.format("%tB", calendar);
+        yearString = String.valueOf(year);
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    private boolean checkIsValidTime(String time) {
+        String startTime = tv_hour_start.getText().toString();
+        String endTime = tv_hour_end.getText().toString();
+        try {
+            Date time1 = new SimpleDateFormat("hh:mm aa").parse(startTime);
+            Calendar calendar1 = Calendar.getInstance();
+            calendar1.setTime(time1);
+            calendar1.add(Calendar.DATE, 1);
+
+
+            Date time2 = new SimpleDateFormat("hh:mm aa").parse(endTime);
+            Calendar calendar2 = Calendar.getInstance();
+            calendar2.setTime(time2);
+            calendar2.add(Calendar.DATE, 1);
+
+            Date d = new SimpleDateFormat("hh:mm aa").parse(time);
+            Calendar calendar3 = Calendar.getInstance();
+            calendar3.setTime(d);
+            calendar3.add(Calendar.DATE, 1);
+
+            Date x = calendar3.getTime();
+            return x.after(calendar1.getTime()) && x.before(calendar2.getTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+    }
+
+
+    private boolean checkIsValidDay(int day) {
+
+        final ImmutableBiMap<String, Integer> DaysToNo =
+                new ImmutableBiMap.Builder<String, Integer>()
+                        .put("Saturday", 1)
+                        .put("Sunday", 2)
+                        .put("Monday", 3)
+                        .put("Tuesday", 4)
+                        .put("Wednesday", 5)
+                        .put("Thursday", 6)
+                        .put("Friday", 7)
+                        .build();
+
+        int startDateInNo = DaysToNo.get(firstDay);
+        int endDateInNo = DaysToNo.get(endDay);
+        return day <= endDateInNo && day >= startDateInNo;
+    }
+
+    private int getDayInNumber() {
+        switch (dayString) {
+            case "Saturday":
+                return 1;
+            case "Sunday":
+                return 2;
+            case "Monday":
+                return 3;
+            case "Tuesday":
+                return 4;
+            case "Wednesday":
+                return 5;
+            case "Thursday":
+                return 6;
+            case "Friday":
+                return 7;
+            default:
+                return 0;
+        }
     }
 }

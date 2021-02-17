@@ -48,16 +48,16 @@
         android:contentDescription="@string/rating"
         app:layout_constraintStart_toEndOf="@+id/item_doctor_iv"
         app:layout_constraintTop_toBottomOf="@+id/item_doctor_tv_category"
-        app:srcCompat="@drawable/ic_star" />
+        app:srcCompat="@drawable/ic_call" />
 
     <TextView
-        android:id="@+id/item_doctor_tv_rating"
+        android:id="@+id/item_doctor_tv_phone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_4sdp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView3"
         app:layout_constraintStart_toEndOf="@+id/imageView3"
         app:layout_constraintTop_toTopOf="@+id/imageView3"
-        tools:text="4.5" />
+        tools:text="0592899024" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

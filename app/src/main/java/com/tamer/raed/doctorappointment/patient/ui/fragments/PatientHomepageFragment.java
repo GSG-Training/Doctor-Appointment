@@ -8,17 +8,15 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.tamer.raed.doctorappointment.R;
 import com.tamer.raed.doctorappointment.model.Category;
 import com.tamer.raed.doctorappointment.model.Doctor;
@@ -35,17 +33,20 @@ public class PatientHomepageFragment extends Fragment {
     private List<Doctor> doctors;
     private CategoryAdapter categoryAdapter;
     private DoctorAdapter doctorAdapter;
+    private ProgressBar progressBar;
+    private RecyclerView doctor_rv;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         View view = inflater.inflate(R.layout.fragment_patient_homepage, container, false);
-        RecyclerView doctor_rv = view.findViewById(R.id.patient_homepage_rv_doctors);
+        doctor_rv = view.findViewById(R.id.patient_homepage_rv_doctors);
         RecyclerView categories_rv = view.findViewById(R.id.patient_homepage_rv_categories);
+        progressBar = view.findViewById(R.id.homepage_progressBar);
         categories = new ArrayList<>();
         doctors = new ArrayList<>();
-
+        fillListDoctors();
         fillListCategories();
 
         categoryAdapter = new CategoryAdapter(getContext(), categories, position -> {
@@ -57,17 +58,6 @@ public class PatientHomepageFragment extends Fragment {
         });
 
         categories_rv.setAdapter(categoryAdapter);
-        fillListDoctors();
-        int position1 = categoryAdapter.getPosition();
-        Category category = categories.get(position1);
-        List<Doctor> temp = getDoctorByCategoryName(category);
-        doctorAdapter = new DoctorAdapter(temp,
-                doctor -> {
-                    Intent intent = new Intent(getContext(), DoctorDetailsActivity.class);
-                    intent.putExtra("Doctor", doctor);
-                    startActivity(intent);
-                }, getContext());
-        doctor_rv.setAdapter(doctorAdapter);
 
         return view;
     }
@@ -94,21 +84,27 @@ public class PatientHomepageFragment extends Fragment {
 
 
     private void fillListDoctors() {
-//    public Doctor(int id, int image, String username, String specialization, String phone, String gender, String country, String city, String street, String startDayWork, String endDayWork, String startHourWork, String endHourWork, double timeForEachCase, int experience, String biography) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("Doctors")
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Doctor doctor = document.toObject(Doctor.class);
-                                doctors.add(doctor);
-                            }
-                        } else {
-                            Toast.makeText(getContext(), getString(R.string.general_error), Toast.LENGTH_SHORT).show();
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Doctor doctor = document.toObject(Doctor.class);
+                            doctors.add(doctor);
                         }
+                        List<Doctor> temp = getDoctorByCategoryName(categories.get(0));
+                        doctorAdapter = new DoctorAdapter(temp,
+                                doctor -> {
+                                    Intent intent = new Intent(getContext(), DoctorDetailsActivity.class);
+                                    intent.putExtra("Doctor", doctor);
+                                    startActivity(intent);
+                                }, getContext());
+                        doctor_rv.setAdapter(doctorAdapter);
+                        progressBar.setVisibility(View.GONE);
+                        doctor_rv.setVisibility(View.VISIBLE);
+                    } else {
+                        Toast.makeText(getContext(), getString(R.string.general_error), Toast.LENGTH_SHORT).show();
                     }
                 });
     }

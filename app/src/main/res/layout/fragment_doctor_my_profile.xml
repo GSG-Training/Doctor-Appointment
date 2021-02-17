@@ -10,12 +10,22 @@
         android:layout_height="wrap_content"
         tools:context=".doctor.ui.fragments.dashboardFragments.DoctorMyProfileFragment">
 
-        <ImageView
+        <ProgressBar
+            android:id="@+id/doctor_progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/doctor_my_profile_image_view"
             android:layout_width="@dimen/_100sdp"
             android:layout_height="@dimen/_100sdp"
             android:contentDescription="@string/username"
-            android:src="@drawable/ic_user"
+            android:src="@drawable/ic_user_account"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -40,7 +50,8 @@
             android:layout_marginTop="@dimen/_8sdp"
             app:cardCornerRadius="@dimen/_8sdp"
             app:cardElevation="@dimen/_12sdp"
-            app:layout_constraintEnd_toStartOf="@+id/card2"
+            app:layout_constraintEnd_toStartOf="@+id/card3"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/doctor_my_profile_username">
 
@@ -69,43 +80,6 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/card2"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_marginStart="@dimen/_4sdp"
-            android:layout_marginEnd="@dimen/_4sdp"
-            app:cardCornerRadius="@dimen/_8sdp"
-            app:cardElevation="@dimen/_8sdp"
-            app:layout_constraintBottom_toBottomOf="@+id/card1"
-            app:layout_constraintEnd_toStartOf="@+id/card3"
-            app:layout_constraintStart_toEndOf="@+id/card1"
-            app:layout_constraintTop_toTopOf="@+id/card1">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:padding="@dimen/_16sdp"
-                tools:ignore="UseCompoundDrawables">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="@string/rating"
-                    android:src="@drawable/ic_star" />
-
-                <TextView
-                    android:id="@+id/doctor_my_profile_tv_rating"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textAlignment="center"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/_16sdp"
-                    android:textStyle="bold"
-                    tools:text="4.5" />
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/card3"
@@ -115,8 +89,8 @@
             app:cardElevation="@dimen/_8sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/card2"
-            app:layout_constraintTop_toTopOf="@+id/card2">
+            app:layout_constraintStart_toEndOf="@+id/card1"
+            app:layout_constraintTop_toTopOf="@+id/card1">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -148,14 +122,14 @@
             android:layout_width="@dimen/_24sdp"
             android:layout_height="@dimen/_24sdp"
             android:layout_marginStart="@dimen/_16sdp"
-            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_12sdp"
             android:contentDescription="@string/phone"
-            android:src="@drawable/ic_call"
+            android:src="@drawable/ic_phone_android"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/card1" />
 
         <TextView
-            android:id="@+id/textView21"
+            android:id="@+id/doctor_my_profile_tv_phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_4sdp"
@@ -174,7 +148,7 @@
             android:layout_height="@dimen/_24sdp"
             android:layout_marginTop="@dimen/_8sdp"
             android:contentDescription="@string/specialization"
-            android:src="@drawable/ic_doctor"
+            android:src="@drawable/ic_patent"
             app:layout_constraintStart_toStartOf="@+id/imageView6"
             app:layout_constraintTop_toBottomOf="@+id/imageView6" />
 
@@ -251,14 +225,15 @@
             app:layout_constraintTop_toBottomOf="@+id/imageView9" />
 
         <androidx.core.widget.NestedScrollView
-            android:id="@+id/doctor_my_profile_tv_biography"
+            android:id="@+id/doctor_my_profile_scroll"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageView10"
-            app:layout_constraintTop_toBottomOf="@+id/imageView9">
+            app:layout_constraintTop_toTopOf="@+id/imageView10">
 
             <TextView
+                android:id="@+id/doctor_my_profile_tv_biography"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_8sdp"
@@ -268,10 +243,17 @@
                 android:foregroundTint="@color/dark_gray2"
                 android:foregroundTintMode="src_over"
                 android:textColor="@color/dark_gray"
-                android:textSize="@dimen/_12sdp"
 
+                android:textSize="@dimen/_12sdp"
                 tools:text="Adept medical doctor with eight solid years of practice experience. Dedicated to exemplary patient outcomes and following all necessary medical procedures with the use of the latest industry equipment and technology. Strong focus on listening to and addressing patient concerns and answering all questions in terms patients can easily understand. Willingness to work with all members of the medical team and listen to their suggestions and input to improve results and maximize patient satisfaction." />
 
         </androidx.core.widget.NestedScrollView>
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/doctorMyProfileGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:constraint_referenced_ids="imageView7,imageView8,doctor_my_profile_tv_working_hour,doctor_my_profile_tv_phone,doctor_my_profile_tv_specialisation,doctor_my_profile_image_view,imageView10,imageView6,card3,doctor_my_profile_tv_location,card1,doctor_my_profile_scroll,imageView9,doctor_my_profile_username" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

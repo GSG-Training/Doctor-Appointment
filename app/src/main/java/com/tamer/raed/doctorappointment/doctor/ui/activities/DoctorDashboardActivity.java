@@ -7,6 +7,9 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,7 +23,15 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.preference.PreferenceManager;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.tamer.raed.doctorappointment.LoginActivity;
 import com.tamer.raed.doctorappointment.R;
 import com.tamer.raed.doctorappointment.doctor.ui.fragments.dashboardFragments.DoctorConcatUsFragment;
@@ -28,6 +39,7 @@ import com.tamer.raed.doctorappointment.doctor.ui.fragments.dashboardFragments.D
 import com.tamer.raed.doctorappointment.doctor.ui.fragments.dashboardFragments.DoctorOrdersFragment;
 import com.tamer.raed.doctorappointment.doctor.ui.fragments.dashboardFragments.DoctorRecentAppointmentsFragment;
 import com.tamer.raed.doctorappointment.doctor.ui.fragments.dashboardFragments.DoctorUpcomingAppointmentsFragment;
+import com.tamer.raed.doctorappointment.model.Doctor;
 import com.tamer.raed.doctorappointment.patient.ui.activities.SettingsActivity;
 
 import java.util.Objects;
@@ -39,6 +51,9 @@ public class DoctorDashboardActivity extends AppCompatActivity implements Naviga
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private ActionBarDrawerToggle toggle;
+    private ImageView imageView;
+    private TextView tv_username;
+    private FirebaseUser firebaseUser;
 
     @SuppressLint("RestrictedApi")
     @Override
@@ -63,12 +78,48 @@ public class DoctorDashboardActivity extends AppCompatActivity implements Naviga
         moveFragment(doctorUpcomingAppointmentsFragment);
         toolbar.setTitle(getString(R.string.upcoming_appointments));
         readUserPreferences();
+        fillHeaderData();
+
     }
 
     public void initViews() {
         toolbar = findViewById(R.id.doctor_dashboard_toolbar);
         drawerLayout = findViewById(R.id.doctor_drawer_layout);
         navigationView = findViewById(R.id.doctor_navigation_view);
+        View header = navigationView.getHeaderView(0);
+        imageView = header.findViewById(R.id.header_image_view);
+        tv_username = header.findViewById(R.id.tv_header_username);
+    }
+
+    private void fillHeaderData() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        DocumentReference docRef = db.collection("Doctors").document(firebaseUser.getUid());
+        docRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                if (document.exists()) {
+                    Doctor doctor = document.toObject(Doctor.class);
+                    if (doctor != null) {
+                        tv_username.setText(doctor.getUsername());
+                        getImageProfile();
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), getString(R.string.general_error), Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(getApplicationContext(), getString(R.string.general_error), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void getImageProfile() {
+        String userId = firebaseUser.getUid();
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+        storageReference.child("profileImages/" + userId).getDownloadUrl().addOnSuccessListener(uri -> Glide.with(getApplicationContext())
+                .load(uri)
+                .into(imageView)).addOnFailureListener(exception -> Toast.makeText(getApplicationContext(), getString(R.string.image_error), Toast.LENGTH_SHORT).show());
+
     }
 
     @SuppressLint("NonConstantResourceId")

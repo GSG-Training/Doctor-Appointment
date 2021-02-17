@@ -17,7 +17,6 @@ public class Doctor implements Parcelable {
     };
     private String username;
     private String id;
-    private float rating;
     private String phone;
     private String gender;
     private String specialization;
@@ -32,7 +31,7 @@ public class Doctor implements Parcelable {
     private int experience;
     private String biography;
 
-    public Doctor(String id, int image, String username, String specialization, String phone, String gender, String country, String city, String street, String startDayWork, String endDayWork, String startHourWork, String endHourWork, int experience, String biography) {
+    public Doctor(String id, String username, String specialization, String phone, String gender, String country, String city, String street, String startDayWork, String endDayWork, String startHourWork, String endHourWork, int experience, String biography) {
         this.id = id;
         this.username = username;
         this.specialization = specialization;
@@ -56,7 +55,6 @@ public class Doctor implements Parcelable {
         id = in.readString();
         username = in.readString();
         specialization = in.readString();
-        rating = in.readFloat();
         phone = in.readString();
         gender = in.readString();
         country = in.readString();
@@ -159,14 +157,6 @@ public class Doctor implements Parcelable {
         this.username = username;
     }
 
-    public float getRating() {
-        return rating;
-    }
-
-    public void setRating(float rating) {
-        this.rating = rating;
-    }
-
     public String getPhone() {
         return phone;
     }
@@ -211,7 +201,6 @@ public class Doctor implements Parcelable {
         parcel.writeString(id);
         parcel.writeString(username);
         parcel.writeString(specialization);
-        parcel.writeFloat(rating);
         parcel.writeString(phone);
         parcel.writeString(gender);
         parcel.writeString(country);

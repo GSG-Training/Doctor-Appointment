@@ -121,7 +121,7 @@
     <string name="work_day_error">The start day must be different from the end day</string>
     <string name="start_hour_error">You must choose start hour</string>
     <string name="end_hour_error">You must choose end hour</string>
-    <string name="time_case_error">You must enter time for each case</string>
+    <string name="time_error">You must choose the time!</string>
     <string name="days">Days:</string>
     <string name="to">to</string>
     <string name="time">Times:</string>
@@ -143,5 +143,12 @@
     <string name="more">More</string>
     <string name="content_error">Content must entered!</string>
     <string name="subject_error">Subject must entered!</string>
+    <string name="date_error">You must choose date!</string>
+    <string name="time_not_valid">Choose valid time</string>
+    <string name="day_not_valid">Choose valid day</string>
+    <string name="success_book_appointment">The doctor confirm your appointment in soon</string>
+    <string name="no_orders">No orders to display</string>
+    <string name="cancel_success">Appointment canceled successfully</string>
+    <string name="done">Done</string>
 
 </resources>

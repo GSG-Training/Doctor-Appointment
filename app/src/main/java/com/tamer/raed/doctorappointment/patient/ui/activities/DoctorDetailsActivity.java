@@ -19,7 +19,7 @@ import com.tamer.raed.doctorappointment.model.Doctor;
 public class DoctorDetailsActivity extends AppCompatActivity {
     private ImageView imageView;
     private TextView tv_username, tv_specialization, tv_number_of_patient,
-            tv_rating, tv_experience, tv_address, tv_phone, tv_biography;
+            tv_experience, tv_address, tv_phone, tv_biography;
     private Doctor doctor;
 
     @SuppressLint("SetTextI18n")
@@ -36,7 +36,6 @@ public class DoctorDetailsActivity extends AppCompatActivity {
             tv_username.setText(doctor.getUsername());
             tv_specialization.setText(doctor.getSpecialization());
             tv_number_of_patient.setText(String.valueOf(doctor.getNumberOfPatient()));
-            tv_rating.setText(String.valueOf(doctor.getRating()));
             tv_experience.setText(String.valueOf(doctor.getExperience()));
             tv_address.setText(doctor.getCountry() + "-" + doctor.getCity() + "-" + doctor.getStreet());
             tv_phone.setText(doctor.getPhone());
@@ -50,7 +49,6 @@ public class DoctorDetailsActivity extends AppCompatActivity {
         tv_username = findViewById(R.id.patient_doctor_details_tv_username);
         tv_specialization = findViewById(R.id.patient_doctor_details_tv_specialization);
         tv_number_of_patient = findViewById(R.id.patient_doctor_details_tv_number_of_patient);
-        tv_rating = findViewById(R.id.patient_doctor_details_tv_rating);
         tv_experience = findViewById(R.id.patient_doctor_details_tv_experience);
         tv_address = findViewById(R.id.patient_doctor_details_tv_address);
         tv_phone = findViewById(R.id.patient_doctor_details_tv_phone);

@@ -1,43 +1,70 @@
 package com.tamer.raed.doctorappointment.model;
 
-import java.util.Date;
-
 public class Appointment {
-    private int doctorId;
-    private int patientId;
-    private Date date;
+    private String doctorId;
+    private String patientId;
+    private int day;
+    private String month;
+    private String year;
+    private String time;
 
-    public Appointment(int doctorId, int patientId, Date date) {
+    public Appointment(String doctorId, String patientId, int day, String month, String year, String time) {
         this.doctorId = doctorId;
         this.patientId = patientId;
-        this.date = date;
+        this.day = day;
+        this.month = month;
+        this.year = year;
+        this.time = time;
     }
 
-    public Appointment(int doctorId) {
-        this.doctorId = doctorId;
+    public Appointment() {
     }
 
-    public int getDoctorId() {
+    public int getDay() {
+        return day;
+    }
+
+    public void setDay(int day) {
+        this.day = day;
+    }
+
+    public String getMonth() {
+        return month;
+    }
+
+    public void setMonth(String month) {
+        this.month = month;
+    }
+
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public String getDoctorId() {
         return doctorId;
     }
 
-    public void setDoctorId(int doctorId) {
+    public void setDoctorId(String doctorId) {
         this.doctorId = doctorId;
     }
 
-    public int getPatientId() {
+    public String getPatientId() {
         return patientId;
     }
 
-    public void setPatientId(int patientId) {
+    public void setPatientId(String patientId) {
         this.patientId = patientId;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
     }
 }

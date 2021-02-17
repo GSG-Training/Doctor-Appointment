@@ -21,17 +21,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 import com.tamer.raed.doctorappointment.R;
 import com.tamer.raed.doctorappointment.model.Patient;
 
@@ -54,7 +48,6 @@ public class PatientSignUpActivity extends AppCompatActivity {
     private Button signUpBtn;
     private static final int PERMISSION_CODE = 1001;
     private CircleImageView imageView;
-    private FirebaseStorage storage;
     private StorageReference storageReference;
     private Uri filePath;
     private String userId;
@@ -69,26 +62,23 @@ public class PatientSignUpActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         toolbar.setNavigationIcon(ContextCompat.getDrawable(this, R.drawable.ic_arrow));
         toolbar.setNavigationOnClickListener(view -> onBackPressed());
-        storage = FirebaseStorage.getInstance();
+        FirebaseStorage storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
-                            == PackageManager.PERMISSION_DENIED) {
-                        //permission not granted, request it.
-                        String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
-                        //show popup for runtime permission
-                        requestPermissions(permissions, PERMISSION_CODE);
-                    } else {
-                        //permission already granted
-                        pickImageFromGallery();
-                    }
+        imageView.setOnClickListener(view -> {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                        == PackageManager.PERMISSION_DENIED) {
+                    //permission not granted, request it.
+                    String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
+                    //show popup for runtime permission
+                    requestPermissions(permissions, PERMISSION_CODE);
                 } else {
-                    //system os is less then marshmallow
+                    //permission already granted
                     pickImageFromGallery();
                 }
+            } else {
+                //system os is less then marshmallow
+                pickImageFromGallery();
             }
         });
     }
@@ -137,44 +127,38 @@ public class PatientSignUpActivity extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
-        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    userId = mAuth.getCurrentUser().getUid();
-                    Patient patient = new Patient(userId, username, phone, gender, email);
-                    db = FirebaseFirestore.getInstance();
-                    db.collection("Patients").document(userId).set(patient).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                Map<String, Object> map2 = new HashMap<>();
-                                map2.put("id", userId);
-                                map2.put("accountType", "patient");
-                                db.collection("Users").document(userId).set(map2).addOnCompleteListener(task2 -> {
-                                    if (task2.isSuccessful()) {
-                                        uploadImage();
-                                        Toast.makeText(PatientSignUpActivity.this, getString(R.string.success_sign_up), Toast.LENGTH_SHORT).show();
-                                        progressBar.setVisibility(View.GONE);
-                                        signUpBtn.setVisibility(View.VISIBLE);
-                                        Intent intent = new Intent(PatientSignUpActivity.this, PatientDashboardActivity.class);
-                                        intent.putExtra("id", userId);
-                                        startActivity(intent);
-                                        finish();
-                                    } else {
-                                        Toast.makeText(PatientSignUpActivity.this, getString(R.string.error_sign_up), Toast.LENGTH_SHORT).show();
-                                    }
-                                });
+        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                userId = mAuth.getCurrentUser().getUid();
+                Patient patient = new Patient(userId, username, phone, gender, email);
+                db = FirebaseFirestore.getInstance();
+                db.collection("Patients").document(userId).set(patient).addOnCompleteListener(task1 -> {
+                    if (task1.isSuccessful()) {
+                        Map<String, Object> map2 = new HashMap<>();
+                        map2.put("id", userId);
+                        map2.put("accountType", "patient");
+                        db.collection("Users").document(userId).set(map2).addOnCompleteListener(task2 -> {
+                            if (task2.isSuccessful()) {
+                                uploadImage();
+                                Toast.makeText(PatientSignUpActivity.this, getString(R.string.success_sign_up), Toast.LENGTH_SHORT).show();
+                                progressBar.setVisibility(View.GONE);
+                                signUpBtn.setVisibility(View.VISIBLE);
+                                Intent intent = new Intent(PatientSignUpActivity.this, PatientDashboardActivity.class);
+                                intent.putExtra("id", userId);
+                                startActivity(intent);
+                                finish();
                             } else {
                                 Toast.makeText(PatientSignUpActivity.this, getString(R.string.error_sign_up), Toast.LENGTH_SHORT).show();
                             }
-                        }
-                    });
-                } else {
-                    progressBar.setVisibility(View.GONE);
-                    signUpBtn.setVisibility(View.VISIBLE);
-                    Toast.makeText(PatientSignUpActivity.this, getString(R.string.error_sign_up), Toast.LENGTH_SHORT).show();
-                }
+                        });
+                    } else {
+                        Toast.makeText(PatientSignUpActivity.this, getString(R.string.error_sign_up), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } else {
+                progressBar.setVisibility(View.GONE);
+                signUpBtn.setVisibility(View.VISIBLE);
+                Toast.makeText(PatientSignUpActivity.this, getString(R.string.error_sign_up), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -199,16 +183,14 @@ public class PatientSignUpActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case PERMISSION_CODE: {
-                if (grantResults.length > 0 && grantResults[0] ==
-                        PackageManager.PERMISSION_GRANTED) {
-                    //permission was granted
-                    pickImageFromGallery();
-                } else {
-                    //permission was denied
-                    Toast.makeText(this, getString(R.string.permissions_error), Toast.LENGTH_SHORT).show();
-                }
+        if (requestCode == PERMISSION_CODE) {
+            if (grantResults.length > 0 && grantResults[0] ==
+                    PackageManager.PERMISSION_GRANTED) {
+                //permission was granted
+                pickImageFromGallery();
+            } else {
+                //permission was denied
+                Toast.makeText(this, getString(R.string.permissions_error), Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -244,20 +226,14 @@ public class PatientSignUpActivity extends AppCompatActivity {
             StorageReference ref = storageReference.child("profileImages/").child(userId);
             // adding listeners on upload
             // or failure of image
-            ref.putFile(filePath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    // Image uploaded successfully
-                    // Dismiss dialog
-                    Toast.makeText(PatientSignUpActivity.this, "Image Uploaded!!", Toast.LENGTH_SHORT).show();
+            ref.putFile(filePath).addOnSuccessListener(taskSnapshot -> {
+                // Image uploaded successfully
+                // Dismiss dialog
+                Toast.makeText(PatientSignUpActivity.this, "Image Uploaded!!", Toast.LENGTH_SHORT).show();
 
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    // Error, Image not uploaded
-                    Toast.makeText(PatientSignUpActivity.this, "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
+            }).addOnFailureListener(e -> {
+                // Error, Image not uploaded
+                Toast.makeText(PatientSignUpActivity.this, "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
             });
         }
 

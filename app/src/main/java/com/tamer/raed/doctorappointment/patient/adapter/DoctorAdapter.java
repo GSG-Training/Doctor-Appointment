@@ -55,14 +55,14 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.DoctorView
 
     class DoctorViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
-        TextView tv_username, tv_category, tv_rating;
+        TextView tv_username, tv_category, tv_phone;
 
         public DoctorViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.item_doctor_iv);
             tv_username = itemView.findViewById(R.id.item_doctor_tv_username);
             tv_category = itemView.findViewById(R.id.item_doctor_tv_category);
-            tv_rating = itemView.findViewById(R.id.item_doctor_tv_rating);
+            tv_phone = itemView.findViewById(R.id.item_doctor_tv_phone);
         }
 
         private void bind(Doctor doctor) {
@@ -73,7 +73,7 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.DoctorView
                     .into(imageView)).addOnFailureListener(exception -> Toast.makeText(context, context.getString(R.string.image_error), Toast.LENGTH_SHORT).show());
             tv_username.setText(doctor.getUsername());
             tv_category.setText(doctor.getSpecialization());
-            tv_rating.setText(String.valueOf(doctor.getRating()));
+            tv_phone.setText(String.valueOf(doctor.getPhone()));
             itemView.setOnClickListener(view -> listener.onItemClick(doctor));
         }
     }

@@ -9,8 +9,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.tamer.raed.doctorappointment.R;
 import com.tamer.raed.doctorappointment.model.Appointment;
+import com.tamer.raed.doctorappointment.model.Patient;
 
 import java.util.List;
 
@@ -41,8 +45,6 @@ public class DoctorUpcomingAppointmentAdapter extends RecyclerView.Adapter<Docto
     }
 
     public interface OnItemClickListener {
-        void onClick(int position);
-
         void onMoreImageButtonClick(View view, int position);
     }
 
@@ -60,18 +62,28 @@ public class DoctorUpcomingAppointmentAdapter extends RecyclerView.Adapter<Docto
             tv_time = itemView.findViewById(R.id.item_appointment_time);
             tv_doctor_phone = itemView.findViewById(R.id.item_appointment_phone);
 
-            itemView.setOnClickListener(view -> onItemClickListener.onClick(getBindingAdapterPosition()));
-            imageButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    onItemClickListener.onMoreImageButtonClick(view, getBindingAdapterPosition());
-                }
-            });
+            imageButton.setOnClickListener(view -> onItemClickListener.onMoreImageButtonClick(view, getBindingAdapterPosition()));
 
         }
 
         private void bind(Appointment appointment) {
-            // TODO: get the data from firebase using doctor appointment from appointment object
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            DocumentReference docRef = db.collection("Patients").document(appointment.getPatientId());
+            docRef.get().addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Patient patient = document.toObject(Patient.class);
+                        if (patient != null) {
+                            tv_doctor_username.setText(patient.getName());
+                            tv_doctor_phone.setText(patient.getPhone());
+                        }
+                    }
+                }
+            });
+            tv_day.setText(String.valueOf(appointment.getDay()));
+            tv_month.setText(appointment.getMonth());
+            tv_time.setText(appointment.getTime());
             tv_specialization.setVisibility(View.GONE);
         }
     }
