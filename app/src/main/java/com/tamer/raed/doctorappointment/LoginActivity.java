@@ -106,22 +106,15 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     });
                 } else {
+                    Alerter.create(this)
+                            .setTitle(getString(R.string.verify_email))
+                            .setText(getString(R.string.check_email))
+                            .setDuration(5000)
+                            .setBackgroundColorRes(R.color.teal_200)
+                            .show();
                     firebaseUser.sendEmailVerification()
-                            .addOnCompleteListener(this, task1 -> {
-                                if (task1.isSuccessful()) {
-                                    Alerter.create(this)
-                                            .setTitle(getString(R.string.verify_email))
-                                            .setText(getString(R.string.check_email))
-                                            .setDuration(5000)
-                                            .setBackgroundColorRes(R.color.teal_200)
-                                            .show();
-                                } else {
-                                    Alerter.create(this)
-                                            .setText(getString(R.string.general_error))
-                                            .setDuration(5000)
-                                            .setBackgroundColorRes(R.color.teal_200)
-                                            .show();
-                                }
+                            .addOnCompleteListener(task1 -> {
+
                             });
                     progressBar.setVisibility(View.GONE);
                     login_btn.setVisibility(View.VISIBLE);
