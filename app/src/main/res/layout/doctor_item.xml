@@ -15,7 +15,7 @@
         android:layout_marginStart="@dimen/_8sdp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/ic_user_account" />
+        android:src="@drawable/ic_user_account" />
 
     <TextView
         android:id="@+id/item_doctor_tv_username"

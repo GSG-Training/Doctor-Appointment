@@ -140,24 +140,24 @@ public class DoctorUpcomingAppointmentsFragment extends Fragment {
                                 db.collection("PatientAppointments").document(patientId).collection("Appointments").document(doctorId).delete();
                                 Alerter.create(getActivity())
                                         .setText(getString(R.string.done))
-                                        .setDuration(5000)
-                                        .setBackgroundColorRes(R.color.purple_700)
+                                        .setDuration(3000)
+                                        .setBackgroundColorRes(R.color.teal_200)
                                         .show();
                             }
                         });
                     } else {
                         Alerter.create(getActivity())
                                 .setText(getString(R.string.general_error))
-                                .setDuration(5000)
-                                .setBackgroundColorRes(R.color.purple_700)
+                                .setDuration(3000)
+                                .setBackgroundColorRes(R.color.teal_200)
                                 .show();
                     }
                 });
             } else {
                 Alerter.create(getActivity())
                         .setText(getString(R.string.general_error))
-                        .setDuration(5000)
-                        .setBackgroundColorRes(R.color.purple_700)
+                        .setDuration(3000)
+                        .setBackgroundColorRes(R.color.teal_200)
                         .show();
             }
         });

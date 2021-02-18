@@ -44,13 +44,14 @@
         app:layout_constraintStart_toStartOf="@+id/guideline6"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
-    <Spinner
+    <androidx.appcompat.widget.AppCompatSpinner
         android:id="@+id/account_type_spinner"
         android:layout_width="0dp"
         android:layout_height="?actionBarSize"
         android:layout_marginTop="@dimen/_16sdp"
         android:background="@drawable/spinner_border2"
         android:textColor="@color/white"
+        android:theme="@style/Spinner"
         android:entries="@array/account_type"
         app:layout_constraintEnd_toStartOf="@+id/guideline7"
         app:layout_constraintStart_toStartOf="@+id/guideline6"
@@ -73,12 +74,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|start"
+        android:layout_marginBottom="@dimen/_12sdp"
         android:padding="@dimen/_8sdp"
         android:text="@string/have_account"
-        android:textSize="@dimen/_12sdp"
         android:textColor="@color/white"
+        android:textSize="@dimen/_12sdp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="@+id/guideline6" />
 
     <TextView
         android:id="@+id/welcome_tv_login"

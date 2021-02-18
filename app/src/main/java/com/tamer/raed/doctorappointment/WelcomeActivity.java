@@ -19,7 +19,7 @@ public class WelcomeActivity extends AppCompatActivity {
     private Button btnSignUp;
     private TextView tvLogin;
     private Spinner spinner;
-    private String accountType;
+    String accountType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

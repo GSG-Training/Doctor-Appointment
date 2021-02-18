@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -18,8 +17,9 @@ import androidx.core.content.ContextCompat;
 
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
+import com.tamer.raed.doctorappointment.LoginActivity;
 import com.tamer.raed.doctorappointment.R;
-import com.tamer.raed.doctorappointment.doctor.ui.activities.DoctorDashboardActivity;
+import com.tapadoo.alerter.Alerter;
 
 import java.sql.Time;
 import java.text.SimpleDateFormat;
@@ -77,13 +77,25 @@ public class WorkHoursActivity extends AppCompatActivity {
 
     private boolean checkFields() {
         if (start_day_spinner.getSelectedItemPosition() == 0) {
-            Toast.makeText(this, getText(R.string.start_day_error), Toast.LENGTH_LONG).show();
+            Alerter.create(this)
+                    .setText(getString(R.string.start_day_error))
+                    .setDuration(5000)
+                    .setBackgroundColorRes(R.color.teal_200)
+                    .show();
             return false;
         } else if (end_day_spinner.getSelectedItemPosition() == 0) {
-            Toast.makeText(this, getText(R.string.end_day_error), Toast.LENGTH_LONG).show();
+            Alerter.create(this)
+                    .setText(getString(R.string.end_day_error))
+                    .setDuration(5000)
+                    .setBackgroundColorRes(R.color.teal_200)
+                    .show();
             return false;
         } else if (start_day_spinner.getSelectedItemPosition() == end_day_spinner.getSelectedItemPosition()) {
-            Toast.makeText(this, getText(R.string.work_day_error), Toast.LENGTH_LONG).show();
+            Alerter.create(this)
+                    .setText(getString(R.string.work_day_error))
+                    .setDuration(5000)
+                    .setBackgroundColorRes(R.color.teal_200)
+                    .show();
             return false;
         } else if (!TextUtils.isEmpty(start_hour_tv.getText().toString())) {
             start_day = start_day_spinner.getSelectedItem().toString();
@@ -93,11 +105,19 @@ public class WorkHoursActivity extends AppCompatActivity {
                 end_hour = end_hour_tv.getText().toString();
                 return true;
             } else {
-                end_hour_tv.setError(getString(R.string.end_hour_error));
+                Alerter.create(this)
+                        .setText(getString(R.string.end_hour_error))
+                        .setDuration(5000)
+                        .setBackgroundColorRes(R.color.teal_200)
+                        .show();
                 return false;
             }
         } else {
-            start_hour_tv.setError(getString(R.string.start_hour_error));
+            Alerter.create(this)
+                    .setText(getString(R.string.start_hour_error))
+                    .setDuration(5000)
+                    .setBackgroundColorRes(R.color.teal_200)
+                    .show();
             return false;
         }
 
@@ -147,11 +167,15 @@ public class WorkHoursActivity extends AppCompatActivity {
             if (task1.isSuccessful()) {
                 progressBar.setVisibility(View.GONE);
                 group.setVisibility(View.VISIBLE);
-                Intent intent = new Intent(WorkHoursActivity.this, DoctorDashboardActivity.class);
+                Intent intent = new Intent(WorkHoursActivity.this, LoginActivity.class);
                 intent.putExtra("id", userId);
                 startActivity(intent);
             } else {
-                Toast.makeText(WorkHoursActivity.this, getString(R.string.error_sign_up), Toast.LENGTH_SHORT).show();
+                Alerter.create(this)
+                        .setText(getString(R.string.error_sign_up))
+                        .setDuration(5000)
+                        .setBackgroundColorRes(R.color.teal_200)
+                        .show();
             }
         });
     }

@@ -89,13 +89,13 @@ public class DoctorOrdersFragment extends Fragment {
                 Alerter.create(getActivity())
                         .setText(getString(R.string.cancel_success))
                         .setDuration(5000)
-                        .setBackgroundColorRes(R.color.purple_700)
+                        .setBackgroundColorRes(R.color.teal_200)
                         .show();
             } else {
                 Alerter.create(getActivity())
                         .setText(getString(R.string.general_error))
                         .setDuration(5000)
-                        .setBackgroundColorRes(R.color.purple_700)
+                        .setBackgroundColorRes(R.color.teal_200)
                         .show();
             }
         });
@@ -128,7 +128,6 @@ public class DoctorOrdersFragment extends Fragment {
         Appointment appointment = appointments.get(position);
         String patientId = appointment.getPatientId();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        String document = patientId + doctorId;
 
         db.collection("DoctorAppointments").document(doctorId).collection("Appointments").document(patientId).set(appointment).addOnCompleteListener(task2 -> {
             if (task2.isSuccessful()) {
@@ -137,22 +136,22 @@ public class DoctorOrdersFragment extends Fragment {
                         db.collection("PatientAppointments").document(patientId).collection("Appointments").document(doctorId).set(appointment);
                         Alerter.create(getActivity())
                                 .setText(getString(R.string.accept))
-                                .setDuration(5000)
-                                .setBackgroundColorRes(R.color.purple_700)
+                                .setDuration(3000)
+                                .setBackgroundColorRes(R.color.teal_200)
                                 .show();
                     } else {
                         Alerter.create(getActivity())
                                 .setText(getString(R.string.general_error))
-                                .setDuration(5000)
-                                .setBackgroundColorRes(R.color.purple_700)
+                                .setDuration(3000)
+                                .setBackgroundColorRes(R.color.teal_200)
                                 .show();
                     }
                 });
             } else {
                 Alerter.create(getActivity())
                         .setText(getString(R.string.general_error))
-                        .setDuration(5000)
-                        .setBackgroundColorRes(R.color.purple_700)
+                        .setDuration(3000)
+                        .setBackgroundColorRes(R.color.teal_200)
                         .show();
             }
         });

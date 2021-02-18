@@ -12,7 +12,8 @@
         android:roundIcon="@drawable/ic_health_insurance"
         android:supportsRtl="true"
         android:theme="@style/Theme.DoctorAppointment">
-        <activity android:name=".doctor.ui.activities.signUpActivities.WorkHoursActivity"></activity>
+        <activity android:name=".ForgetPasswordActivity"></activity>
+        <activity android:name=".doctor.ui.activities.signUpActivities.WorkHoursActivity" />
         <activity android:name=".doctor.ui.activities.signUpActivities.AddressActivity" />
         <activity android:name=".doctor.ui.activities.signUpActivities.SpecializationActivity" />
         <activity android:name=".doctor.ui.activities.signUpActivities.PersonalDataActivity" />

@@ -31,8 +31,7 @@
         android:id="@+id/doctor_frameLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?actionBarSize"
-        android:padding="@dimen/_8sdp" />
+        android:layout_marginTop="?actionBarSize" />
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/doctor_navigation_view"

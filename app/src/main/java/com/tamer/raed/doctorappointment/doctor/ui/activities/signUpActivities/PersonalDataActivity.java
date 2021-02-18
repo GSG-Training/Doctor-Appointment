@@ -23,10 +23,12 @@ import androidx.core.content.ContextCompat;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.tamer.raed.doctorappointment.R;
+import com.tapadoo.alerter.Alerter;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -133,24 +135,18 @@ public class PersonalDataActivity extends AppCompatActivity {
 
     public void chooseImage(View view) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
-                    == PackageManager.PERMISSION_DENIED) {
-                //permission not granted, request it.
+            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
                 String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
-                //show popup for runtime permission
                 requestPermissions(permissions, PERMISSION_CODE);
             } else {
-                //permission already granted
                 pickImageFromGallery();
             }
         } else {
-            //system os is less then marshmallow
             pickImageFromGallery();
         }
     }
 
     private void pickImageFromGallery() {
-        //intent to pick image
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_GET_CONTENT);
         intent.setType("image/*");
@@ -162,12 +158,9 @@ public class PersonalDataActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == PERMISSION_CODE) {
-            if (grantResults.length > 0 && grantResults[0] ==
-                    PackageManager.PERMISSION_GRANTED) {
-                //permission was granted
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 pickImageFromGallery();
             } else {
-                //permission was denied
                 Toast.makeText(this, getString(R.string.permissions_error), Toast.LENGTH_SHORT).show();
             }
         }
@@ -176,23 +169,12 @@ public class PersonalDataActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == IMAGE_PICK_CODE
-                && resultCode == RESULT_OK
-                && data != null
-                && data.getData() != null) {
+        if (requestCode == IMAGE_PICK_CODE && resultCode == RESULT_OK && data != null && data.getData() != null) {
             filePath = data.getData();
             try {
-
-                // Setting image on image view using Bitmap
-                Bitmap bitmap = MediaStore
-                        .Images
-                        .Media
-                        .getBitmap(
-                                getContentResolver(),
-                                filePath);
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
                 imageView.setImageBitmap(bitmap);
             } catch (IOException e) {
-                // Log the exception
                 e.printStackTrace();
             }
         }
@@ -203,9 +185,17 @@ public class PersonalDataActivity extends AppCompatActivity {
             StorageReference ref = storageReference.child("profileImages/").child(userId);
             ref.putFile(filePath)
                     .addOnSuccessListener(taskSnapshot ->
-                            Toast.makeText(PersonalDataActivity.this, "Image Uploaded!!", Toast.LENGTH_SHORT).show())
+                            Alerter.create(this)
+                                    .setText(getString(R.string.image_uploaded))
+                                    .setDuration(5000)
+                                    .setBackgroundColorRes(R.color.teal_200)
+                                    .show())
                     .addOnFailureListener(e ->
-                            Toast.makeText(PersonalDataActivity.this, "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show());
+                            Alerter.create(this)
+                                    .setText(getString(R.string.image_fail_uploaded))
+                                    .setDuration(5000)
+                                    .setBackgroundColorRes(R.color.teal_200)
+                                    .show());
         }
 
     }
@@ -217,44 +207,68 @@ public class PersonalDataActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                userId = mAuth.getCurrentUser().getUid();
-                db = FirebaseFirestore.getInstance();
+                FirebaseUser firebaseUser = mAuth.getCurrentUser();
+                if (!firebaseUser.isEmailVerified()) {
+                    firebaseUser.sendEmailVerification()
+                            .addOnCompleteListener(task12 -> {
+                                if (task12.isSuccessful()) {
+                                    userId = mAuth.getCurrentUser().getUid();
+                                    db = FirebaseFirestore.getInstance();
+                                    Map<String, Object> user = new HashMap<>();
+                                    user.put("id", userId);
+                                    user.put("username", username);
+                                    user.put("email", email);
+                                    user.put("phone", phone);
+                                    user.put("gender", gender);
 
-                Map<String, Object> user = new HashMap<>();
-                user.put("id", userId);
-                user.put("username", username);
-                user.put("email", email);
-                user.put("phone", phone);
-                user.put("gender", gender);
+                                    db.collection("Doctors").document(userId).set(user).addOnCompleteListener(task1 -> {
+                                        if (task1.isSuccessful()) {
+                                            uploadImage();
+                                            Map<String, Object> map2 = new HashMap<>();
+                                            map2.put("id", userId);
+                                            map2.put("accountType", "doctor");
+                                            db.collection("Users").document(userId).set(map2).addOnCompleteListener(task2 -> {
+                                                if (task2.isSuccessful()) {
+                                                    progressBar.setVisibility(View.GONE);
+                                                    group.setVisibility(View.VISIBLE);
+                                                    Intent intent = new Intent(PersonalDataActivity.this, SpecializationActivity.class);
+                                                    intent.putExtra("id", userId);
+                                                    startActivity(intent);
+                                                } else {
+                                                    Alerter.create(this)
+                                                            .setText(getString(R.string.error_sign_up))
+                                                            .setDuration(5000)
+                                                            .setBackgroundColorRes(R.color.teal_200)
+                                                            .show();
+                                                }
+                                            });
+                                        } else {
+                                            Alerter.create(this)
+                                                    .setText(getString(R.string.error_sign_up))
+                                                    .setDuration(5000)
+                                                    .setBackgroundColorRes(R.color.teal_200)
+                                                    .show();
+                                        }
+                                    });
 
-                db.collection("Doctors").document(userId).set(user).addOnCompleteListener(task1 -> {
-                    if (task1.isSuccessful()) {
-                        uploadImage();
-                        Map<String, Object> map2 = new HashMap<>();
-                        map2.put("id", userId);
-                        map2.put("accountType", "doctor");
-                        db.collection("Users").document(userId).set(map2).addOnCompleteListener(task2 -> {
-                            if (task2.isSuccessful()) {
-                                uploadImage();
-                                progressBar.setVisibility(View.GONE);
-                                group.setVisibility(View.VISIBLE);
-                                Intent intent = new Intent(PersonalDataActivity.this, SpecializationActivity.class);
-                                intent.putExtra("id", userId);
-                                startActivity(intent);
-                            } else {
-                                Toast.makeText(PersonalDataActivity.this, getString(R.string.error_sign_up), Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    } else {
-                        Toast.makeText(PersonalDataActivity.this, getString(R.string.error_sign_up), Toast.LENGTH_SHORT).show();
-                    }
-                });
-
+                                } else {
+                                    Alerter.create(this)
+                                            .setText(getString(R.string.verify_error))
+                                            .setDuration(5000)
+                                            .setBackgroundColorRes(R.color.teal_200)
+                                            .show();
+                                }
+                            });
+                }
 
             } else {
                 progressBar.setVisibility(View.GONE);
                 group.setVisibility(View.VISIBLE);
-                Toast.makeText(PersonalDataActivity.this, getString(R.string.error_sign_up), Toast.LENGTH_SHORT).show();
+                Alerter.create(this)
+                        .setText(getString(R.string.error_sign_up))
+                        .setDuration(5000)
+                        .setBackgroundColorRes(R.color.teal_200)
+                        .show();
             }
         });
     }

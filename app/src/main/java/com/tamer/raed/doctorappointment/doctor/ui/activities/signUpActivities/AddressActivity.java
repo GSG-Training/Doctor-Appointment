@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -16,6 +15,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 import com.tamer.raed.doctorappointment.R;
+import com.tapadoo.alerter.Alerter;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -108,7 +108,11 @@ public class AddressActivity extends AppCompatActivity {
                 intent.putExtra("id", userId);
                 startActivity(intent);
             } else {
-                Toast.makeText(AddressActivity.this, getString(R.string.error_sign_up), Toast.LENGTH_SHORT).show();
+                Alerter.create(this)
+                        .setText(getString(R.string.error_sign_up))
+                        .setDuration(5000)
+                        .setBackgroundColorRes(R.color.teal_200)
+                        .show();
             }
         });
     }

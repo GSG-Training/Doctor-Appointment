@@ -1,13 +1,26 @@
 package com.tamer.raed.doctorappointment.doctor.ui.fragments.dashboardFragments;
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.Group;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
@@ -22,6 +35,8 @@ import com.tamer.raed.doctorappointment.R;
 import com.tamer.raed.doctorappointment.model.Doctor;
 import com.tapadoo.alerter.Alerter;
 
+import java.io.IOException;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class DoctorMyProfileFragment extends Fragment {
@@ -31,6 +46,10 @@ public class DoctorMyProfileFragment extends Fragment {
     private FirebaseUser firebaseUser;
     private ProgressBar progressBar;
     private Group group;
+    private static final int PERMISSION_CODE = 1001;
+    private static final int IMAGE_PICK_CODE = 1000;
+    private Uri filePath;
+    private StorageReference storageReference;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,6 +66,26 @@ public class DoctorMyProfileFragment extends Fragment {
         tv_biography = view.findViewById(R.id.doctor_my_profile_tv_biography);
         progressBar = view.findViewById(R.id.doctor_progressBar);
         group = view.findViewById(R.id.doctorMyProfileGroup);
+
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
+
+        ImageButton imageButton = view.findViewById(R.id.imgBtn_change_image);
+        imageButton.setOnClickListener(view1 -> {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
+                        == PackageManager.PERMISSION_DENIED) {
+                    String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
+                    requestPermissions(permissions, PERMISSION_CODE);
+                } else {
+                    pickImageFromGallery();
+                }
+                uploadImage();
+            } else {
+                pickImageFromGallery();
+                uploadImage();
+            }
+        });
         fillDataFromFirebase();
 
         return view;
@@ -58,6 +97,7 @@ public class DoctorMyProfileFragment extends Fragment {
         DocumentReference docRef = db.collection("Doctors").document(firebaseUser.getUid());
         docRef.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
+
                 DocumentSnapshot document = task.getResult();
                 assert document != null;
                 if (document.exists()) {
@@ -75,21 +115,22 @@ public class DoctorMyProfileFragment extends Fragment {
                                 + "\n" + doctor.getStartHourWork() + " " + getString(R.string.to) + " " + doctor.getEndHourWork();
                         tv_working_hour.setText(workHour);
                         getImageProfile();
+
                         group.setVisibility(View.VISIBLE);
                         progressBar.setVisibility(View.GONE);
                     }
                 } else {
                     Alerter.create(getActivity())
                             .setText(getString(R.string.general_error))
-                            .setDuration(5000)
-                            .setBackgroundColorRes(R.color.purple_700)
+                            .setDuration(3000)
+                            .setBackgroundColorRes(R.color.teal_200)
                             .show();
                 }
             } else {
                 Alerter.create(getActivity())
                         .setText(getString(R.string.general_error))
-                        .setDuration(5000)
-                        .setBackgroundColorRes(R.color.purple_700)
+                        .setDuration(3000)
+                        .setBackgroundColorRes(R.color.teal_200)
                         .show();
             }
         });
@@ -102,5 +143,75 @@ public class DoctorMyProfileFragment extends Fragment {
                 .load(uri)
                 .into(imageView)).addOnFailureListener(exception -> imageView.setImageResource(R.drawable.ic_user_account));
 
+    }
+
+    private void pickImageFromGallery() {
+        //intent to pick image
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        startActivityForResult(Intent.createChooser(intent, "Select Image from here..."),
+                IMAGE_PICK_CODE);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == PERMISSION_CODE) {
+            if (grantResults.length > 0 && grantResults[0] ==
+                    PackageManager.PERMISSION_GRANTED) {
+                //permission was granted
+                pickImageFromGallery();
+                uploadImage();
+            } else {
+                //permission was denied
+                Toast.makeText(getContext(), getString(R.string.permissions_error), Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == IMAGE_PICK_CODE
+                && resultCode == Activity.RESULT_OK
+                && data != null
+                && data.getData() != null) {
+            filePath = data.getData();
+            try {
+                Bitmap bitmap = MediaStore
+                        .Images
+                        .Media
+                        .getBitmap(
+                                getActivity().getApplicationContext().getContentResolver(),
+                                filePath);
+                imageView.setImageBitmap(bitmap);
+                uploadImage();
+
+            } catch (IOException e) {
+                // Log the exception
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void uploadImage() {
+        group.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        String userId = firebaseUser.getUid();
+        if (filePath != null) {
+            StorageReference ref = storageReference.child("profileImages/").child(userId);
+            ref.putFile(filePath).addOnSuccessListener(taskSnapshot -> Alerter.create(getActivity())
+                    .setText(getString(R.string.image_update))
+                    .setDuration(3000)
+                    .setBackgroundColorRes(R.color.teal_200)
+                    .show()).addOnFailureListener(e -> Alerter.create(getActivity())
+                    .setText(getString(R.string.image_update_failed))
+                    .setDuration(5000)
+                    .setBackgroundColorRes(R.color.teal_200)
+                    .show());
+        }
+        fillDataFromFirebase();
     }
 }

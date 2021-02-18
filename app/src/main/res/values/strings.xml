@@ -4,6 +4,7 @@
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="forget_password">Forget your password?</string>
+    <string name="forget_password2">Forget Password</string>
     <string name="new_user">New User?</string>
     <string name="sign_up">Sign Up</string>
     <string name="logo">logo</string>
@@ -130,7 +131,7 @@
     <string name="confirm_appointment">Confirm appointment</string>
     <string name="orders">Orders</string>
     <string name="accept">Accept</string>
-    <string name="login_error">Login failed! Please try again later</string>
+    <string name="login_error">Login failed! Please try again</string>
     <string name="success_sign_up">Successful sign up, enjoy</string>
     <string name="error_sign_up">Error in sign up, Try again</string>
     <string name="doctor">Doctor</string>
@@ -153,10 +154,14 @@
     <string name="done">Done</string>
     <string name="image_update">Image has been updated</string>
     <string name="image_update_failed">Image update failed</string>
-    <string name="success_book_appointment_titel">The appointment has been booked successfully</string>
+    <string name="success_book_appointment_title">Appointment successfully</string>
     <string name="doctor_not_found">Doctor not found!</string>
     <string name="delete_appointment">Appointment deleted successfully</string>
     <string name="image_uploaded">Image uploaded successfully</string>
     <string name="image_fail_uploaded">Failed to upload image</string>
+    <string name="check_email">Check your email</string>
+    <string name="email_send">Email Sended</string>
+    <string name="verify_email">Your email not verify</string>
+    <string name="verify_error">Failed to send verification email</string>
 
 </resources>

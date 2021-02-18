@@ -76,14 +76,14 @@ public class DoctorRecentAppointmentsFragment extends Fragment {
             if (task3.isSuccessful()) {
                 Alerter.create(getActivity())
                         .setText(getString(R.string.delete_appointment))
-                        .setDuration(5000)
-                        .setBackgroundColorRes(R.color.purple_700)
+                        .setDuration(3000)
+                        .setBackgroundColorRes(R.color.teal_200)
                         .show();
             } else {
                 Alerter.create(getActivity())
                         .setText(getString(R.string.general_error))
-                        .setDuration(5000)
-                        .setBackgroundColorRes(R.color.purple_700)
+                        .setDuration(3000)
+                        .setBackgroundColorRes(R.color.teal_200)
                         .show();
             }
         });

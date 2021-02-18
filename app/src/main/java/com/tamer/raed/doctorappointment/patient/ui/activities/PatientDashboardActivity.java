@@ -57,7 +57,6 @@ public class PatientDashboardActivity extends AppCompatActivity implements Navig
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_dashboard);
-
         initViews();
 
         setSupportActionBar(toolbar);
@@ -95,15 +94,15 @@ public class PatientDashboardActivity extends AppCompatActivity implements Navig
                 } else {
                     Alerter.create(this)
                             .setText(getString(R.string.general_error))
-                            .setDuration(5000)
-                            .setBackgroundColorRes(R.color.purple_700)
+                            .setDuration(3000)
+                            .setBackgroundColorRes(R.color.teal_200)
                             .show();
                 }
             } else {
                 Alerter.create(this)
                         .setText(getString(R.string.general_error))
-                        .setDuration(5000)
-                        .setBackgroundColorRes(R.color.purple_700)
+                        .setDuration(3000)
+                        .setBackgroundColorRes(R.color.teal_200)
                         .show();
             }
         });

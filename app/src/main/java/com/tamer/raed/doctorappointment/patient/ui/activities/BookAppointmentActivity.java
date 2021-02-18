@@ -5,6 +5,7 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -128,15 +129,15 @@ public class BookAppointmentActivity extends AppCompatActivity {
                 } else {
                     Alerter.create(this)
                             .setText(getString(R.string.time_not_valid))
-                            .setDuration(5000)
-                            .setBackgroundColorRes(R.color.purple_700)
+                            .setDuration(3000)
+                            .setBackgroundColorRes(R.color.teal_200)
                             .show();
                 }
             } else {
                 Alerter.create(this)
                         .setText(getString(R.string.day_not_valid))
-                        .setDuration(5000)
-                        .setBackgroundColorRes(R.color.purple_700)
+                        .setDuration(3000)
+                        .setBackgroundColorRes(R.color.teal_200)
                         .show();
             }
         }
@@ -156,19 +157,23 @@ public class BookAppointmentActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.GONE);
                 confirm.setVisibility(View.VISIBLE);
                 Alerter.create(this)
-                        .setTitle(R.string.success_book_appointment_titel)
+                        .setTitle(R.string.success_book_appointment_title)
                         .setText(getString(R.string.success_book_appointment))
                         .setDuration(5000)
-                        .setBackgroundColorRes(R.color.purple_700)
+                        .setBackgroundColorRes(R.color.teal_200)
                         .show();
-                Intent intent = new Intent(BookAppointmentActivity.this, PatientDashboardActivity.class);
-                startActivity(intent);
-                finish();
+
+                Handler handler = new Handler();
+                handler.postDelayed(() -> {
+                    Intent intent = new Intent(BookAppointmentActivity.this, PatientDashboardActivity.class);
+                    startActivity(intent);
+                    finish();
+                }, 5000);
             } else {
                 Alerter.create(this)
                         .setText(getString(R.string.general_error))
-                        .setDuration(5000)
-                        .setBackgroundColorRes(R.color.purple_700)
+                        .setDuration(3000)
+                        .setBackgroundColorRes(R.color.teal_200)
                         .show();
             }
         });
@@ -178,8 +183,8 @@ public class BookAppointmentActivity extends AppCompatActivity {
         if (dayString == null || monthString == null || yearString == null) {
             Alerter.create(this)
                     .setText(getString(R.string.date_error))
-                    .setDuration(5000)
-                    .setBackgroundColorRes(R.color.purple_700)
+                    .setDuration(3000)
+                    .setBackgroundColorRes(R.color.teal_200)
                     .show();
             return false;
         } else if (!TextUtils.isEmpty(tv_time.getText().toString())) {
@@ -188,8 +193,8 @@ public class BookAppointmentActivity extends AppCompatActivity {
         } else {
             Alerter.create(this)
                     .setText(getString(R.string.time_error))
-                    .setDuration(5000)
-                    .setBackgroundColorRes(R.color.purple_700)
+                    .setDuration(3000)
+                    .setBackgroundColorRes(R.color.teal_200)
                     .show();
             return false;
         }
@@ -208,9 +213,7 @@ public class BookAppointmentActivity extends AppCompatActivity {
                     Glide.with(getApplicationContext()).load(uri).into(imageView);
                     imageView.setVisibility(View.VISIBLE);
                 })
-                .addOnFailureListener(exception -> {
-                    imageView.setImageResource(R.drawable.ic_user_account);
-                });
+                .addOnFailureListener(exception -> imageView.setImageResource(R.drawable.ic_user_account));
 
     }
 

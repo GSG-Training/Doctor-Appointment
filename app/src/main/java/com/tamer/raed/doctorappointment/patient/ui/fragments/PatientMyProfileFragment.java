@@ -68,26 +68,23 @@ public class PatientMyProfileFragment extends Fragment {
         FirebaseStorage storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
         ImageButton imageButton = view.findViewById(R.id.imgBtn_change_image);
-        imageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
-                            == PackageManager.PERMISSION_DENIED) {
-                        //permission not granted, request it.
-                        String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
-                        //show popup for runtime permission
-                        requestPermissions(permissions, PERMISSION_CODE);
-                    } else {
-                        //permission already granted
-                        pickImageFromGallery();
-                    }
-                    uploadImage();
+        imageButton.setOnClickListener(view1 -> {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
+                        == PackageManager.PERMISSION_DENIED) {
+                    //permission not granted, request it.
+                    String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
+                    //show popup for runtime permission
+                    requestPermissions(permissions, PERMISSION_CODE);
                 } else {
-                    //system os is less then marshmallow
+                    //permission already granted
                     pickImageFromGallery();
-                    uploadImage();
                 }
+                uploadImage();
+            } else {
+                //system os is less then marshmallow
+                pickImageFromGallery();
+                uploadImage();
             }
         });
         fillDataFromFirebase();
@@ -116,15 +113,15 @@ public class PatientMyProfileFragment extends Fragment {
                 } else {
                     Alerter.create(getActivity())
                             .setText(getString(R.string.general_error))
-                            .setDuration(5000)
-                            .setBackgroundColorRes(R.color.purple_700)
+                            .setDuration(3000)
+                            .setBackgroundColorRes(R.color.teal_200)
                             .show();
                 }
             } else {
                 Alerter.create(getActivity())
                         .setText(getString(R.string.general_error))
-                        .setDuration(5000)
-                        .setBackgroundColorRes(R.color.purple_700)
+                        .setDuration(3000)
+                        .setBackgroundColorRes(R.color.teal_200)
                         .show();
             }
         });
@@ -171,23 +168,14 @@ public class PatientMyProfileFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == IMAGE_PICK_CODE
-                && resultCode == Activity.RESULT_OK
-                && data != null
-                && data.getData() != null) {
+        if (requestCode == IMAGE_PICK_CODE && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
             filePath = data.getData();
             try {
-                Bitmap bitmap = MediaStore
-                        .Images
-                        .Media
-                        .getBitmap(
-                                getActivity().getApplicationContext().getContentResolver(),
-                                filePath);
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getApplicationContext().getContentResolver(), filePath);
                 imageView.setImageBitmap(bitmap);
                 uploadImage();
 
             } catch (IOException e) {
-                // Log the exception
                 e.printStackTrace();
             }
         }
@@ -203,14 +191,14 @@ public class PatientMyProfileFragment extends Fragment {
             ref.putFile(filePath).addOnSuccessListener(taskSnapshot -> {
                 Alerter.create(getActivity())
                         .setText(getString(R.string.image_update))
-                        .setDuration(5000)
-                        .setBackgroundColorRes(R.color.purple_700)
+                        .setDuration(3000)
+                        .setBackgroundColorRes(R.color.teal_200)
                         .show();
             }).addOnFailureListener(e -> {
                 Alerter.create(getActivity())
                         .setText(getString(R.string.image_update_failed))
-                        .setDuration(5000)
-                        .setBackgroundColorRes(R.color.purple_700)
+                        .setDuration(3000)
+                        .setBackgroundColorRes(R.color.teal_200)
                         .show();
             });
         }

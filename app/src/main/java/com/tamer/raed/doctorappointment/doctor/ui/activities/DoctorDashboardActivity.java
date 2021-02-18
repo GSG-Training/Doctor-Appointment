@@ -50,7 +50,6 @@ public class DoctorDashboardActivity extends AppCompatActivity implements Naviga
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
-    private ActionBarDrawerToggle toggle;
     private ImageView imageView;
     private TextView tv_username;
     private FirebaseUser firebaseUser;
@@ -68,7 +67,7 @@ public class DoctorDashboardActivity extends AppCompatActivity implements Naviga
         Objects.requireNonNull(getSupportActionBar()).setDefaultDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawerOpen, R.string.drawerClose);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawerOpen, R.string.drawerClose);
         toggle.getDrawerArrowDrawable().setColor(Color.WHITE);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();

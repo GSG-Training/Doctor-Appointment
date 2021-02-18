@@ -3,12 +3,10 @@ package com.tamer.raed.doctorappointment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -20,6 +18,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.tamer.raed.doctorappointment.doctor.ui.activities.DoctorDashboardActivity;
 import com.tamer.raed.doctorappointment.patient.ui.activities.PatientDashboardActivity;
+import com.tapadoo.alerter.Alerter;
 
 public class LoginActivity extends AppCompatActivity {
     private TextView tvSignUp;
@@ -73,47 +72,78 @@ public class LoginActivity extends AppCompatActivity {
         login_btn.setVisibility(View.INVISIBLE);
         progressBar.setVisibility(View.VISIBLE);
         FirebaseAuth auth = FirebaseAuth.getInstance();
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-                db = FirebaseFirestore.getInstance();
-
-                DocumentReference docRef = db.collection("Users").document(firebaseUser.getUid());
-                docRef.get().addOnCompleteListener(task2 -> {
-                    if (task2.isSuccessful()) {
-                        DocumentSnapshot document = task2.getResult();
-                        if (document.exists()) {
-                            String accountType = (String) document.get("accountType");
-                            Log.d("ddddd", accountType);
-                            if (accountType.equalsIgnoreCase("doctor")) {
-                                progressBar.setVisibility(View.GONE);
-                                login_btn.setVisibility(View.VISIBLE);
-                                startActivity(new Intent(LoginActivity.this, DoctorDashboardActivity.class));
-                                finish();
-                            } else if (accountType.equalsIgnoreCase("patient")) {
-                                progressBar.setVisibility(View.GONE);
-                                login_btn.setVisibility(View.VISIBLE);
-                                startActivity(new Intent(LoginActivity.this, PatientDashboardActivity.class));
-                                finish();
+                if (checkIfEmailVerified()) {
+                    db = FirebaseFirestore.getInstance();
+                    DocumentReference docRef = db.collection("Users").document(firebaseUser.getUid());
+                    docRef.get().addOnCompleteListener(task2 -> {
+                        if (task2.isSuccessful()) {
+                            DocumentSnapshot document = task2.getResult();
+                            if (document.exists()) {
+                                String accountType = (String) document.get("accountType");
+                                if (accountType.equalsIgnoreCase("doctor")) {
+                                    progressBar.setVisibility(View.GONE);
+                                    login_btn.setVisibility(View.VISIBLE);
+                                    startActivity(new Intent(LoginActivity.this, DoctorDashboardActivity.class));
+                                    finish();
+                                } else if (accountType.equalsIgnoreCase("patient")) {
+                                    progressBar.setVisibility(View.GONE);
+                                    login_btn.setVisibility(View.VISIBLE);
+                                    startActivity(new Intent(LoginActivity.this, PatientDashboardActivity.class));
+                                    finish();
+                                }
                             }
                         } else {
-                            Toast.makeText(getApplicationContext(), getString(R.string.general_error), Toast.LENGTH_SHORT).show();
+                            Alerter.create(this)
+                                    .setText(getString(R.string.general_error))
+                                    .setDuration(3000)
+                                    .setBackgroundColorRes(R.color.teal_200)
+                                    .show();
                             progressBar.setVisibility(View.GONE);
                             login_btn.setVisibility(View.VISIBLE);
                         }
-                    } else {
-                        Toast.makeText(getApplicationContext(), getString(R.string.general_error), Toast.LENGTH_SHORT).show();
-                        progressBar.setVisibility(View.GONE);
-                        login_btn.setVisibility(View.VISIBLE);
-                    }
-                });
-
+                    });
+                } else {
+                    firebaseUser.sendEmailVerification()
+                            .addOnCompleteListener(this, task1 -> {
+                                if (task1.isSuccessful()) {
+                                    Alerter.create(this)
+                                            .setTitle(getString(R.string.verify_email))
+                                            .setText(getString(R.string.check_email))
+                                            .setDuration(5000)
+                                            .setBackgroundColorRes(R.color.teal_200)
+                                            .show();
+                                } else {
+                                    Alerter.create(this)
+                                            .setText(getString(R.string.general_error))
+                                            .setDuration(5000)
+                                            .setBackgroundColorRes(R.color.teal_200)
+                                            .show();
+                                }
+                            });
+                    progressBar.setVisibility(View.GONE);
+                    login_btn.setVisibility(View.VISIBLE);
+                }
 
             } else {
-                Toast.makeText(getApplicationContext(), getString(R.string.login_error), Toast.LENGTH_LONG).show();
+                Alerter.create(this)
+                        .setText(getString(R.string.login_error))
+                        .setDuration(5000)
+                        .setBackgroundColorRes(R.color.teal_200)
+                        .show();
                 progressBar.setVisibility(View.GONE);
                 login_btn.setVisibility(View.VISIBLE);
             }
         });
+    }
+
+    public void forgetPassword(View view) {
+        startActivity(new Intent(LoginActivity.this, ForgetPasswordActivity.class));
+    }
+
+    private boolean checkIfEmailVerified() {
+        return firebaseUser.isEmailVerified();
     }
 }
