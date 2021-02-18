@@ -118,7 +118,7 @@ public class DoctorDashboardActivity extends AppCompatActivity implements Naviga
         StorageReference storageReference = FirebaseStorage.getInstance().getReference();
         storageReference.child("profileImages/" + userId).getDownloadUrl().addOnSuccessListener(uri -> Glide.with(getApplicationContext())
                 .load(uri)
-                .into(imageView)).addOnFailureListener(exception -> Toast.makeText(getApplicationContext(), getString(R.string.image_error), Toast.LENGTH_SHORT).show());
+                .into(imageView)).addOnFailureListener(exception -> imageView.setImageResource(R.drawable.ic_user_account));
 
     }
 

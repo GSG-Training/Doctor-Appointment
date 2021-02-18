@@ -4,25 +4,52 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/_8sdp"
     tools:context=".patient.ui.fragments.PatientMyProfileFragment">
+
+    <ImageView
+        android:id="@+id/profile_image_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:contentDescription="@string/username"
+        android:scaleType="centerCrop"
+        android:tintMode="add"
+        app:layout_constraintBottom_toTopOf="@+id/guideline3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="#9901579B"
+        tools:src="@drawable/ic_user_account" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/patient_my_profile_image_view"
         android:layout_width="@dimen/_100sdp"
         android:layout_height="@dimen/_100sdp"
+        android:background="@drawable/white_border"
         android:contentDescription="@string/username"
+        android:padding="@dimen/_3sdp"
         android:src="@drawable/ic_user_account"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.16000003" />
+        app:layout_constraintTop_toTopOf="@+id/guideline3" />
+
+    <ImageButton
+        android:id="@+id/imgBtn_change_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/camera_bg"
+        android:contentDescription="@string/camera"
+        android:padding="@dimen/_8sdp"
+        android:src="@drawable/ic_camera"
+        app:layout_constraintBottom_toBottomOf="@+id/patient_my_profile_image_view"
+        app:layout_constraintEnd_toEndOf="@+id/patient_my_profile_image_view"
+        app:layout_constraintTop_toBottomOf="@+id/patient_my_profile_image_view" />
 
     <TextView
         android:id="@+id/patient_my_profile_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8sdp"
         android:textColor="@color/dark_gray2"
         android:textSize="@dimen/_16sdp"
         android:textStyle="bold"
@@ -39,7 +66,9 @@
         android:padding="@dimen/_8sdp"
         android:src="@drawable/ic_phone_android"
         app:layout_constraintStart_toStartOf="@+id/guideline12"
-        app:layout_constraintTop_toBottomOf="@+id/patient_my_profile_username" />
+        android:contentDescription="@string/phone"
+        app:layout_constraintTop_toBottomOf="@+id/patient_my_profile_username"
+        app:tint="@color/colorPrimary" />
 
     <TextView
         android:id="@+id/patient_my_profile_phone"
@@ -58,8 +87,10 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/_8sdp"
         android:src="@drawable/ic_email"
+        android:contentDescription="@string/email"
         app:layout_constraintStart_toStartOf="@+id/guideline12"
-        app:layout_constraintTop_toBottomOf="@+id/imageView11" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView11"
+        app:tint="@color/colorPrimary" />
 
     <TextView
         android:id="@+id/patient_my_profile_email"
@@ -77,9 +108,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="@dimen/_8sdp"
+        android:contentDescription="@string/gender"
         android:src="@drawable/ic_gender"
         app:layout_constraintStart_toStartOf="@+id/guideline12"
-        app:layout_constraintTop_toBottomOf="@+id/imageView12" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView12"
+        app:tint="@color/colorPrimary" />
 
     <TextView
         android:id="@+id/patient_my_profile_gender"
@@ -104,7 +137,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:constraint_referenced_ids="imageView13,patient_my_profile_phone,imageView12,patient_my_profile_username,patient_my_profile_gender,patient_my_profile_image_view,imageView11,patient_my_profile_email"
+        app:constraint_referenced_ids="imageView13,patient_my_profile_phone,imageView12,patient_my_profile_username,patient_my_profile_gender,patient_my_profile_image_view,imageView11,patient_my_profile_email,profile_image_view,imgBtn_change_image"
         tools:layout_editor_absoluteX="10dp"
         tools:layout_editor_absoluteY="10dp" />
 
@@ -118,5 +151,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.3" />
 </androidx.constraintlayout.widget.ConstraintLayout>

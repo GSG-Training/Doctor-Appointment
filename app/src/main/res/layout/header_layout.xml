@@ -25,7 +25,6 @@
         android:textColor="@color/white"
         android:textSize="@dimen/_16sdp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/header_image_view"
         app:layout_constraintStart_toStartOf="@+id/header_image_view"
         app:layout_constraintTop_toBottomOf="@+id/header_image_view" />
 </androidx.constraintlayout.widget.ConstraintLayout>

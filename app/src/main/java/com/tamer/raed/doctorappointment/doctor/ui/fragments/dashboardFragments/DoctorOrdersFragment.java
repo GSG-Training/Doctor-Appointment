@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,6 +19,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.tamer.raed.doctorappointment.R;
 import com.tamer.raed.doctorappointment.doctor.adapters.DoctorUpcomingAppointmentAdapter;
 import com.tamer.raed.doctorappointment.model.Appointment;
+import com.tapadoo.alerter.Alerter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,10 +28,8 @@ public class DoctorOrdersFragment extends Fragment {
 
     private List<Appointment> appointments;
     private DoctorUpcomingAppointmentAdapter doctorUpcomingAppointmentAdapter;
-    private RecyclerView recyclerView;
     private ProgressBar progressBar;
     private TextView textView;
-    private FirebaseUser firebaseUser;
     private String doctorId;
 
     @SuppressLint("NonConstantResourceId")
@@ -39,10 +37,10 @@ public class DoctorOrdersFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_patient_recent_appointments, container, false);
-        recyclerView = view.findViewById(R.id.rv_recent_appointments);
+        RecyclerView recyclerView = view.findViewById(R.id.rv_recent_appointments);
         progressBar = view.findViewById(R.id.appointmentsProgressBar);
         textView = view.findViewById(R.id.appointments_state_tv);
-        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         doctorId = firebaseUser.getUid();
         appointments = new ArrayList<>();
 
@@ -88,9 +86,17 @@ public class DoctorOrdersFragment extends Fragment {
 
         db.collection("Orders").document(doctorId).collection("doctorOrders").document(patientId).delete().addOnCompleteListener(task3 -> {
             if (task3.isSuccessful()) {
-                Toast.makeText(getContext(), getString(R.string.cancel_success), Toast.LENGTH_SHORT).show();
+                Alerter.create(getActivity())
+                        .setText(getString(R.string.cancel_success))
+                        .setDuration(5000)
+                        .setBackgroundColorRes(R.color.purple_700)
+                        .show();
             } else {
-                Toast.makeText(getContext(), getString(R.string.general_error), Toast.LENGTH_SHORT).show();
+                Alerter.create(getActivity())
+                        .setText(getString(R.string.general_error))
+                        .setDuration(5000)
+                        .setBackgroundColorRes(R.color.purple_700)
+                        .show();
             }
         });
     }
@@ -128,25 +134,26 @@ public class DoctorOrdersFragment extends Fragment {
             if (task2.isSuccessful()) {
                 db.collection("Orders").document(doctorId).collection("doctorOrders").document(patientId).delete().addOnCompleteListener(task3 -> {
                     if (task3.isSuccessful()) {
-                        Toast.makeText(getContext(), getString(R.string.accept), Toast.LENGTH_SHORT).show();
+                        db.collection("PatientAppointments").document(patientId).collection("Appointments").document(doctorId).set(appointment);
+                        Alerter.create(getActivity())
+                                .setText(getString(R.string.accept))
+                                .setDuration(5000)
+                                .setBackgroundColorRes(R.color.purple_700)
+                                .show();
                     } else {
-                        Toast.makeText(getContext(), getString(R.string.general_error), Toast.LENGTH_SHORT).show();
+                        Alerter.create(getActivity())
+                                .setText(getString(R.string.general_error))
+                                .setDuration(5000)
+                                .setBackgroundColorRes(R.color.purple_700)
+                                .show();
                     }
                 });
             } else {
-                Toast.makeText(getContext(), getString(R.string.general_error), Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        db.collection("PatientAppointments").document(patientId).collection("Appointments").document(doctorId).set(appointment).addOnCompleteListener(task2 -> {
-            if (task2.isSuccessful()) {
-                if (task2.isSuccessful()) {
-                    Toast.makeText(getContext(), getString(R.string.accept), Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getContext(), getString(R.string.general_error), Toast.LENGTH_SHORT).show();
-                }
-            } else {
-                Toast.makeText(getContext(), getString(R.string.general_error), Toast.LENGTH_SHORT).show();
+                Alerter.create(getActivity())
+                        .setText(getString(R.string.general_error))
+                        .setDuration(5000)
+                        .setBackgroundColorRes(R.color.purple_700)
+                        .show();
             }
         });
     }

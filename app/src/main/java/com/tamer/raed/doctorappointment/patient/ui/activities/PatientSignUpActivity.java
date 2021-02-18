@@ -28,6 +28,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.tamer.raed.doctorappointment.R;
 import com.tamer.raed.doctorappointment.model.Patient;
+import com.tapadoo.alerter.Alerter;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -229,11 +230,19 @@ public class PatientSignUpActivity extends AppCompatActivity {
             ref.putFile(filePath).addOnSuccessListener(taskSnapshot -> {
                 // Image uploaded successfully
                 // Dismiss dialog
-                Toast.makeText(PatientSignUpActivity.this, "Image Uploaded!!", Toast.LENGTH_SHORT).show();
+                Alerter.create(this)
+                        .setText(getString(R.string.image_uploaded))
+                        .setDuration(5000)
+                        .setBackgroundColorRes(R.color.purple_700)
+                        .show();
 
             }).addOnFailureListener(e -> {
                 // Error, Image not uploaded
-                Toast.makeText(PatientSignUpActivity.this, "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                Alerter.create(this)
+                        .setText(getString(R.string.image_fail_uploaded))
+                        .setDuration(5000)
+                        .setBackgroundColorRes(R.color.purple_700)
+                        .show();
             });
         }
 

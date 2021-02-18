@@ -9,7 +9,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -24,6 +23,7 @@ import com.tamer.raed.doctorappointment.patient.adapter.CategoryAdapter;
 import com.tamer.raed.doctorappointment.patient.adapter.DoctorAdapter;
 import com.tamer.raed.doctorappointment.patient.ui.activities.DoctorDetailsActivity;
 import com.tamer.raed.doctorappointment.patient.ui.activities.SearchActivity;
+import com.tapadoo.alerter.Alerter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -104,7 +104,11 @@ public class PatientHomepageFragment extends Fragment {
                         progressBar.setVisibility(View.GONE);
                         doctor_rv.setVisibility(View.VISIBLE);
                     } else {
-                        Toast.makeText(getContext(), getString(R.string.general_error), Toast.LENGTH_SHORT).show();
+                        Alerter.create(getActivity())
+                                .setText(getString(R.string.general_error))
+                                .setDuration(5000)
+                                .setBackgroundColorRes(R.color.purple_700)
+                                .show();
                     }
                 });
     }

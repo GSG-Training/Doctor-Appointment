@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -25,6 +24,7 @@ import com.google.firebase.storage.StorageReference;
 import com.tamer.raed.doctorappointment.R;
 import com.tamer.raed.doctorappointment.model.Appointment;
 import com.tamer.raed.doctorappointment.model.Doctor;
+import com.tapadoo.alerter.Alerter;
 import com.vivekkaushik.datepicker.DatePickerTimeline;
 import com.vivekkaushik.datepicker.OnDateSelectedListener;
 
@@ -126,10 +126,18 @@ public class BookAppointmentActivity extends AppCompatActivity {
                 if (checkIsValidTime(timeString)) {
                     setAppointmentToFirebase();
                 } else {
-                    Toast.makeText(this, getString(R.string.time_not_valid), Toast.LENGTH_SHORT).show();
+                    Alerter.create(this)
+                            .setText(getString(R.string.time_not_valid))
+                            .setDuration(5000)
+                            .setBackgroundColorRes(R.color.purple_700)
+                            .show();
                 }
             } else {
-                Toast.makeText(this, getString(R.string.day_not_valid), Toast.LENGTH_SHORT).show();
+                Alerter.create(this)
+                        .setText(getString(R.string.day_not_valid))
+                        .setDuration(5000)
+                        .setBackgroundColorRes(R.color.purple_700)
+                        .show();
             }
         }
     }
@@ -145,27 +153,44 @@ public class BookAppointmentActivity extends AppCompatActivity {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("Orders").document(doctorId).collection("doctorOrders").document(patientId).set(appointment).addOnCompleteListener(task2 -> {
             if (task2.isSuccessful()) {
-                Toast.makeText(BookAppointmentActivity.this, getString(R.string.success_book_appointment), Toast.LENGTH_SHORT).show();
                 progressBar.setVisibility(View.GONE);
                 confirm.setVisibility(View.VISIBLE);
+                Alerter.create(this)
+                        .setTitle(R.string.success_book_appointment_titel)
+                        .setText(getString(R.string.success_book_appointment))
+                        .setDuration(5000)
+                        .setBackgroundColorRes(R.color.purple_700)
+                        .show();
                 Intent intent = new Intent(BookAppointmentActivity.this, PatientDashboardActivity.class);
                 startActivity(intent);
                 finish();
             } else {
-                Toast.makeText(BookAppointmentActivity.this, getString(R.string.general_error), Toast.LENGTH_SHORT).show();
+                Alerter.create(this)
+                        .setText(getString(R.string.general_error))
+                        .setDuration(5000)
+                        .setBackgroundColorRes(R.color.purple_700)
+                        .show();
             }
         });
     }
 
     private boolean checkFields() {
         if (dayString == null || monthString == null || yearString == null) {
-            Toast.makeText(this, getString(R.string.date_error), Toast.LENGTH_SHORT).show();
+            Alerter.create(this)
+                    .setText(getString(R.string.date_error))
+                    .setDuration(5000)
+                    .setBackgroundColorRes(R.color.purple_700)
+                    .show();
             return false;
         } else if (!TextUtils.isEmpty(tv_time.getText().toString())) {
             timeString = tv_time.getText().toString();
             return true;
         } else {
-            tv_time.setError(getString(R.string.time_error));
+            Alerter.create(this)
+                    .setText(getString(R.string.time_error))
+                    .setDuration(5000)
+                    .setBackgroundColorRes(R.color.purple_700)
+                    .show();
             return false;
         }
     }
@@ -185,7 +210,6 @@ public class BookAppointmentActivity extends AppCompatActivity {
                 })
                 .addOnFailureListener(exception -> {
                     imageView.setImageResource(R.drawable.ic_user_account);
-                    Toast.makeText(getApplicationContext(), getString(R.string.image_error), Toast.LENGTH_SHORT).show();
                 });
 
     }

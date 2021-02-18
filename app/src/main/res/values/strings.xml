@@ -76,6 +76,7 @@
     <string name="concat_us">Concat Us</string>
     <string name="account_type_error">You must select the account type!</string>
     <string name="search">Search</string>
+    <string name="search_hint">Enter the doctor name</string>
     <string name="find_doctor">Let\'s Find Your \nDoctor</string>
     <string name="categories">Categories</string>
     <string name="available_doctor">Available Doctor</string>
@@ -150,5 +151,12 @@
     <string name="no_orders">No orders to display</string>
     <string name="cancel_success">Appointment canceled successfully</string>
     <string name="done">Done</string>
+    <string name="image_update">Image has been updated</string>
+    <string name="image_update_failed">Image update failed</string>
+    <string name="success_book_appointment_titel">The appointment has been booked successfully</string>
+    <string name="doctor_not_found">Doctor not found!</string>
+    <string name="delete_appointment">Appointment deleted successfully</string>
+    <string name="image_uploaded">Image uploaded successfully</string>
+    <string name="image_fail_uploaded">Failed to upload image</string>
 
 </resources>

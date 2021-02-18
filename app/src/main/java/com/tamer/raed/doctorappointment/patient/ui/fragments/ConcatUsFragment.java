@@ -19,6 +19,7 @@ import com.tamer.raed.doctorappointment.R;
 public class ConcatUsFragment extends Fragment {
 
 
+    @SuppressLint("IntentReset")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -27,30 +28,26 @@ public class ConcatUsFragment extends Fragment {
         TextInputEditText subject_et = view.findViewById(R.id.patient_concat_us_et_subject);
         Button sendEmail = view.findViewById(R.id.patient_concat_us_btn_send);
 
-        sendEmail.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("IntentReset")
-            @Override
-            public void onClick(View view) {
-                if (!TextUtils.isEmpty(subject_et.getText().toString())) {
-                    if (!TextUtils.isEmpty(content_et.getText().toString())) {
-                        String subject = subject_et.getText().toString();
-                        String content = content_et.getText().toString();
+        sendEmail.setOnClickListener(view1 -> {
+            if (!TextUtils.isEmpty(subject_et.getText().toString())) {
+                if (!TextUtils.isEmpty(content_et.getText().toString())) {
+                    String subject = subject_et.getText().toString();
+                    String content = content_et.getText().toString();
 
-                        Intent email = new Intent(Intent.ACTION_SEND);
-                        email.setData(Uri.parse("mailto:"));
-                        email.putExtra(Intent.EXTRA_EMAIL, new String[]{"tamer.alhasan.apps@gmail.com"});
-                        email.putExtra(Intent.EXTRA_SUBJECT, subject);
-                        email.putExtra(Intent.EXTRA_TEXT, content);
-                        email.setType("message/rfc822");
-                        startActivity(Intent.createChooser(email, "Send mail..."));
-                    } else {
-                        content_et.setError(getString(R.string.content_error));
-                    }
+                    Intent email = new Intent(Intent.ACTION_SEND);
+                    email.setData(Uri.parse("mailto:"));
+                    email.putExtra(Intent.EXTRA_EMAIL, new String[]{"tamer.alhasan.apps@gmail.com"});
+                    email.putExtra(Intent.EXTRA_SUBJECT, subject);
+                    email.putExtra(Intent.EXTRA_TEXT, content);
+                    email.setType("message/rfc822");
+                    startActivity(Intent.createChooser(email, "Send mail..."));
                 } else {
-                    subject_et.setError(getString(R.string.subject_error));
+                    content_et.setError(getString(R.string.content_error));
                 }
-
+            } else {
+                subject_et.setError(getString(R.string.subject_error));
             }
+
         });
         return view;
     }

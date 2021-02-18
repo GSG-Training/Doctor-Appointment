@@ -28,6 +28,8 @@
             android:id="@+id/patient_doctor_details_image_view"
             android:layout_width="@dimen/_80sdp"
             android:layout_height="@dimen/_80sdp"
+            android:background="@drawable/white_border"
+            android:padding="@dimen/_4sdp"
             android:src="@drawable/ic_user_account"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

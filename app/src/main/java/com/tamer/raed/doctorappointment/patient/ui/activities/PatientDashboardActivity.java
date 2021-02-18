@@ -9,7 +9,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -40,6 +39,7 @@ import com.tamer.raed.doctorappointment.patient.ui.fragments.PatientHomepageFrag
 import com.tamer.raed.doctorappointment.patient.ui.fragments.PatientMyProfileFragment;
 import com.tamer.raed.doctorappointment.patient.ui.fragments.PatientRecentAppointmentsFragment;
 import com.tamer.raed.doctorappointment.patient.ui.fragments.PatientUpcomingAppointmentsFragment;
+import com.tapadoo.alerter.Alerter;
 
 import java.util.Objects;
 
@@ -93,10 +93,18 @@ public class PatientDashboardActivity extends AppCompatActivity implements Navig
                         getImageProfile();
                     }
                 } else {
-                    Toast.makeText(getApplicationContext(), getString(R.string.general_error), Toast.LENGTH_SHORT).show();
+                    Alerter.create(this)
+                            .setText(getString(R.string.general_error))
+                            .setDuration(5000)
+                            .setBackgroundColorRes(R.color.purple_700)
+                            .show();
                 }
             } else {
-                Toast.makeText(getApplicationContext(), getString(R.string.general_error), Toast.LENGTH_SHORT).show();
+                Alerter.create(this)
+                        .setText(getString(R.string.general_error))
+                        .setDuration(5000)
+                        .setBackgroundColorRes(R.color.purple_700)
+                        .show();
             }
         });
     }
@@ -106,7 +114,7 @@ public class PatientDashboardActivity extends AppCompatActivity implements Navig
         StorageReference storageReference = FirebaseStorage.getInstance().getReference();
         storageReference.child("profileImages/" + userId).getDownloadUrl().addOnSuccessListener(uri -> Glide.with(getApplicationContext())
                 .load(uri)
-                .into(imageView)).addOnFailureListener(exception -> Toast.makeText(getApplicationContext(), getString(R.string.image_error), Toast.LENGTH_SHORT).show());
+                .into(imageView)).addOnFailureListener(exception -> imageView.setImageResource(R.drawable.ic_user_account));
 
     }
 

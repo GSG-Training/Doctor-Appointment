@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,6 +18,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.tamer.raed.doctorappointment.R;
 import com.tamer.raed.doctorappointment.model.Appointment;
 import com.tamer.raed.doctorappointment.patient.adapter.PatientUpcomingAppointmentAdapter;
+import com.tapadoo.alerter.Alerter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,9 +72,17 @@ public class PatientRecentAppointmentsFragment extends Fragment {
 
         db.collection("PatientRecentAppointments").document(patientId).collection("Appointments").document(doctorId).delete().addOnCompleteListener(task3 -> {
             if (task3.isSuccessful()) {
-                Toast.makeText(getContext(), getString(R.string.cancel_success), Toast.LENGTH_SHORT).show();
+                Alerter.create(getActivity())
+                        .setText(getString(R.string.delete_appointment))
+                        .setDuration(5000)
+                        .setBackgroundColorRes(R.color.purple_700)
+                        .show();
             } else {
-                Toast.makeText(getContext(), getString(R.string.general_error), Toast.LENGTH_SHORT).show();
+                Alerter.create(getActivity())
+                        .setText(getString(R.string.general_error))
+                        .setDuration(5000)
+                        .setBackgroundColorRes(R.color.purple_700)
+                        .show();
             }
         });
     }

@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.constraintlayout.widget.Group;
 import androidx.fragment.app.Fragment;
@@ -21,6 +20,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.tamer.raed.doctorappointment.R;
 import com.tamer.raed.doctorappointment.model.Doctor;
+import com.tapadoo.alerter.Alerter;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -79,10 +79,18 @@ public class DoctorMyProfileFragment extends Fragment {
                         progressBar.setVisibility(View.GONE);
                     }
                 } else {
-                    Toast.makeText(getContext(), getString(R.string.general_error), Toast.LENGTH_SHORT).show();
+                    Alerter.create(getActivity())
+                            .setText(getString(R.string.general_error))
+                            .setDuration(5000)
+                            .setBackgroundColorRes(R.color.purple_700)
+                            .show();
                 }
             } else {
-                Toast.makeText(getContext(), getString(R.string.general_error), Toast.LENGTH_SHORT).show();
+                Alerter.create(getActivity())
+                        .setText(getString(R.string.general_error))
+                        .setDuration(5000)
+                        .setBackgroundColorRes(R.color.purple_700)
+                        .show();
             }
         });
     }
@@ -92,7 +100,7 @@ public class DoctorMyProfileFragment extends Fragment {
         StorageReference storageReference = FirebaseStorage.getInstance().getReference();
         storageReference.child("profileImages/" + userId).getDownloadUrl().addOnSuccessListener(uri -> Glide.with(getContext())
                 .load(uri)
-                .into(imageView)).addOnFailureListener(exception -> Toast.makeText(getContext(), getString(R.string.image_error), Toast.LENGTH_SHORT).show());
+                .into(imageView)).addOnFailureListener(exception -> imageView.setImageResource(R.drawable.ic_user_account));
 
     }
 }
