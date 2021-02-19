@@ -163,5 +163,6 @@
     <string name="email_send">Email Sended</string>
     <string name="verify_email">Your email not verify</string>
     <string name="verify_error">Failed to send verification email</string>
+    <string name="enter_subject">Enter The Subject</string>
 
 </resources>

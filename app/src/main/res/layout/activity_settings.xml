@@ -18,12 +18,12 @@
 
     <fragment
         android:id="@+id/settings_fragment"
-        android:name="com.tamer.raed.doctorappointment.patient.ui.fragments.SettingsFragment"
+        android:name="com.tamer.raed.doctorappointment.users.patient.ui.fragments.SettingsFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/patient_settings_toolbar"
-        tools:context=".patient.ui.activities.SettingsActivity" />
+        tools:context=".users.patient.ui.activities.SettingsActivity" />
 </androidx.constraintlayout.widget.ConstraintLayout>

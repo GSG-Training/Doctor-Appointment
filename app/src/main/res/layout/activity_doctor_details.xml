@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/purple_700"
-        tools:context=".patient.ui.activities.DoctorDetailsActivity">
+        tools:context=".users.patient.ui.activities.DoctorDetailsActivity">
 
         <ImageButton
             android:id="@+id/patient_doctor_details_image_button"

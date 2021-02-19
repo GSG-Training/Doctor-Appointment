@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".patient.ui.fragments.PatientRecentAppointmentsFragment">
+    tools:context=".users.patient.ui.fragments.PatientRecentAppointmentsFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_recent_appointments"

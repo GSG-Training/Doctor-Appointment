@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".patient.ui.activities.SearchActivity">
+    tools:context=".users.patient.ui.activities.SearchActivity">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/patient_search_toolbar"

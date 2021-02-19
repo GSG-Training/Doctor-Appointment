@@ -9,7 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".patient.ui.activities.PatientSignUpActivity">
+        tools:context=".users.patient.ui.activities.PatientSignUpActivity">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/patient_sign_up_toolbar"

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="@dimen/_12sdp"
-    tools:context=".patient.ui.fragments.ConcatUsFragment">
+    tools:context=".users.patient.ui.fragments.ConcatUsFragment">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/patient_concat_us_input_layout_email_subject"
@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="top"
-            android:hint="@string/enter_content" />
+            android:hint="@string/enter_subject" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout

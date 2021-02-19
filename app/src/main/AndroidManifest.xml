@@ -12,24 +12,24 @@
         android:roundIcon="@drawable/ic_health_insurance"
         android:supportsRtl="true"
         android:theme="@style/Theme.DoctorAppointment">
-        <activity android:name=".ForgetPasswordActivity"></activity>
-        <activity android:name=".doctor.ui.activities.signUpActivities.WorkHoursActivity" />
-        <activity android:name=".doctor.ui.activities.signUpActivities.AddressActivity" />
-        <activity android:name=".doctor.ui.activities.signUpActivities.SpecializationActivity" />
-        <activity android:name=".doctor.ui.activities.signUpActivities.PersonalDataActivity" />
-        <activity android:name=".doctor.ui.activities.DoctorDashboardActivity" />
-        <activity android:name=".patient.ui.activities.SettingsActivity" />
-        <activity android:name=".patient.ui.activities.BookAppointmentActivity" />
-        <activity android:name=".patient.ui.activities.DoctorDetailsActivity" />
-        <activity android:name=".patient.ui.activities.SearchActivity" />
-        <activity android:name=".patient.ui.activities.PatientSignUpActivity" />
-        <activity android:name=".patient.ui.activities.PatientDashboardActivity" />
+        <activity android:name=".activity.ForgetPasswordActivity" />
+        <activity android:name=".users.doctor.ui.activities.signUpActivities.WorkHoursActivity" />
+        <activity android:name=".users.doctor.ui.activities.signUpActivities.AddressActivity" />
+        <activity android:name=".users.doctor.ui.activities.signUpActivities.SpecializationActivity" />
+        <activity android:name=".users.doctor.ui.activities.signUpActivities.PersonalDataActivity" />
+        <activity android:name=".users.doctor.ui.activities.DoctorDashboardActivity" />
+        <activity android:name=".users.patient.ui.activities.SettingsActivity" />
+        <activity android:name=".users.patient.ui.activities.BookAppointmentActivity" />
+        <activity android:name=".users.patient.ui.activities.DoctorDetailsActivity" />
+        <activity android:name=".users.patient.ui.activities.SearchActivity" />
+        <activity android:name=".users.patient.ui.activities.PatientSignUpActivity" />
+        <activity android:name=".users.patient.ui.activities.PatientDashboardActivity" />
         <activity
-            android:name=".WelcomeActivity"
+            android:name=".activity.WelcomeActivity"
             android:theme="@style/welcome" />
-        <activity android:name=".LoginActivity" />
+        <activity android:name=".activity.LoginActivity" />
         <activity
-            android:name=".SplashActivity"
+            android:name=".activity.SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

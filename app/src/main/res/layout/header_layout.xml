@@ -10,6 +10,8 @@
         android:id="@+id/header_image_view"
         android:layout_width="@dimen/_80sdp"
         android:layout_height="@dimen/_80sdp"
+        android:background="@drawable/white_border"
+        android:padding="@dimen/_3sdp"
         android:layout_marginStart="@dimen/_8sdp"
         android:layout_marginTop="@dimen/_8sdp"
         android:src="@drawable/ic_user_account"
