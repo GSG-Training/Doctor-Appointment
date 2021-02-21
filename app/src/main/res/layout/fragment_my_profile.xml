@@ -18,7 +18,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:tint="#9901579B"
-        tools:src="@drawable/ic_user_account" />
+        android:src="@drawable/ic_user_account" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/patient_my_profile_image_view"

@@ -172,6 +172,7 @@ public class PatientMyProfileFragment extends Fragment {
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getApplicationContext().getContentResolver(), filePath);
                 imageView.setImageBitmap(bitmap);
+                profileImageView.setImageBitmap(bitmap);
                 uploadImage();
 
             } catch (IOException e) {

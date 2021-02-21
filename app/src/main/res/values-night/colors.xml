@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#50AEFA</color>
+    <color name="find_doctor">#FFFFFF</color>
+    <color name="dark_gray">#B5B2B2</color>
+    <color name="toolbar_color">#121212</color>
 </resources>

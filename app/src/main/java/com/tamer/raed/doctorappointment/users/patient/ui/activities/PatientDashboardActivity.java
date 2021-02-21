@@ -166,6 +166,8 @@ public class PatientDashboardActivity extends AppCompatActivity implements Navig
                 drawerLayout.closeDrawers();
                 break;
             case R.id.patient_menu_logout:
+                FirebaseAuth auth = FirebaseAuth.getInstance();
+                auth.signOut();
                 startActivityForResult(new Intent(PatientDashboardActivity.this, LoginActivity.class), REQUEST_SETTINGS_CHANGE);
                 finish();
                 break;

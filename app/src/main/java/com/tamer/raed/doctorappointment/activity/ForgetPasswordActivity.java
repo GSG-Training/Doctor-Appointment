@@ -9,16 +9,21 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.tamer.raed.doctorappointment.R;
 import com.tapadoo.alerter.Alerter;
 
+import java.util.Objects;
+
 public class ForgetPasswordActivity extends AppCompatActivity {
     private TextInputEditText et_email;
     private ProgressBar progressBar;
     private Button button;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +32,9 @@ public class ForgetPasswordActivity extends AppCompatActivity {
         et_email = findViewById(R.id.et_email);
         progressBar = findViewById(R.id.progressBar);
         button = findViewById(R.id.button);
+        toolbar = findViewById(R.id.forget_password_toolbar);
+
+        setupToolbar();
     }
 
     public void sendEmail(View view) {
@@ -58,4 +66,13 @@ public class ForgetPasswordActivity extends AppCompatActivity {
         progressBar.setVisibility(View.GONE);
         button.setVisibility(View.VISIBLE);
     }
+
+    private void setupToolbar() {
+        setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationIcon(ContextCompat.getDrawable(this, R.drawable.ic_arrow));
+        toolbar.setNavigationOnClickListener(view -> onBackPressed());
+    }
+
 }

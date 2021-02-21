@@ -29,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private FirebaseUser firebaseUser;
     private FirebaseFirestore db;
-
+    private FirebaseAuth auth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,15 +67,17 @@ public class LoginActivity extends AppCompatActivity {
         et_email = findViewById(R.id.login_et_email);
         et_password = findViewById(R.id.login_et_password);
         progressBar = findViewById(R.id.login_progressBar);
+        auth = FirebaseAuth.getInstance();
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
     }
 
     private void login() {
         login_btn.setVisibility(View.INVISIBLE);
         progressBar.setVisibility(View.VISIBLE);
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        auth = FirebaseAuth.getInstance();
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
+                firebaseUser = auth.getCurrentUser();
                 if (checkIfEmailVerified()) {
                     db = FirebaseFirestore.getInstance();
                     DocumentReference docRef = db.collection("Users").document(firebaseUser.getUid());
@@ -139,5 +141,49 @@ public class LoginActivity extends AppCompatActivity {
 
     private boolean checkIfEmailVerified() {
         return firebaseUser.isEmailVerified();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        auth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = auth.getCurrentUser();
+        updateUI(currentUser);
+    }
+
+    private void updateUI(FirebaseUser currentUser) {
+        if (currentUser != null) {
+
+            db = FirebaseFirestore.getInstance();
+            DocumentReference docRef = db.collection("Users").document(firebaseUser.getUid());
+            docRef.get().addOnCompleteListener(task2 -> {
+                if (task2.isSuccessful()) {
+                    DocumentSnapshot document = task2.getResult();
+                    if (document.exists()) {
+                        String accountType = (String) document.get("accountType");
+                        if (accountType.equalsIgnoreCase("doctor")) {
+                            progressBar.setVisibility(View.GONE);
+                            login_btn.setVisibility(View.VISIBLE);
+                            startActivity(new Intent(LoginActivity.this, DoctorDashboardActivity.class));
+                            finish();
+                        } else if (accountType.equalsIgnoreCase("patient")) {
+                            progressBar.setVisibility(View.GONE);
+                            login_btn.setVisibility(View.VISIBLE);
+                            startActivity(new Intent(LoginActivity.this, PatientDashboardActivity.class));
+                            finish();
+                        }
+                    }
+                } else {
+                    Alerter.create(this)
+                            .setText(getString(R.string.general_error))
+                            .setDuration(3000)
+                            .setBackgroundColorRes(R.color.teal_200)
+                            .show();
+                    progressBar.setVisibility(View.GONE);
+                    login_btn.setVisibility(View.VISIBLE);
+                }
+            });
+        }
     }
 }

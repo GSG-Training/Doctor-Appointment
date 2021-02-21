@@ -254,6 +254,7 @@
                         android:layout_marginBottom="@dimen/_16sdp"
                         android:layout_marginTop="@dimen/_8sdp"
                         android:onClick="confirmAppointment"
+                        android:background="@color/colorPrimary"
                         android:text="@string/confirm_appointment"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"

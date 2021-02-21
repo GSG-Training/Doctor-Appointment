@@ -14,7 +14,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/white">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
@@ -80,6 +81,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/item_appointment_doctor_name"
             android:textSize="@dimen/_12sdp"
+            android:textColor="@color/dark_gray"
             app:layout_constraintStart_toStartOf="@+id/item_appointment_doctor_name"
             tools:text="Tooth" />
 
@@ -109,6 +111,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_4sdp"
+            android:textColor="@color/dark_gray"
             app:layout_constraintTop_toTopOf="@+id/imageButton2"
             app:layout_constraintBottom_toBottomOf="@+id/imageButton2"
             app:layout_constraintStart_toEndOf="@+id/imageButton2"

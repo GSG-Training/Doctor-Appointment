@@ -15,7 +15,7 @@
             android:id="@+id/patient_sign_up_toolbar"
             android:layout_width="0dp"
             android:layout_height="?actionBarSize"
-            android:background="@color/colorPrimary"
+            android:background="@color/toolbar_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

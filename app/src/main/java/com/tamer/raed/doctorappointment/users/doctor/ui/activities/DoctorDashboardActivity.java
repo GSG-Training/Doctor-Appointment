@@ -161,6 +161,8 @@ public class DoctorDashboardActivity extends AppCompatActivity implements Naviga
                 drawerLayout.closeDrawers();
                 break;
             case R.id.doctor_menu_logout:
+                FirebaseAuth auth = FirebaseAuth.getInstance();
+                auth.signOut();
                 startActivity(new Intent(DoctorDashboardActivity.this, LoginActivity.class));
                 finish();
                 break;
