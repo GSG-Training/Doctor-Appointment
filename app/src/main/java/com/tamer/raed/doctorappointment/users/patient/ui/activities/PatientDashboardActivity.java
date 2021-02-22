@@ -5,10 +5,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -51,6 +53,7 @@ public class PatientDashboardActivity extends AppCompatActivity implements Navig
     private ImageView imageView;
     private TextView tv_username;
     private FirebaseUser firebaseUser;
+    boolean doubleBackToExitPressedOnce = false;
 
     @SuppressLint("RestrictedApi")
     @Override
@@ -182,6 +185,10 @@ public class PatientDashboardActivity extends AppCompatActivity implements Navig
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawers();
+        } else if (!doubleBackToExitPressedOnce) {
+            this.doubleBackToExitPressedOnce = true;
+            Toast.makeText(this, "click again to exit", Toast.LENGTH_SHORT).show();
+            new Handler().postDelayed(() -> doubleBackToExitPressedOnce = false, 2000);
         } else {
             super.onBackPressed();
         }

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -47,6 +48,7 @@ public class DoctorDashboardActivity extends AppCompatActivity implements Naviga
     private ImageView imageView;
     private TextView tv_username;
     private FirebaseUser firebaseUser;
+    boolean doubleBackToExitPressedOnce = false;
 
     @SuppressLint("RestrictedApi")
     @Override
@@ -167,6 +169,10 @@ public class DoctorDashboardActivity extends AppCompatActivity implements Naviga
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawers();
+        } else if (!doubleBackToExitPressedOnce) {
+            this.doubleBackToExitPressedOnce = true;
+            Toast.makeText(this, "click again to exit", Toast.LENGTH_SHORT).show();
+            new Handler().postDelayed(() -> doubleBackToExitPressedOnce = false, 2000);
         } else {
             super.onBackPressed();
         }
