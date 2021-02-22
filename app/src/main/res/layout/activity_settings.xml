@@ -16,7 +16,7 @@
         app:title="@string/settings"
         app:titleTextColor="@color/white" />
 
-    <fragment
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/settings_fragment"
         android:name="com.tamer.raed.doctorappointment.users.patient.ui.fragments.SettingsFragment"
         android:layout_width="0dp"

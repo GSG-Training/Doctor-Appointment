@@ -11,13 +11,12 @@ import com.tamer.raed.doctorappointment.R;
 import java.util.Objects;
 
 public class SettingsActivity extends AppCompatActivity {
-    private MaterialToolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-        toolbar = findViewById(R.id.patient_settings_toolbar);
+        MaterialToolbar toolbar = findViewById(R.id.patient_settings_toolbar);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);

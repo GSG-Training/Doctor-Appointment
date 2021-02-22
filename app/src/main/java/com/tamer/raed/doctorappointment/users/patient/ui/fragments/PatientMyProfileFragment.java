@@ -188,19 +188,15 @@ public class PatientMyProfileFragment extends Fragment {
         String userId = firebaseUser.getUid();
         if (filePath != null) {
             StorageReference ref = storageReference.child("profileImages/").child(userId);
-            ref.putFile(filePath).addOnSuccessListener(taskSnapshot -> {
-                Alerter.create(getActivity())
-                        .setText(getString(R.string.image_update))
-                        .setDuration(3000)
-                        .setBackgroundColorRes(R.color.teal_200)
-                        .show();
-            }).addOnFailureListener(e -> {
-                Alerter.create(getActivity())
-                        .setText(getString(R.string.image_update_failed))
-                        .setDuration(3000)
-                        .setBackgroundColorRes(R.color.teal_200)
-                        .show();
-            });
+            ref.putFile(filePath).addOnSuccessListener(taskSnapshot -> Alerter.create(getActivity())
+                    .setText(getString(R.string.image_update))
+                    .setDuration(3000)
+                    .setBackgroundColorRes(R.color.teal_200)
+                    .show()).addOnFailureListener(e -> Alerter.create(getActivity())
+                            .setText(getString(R.string.image_update_failed))
+                            .setDuration(3000)
+                            .setBackgroundColorRes(R.color.teal_200)
+                            .show());
         }
         fillDataFromFirebase();
     }
