@@ -24,10 +24,6 @@
         android:id="@+id/doctor_group2"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/doctor_menu_settings"
-            android:icon="@drawable/ic_settings"
-            android:title="@string/settings" />
-        <item
             android:id="@+id/doctor_menu_concat_us"
             android:icon="@drawable/ic_email"
             android:title="@string/concat_us" />

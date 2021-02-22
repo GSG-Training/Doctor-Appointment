@@ -168,7 +168,6 @@ public class WorkHoursActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.GONE);
                 group.setVisibility(View.VISIBLE);
                 Intent intent = new Intent(WorkHoursActivity.this, LoginActivity.class);
-                intent.putExtra("id", userId);
                 startActivity(intent);
             } else {
                 Alerter.create(this)

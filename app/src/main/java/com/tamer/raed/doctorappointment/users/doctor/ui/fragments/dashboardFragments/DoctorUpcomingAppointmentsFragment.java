@@ -2,6 +2,7 @@ package com.tamer.raed.doctorappointment.users.doctor.ui.fragments.dashboardFrag
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.tamer.raed.doctorappointment.R;
 import com.tamer.raed.doctorappointment.model.Appointment;
+import com.tamer.raed.doctorappointment.model.Doctor;
 import com.tamer.raed.doctorappointment.users.doctor.adapters.DoctorUpcomingAppointmentAdapter;
 import com.tapadoo.alerter.Alerter;
 
@@ -138,6 +140,18 @@ public class DoctorUpcomingAppointmentsFragment extends Fragment {
                         db.collection("PatientRecentAppointments").document(patientId).collection("Appointments").document(doctorId).set(appointment).addOnCompleteListener(task4 -> {
                             if (task4.isSuccessful()) {
                                 db.collection("PatientAppointments").document(patientId).collection("Appointments").document(doctorId).delete();
+
+                                db.collection("Doctors").document(doctorId)
+                                        .get()
+                                        .addOnSuccessListener(documentSnapshot -> {
+                                            Doctor doctor = documentSnapshot.toObject(Doctor.class);
+                                            int num = doctor.getNumberOfPatient();
+                                            int numOfPatient = num + 1;
+                                            db.collection("Doctors").document(doctorId).update("numberOfPatient", numOfPatient);
+                                            Log.d("ddddd", "num: " + num);
+                                            Log.d("ddddd", "numOfPatient: " + numOfPatient);
+                                        });
+
                                 Alerter.create(getActivity())
                                         .setText(getString(R.string.done))
                                         .setDuration(3000)
